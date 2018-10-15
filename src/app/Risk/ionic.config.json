@@ -1,0 +1,8 @@
+{
+  "name": "Risk",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular",
+  "pro_id": "e42fe9eb"
+}
