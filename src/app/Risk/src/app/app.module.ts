@@ -8,12 +8,26 @@ import { ListPage } from '../pages/list/list';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { Geolocation } from '@ionic-native/geolocation';
+
+import { LoginPage } from '../pages/login/login';
+import { RegisterPage } from '../pages/register/register';
+import { MapPage } from '../pages/map/map';
+import { BattlePhasePage } from '../pages/battle-phase/battle-phase';
+import { ArmyPage } from '../pages/army/army';
+import { TeamPage } from '../pages/team/team';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    ListPage
+    ListPage,
+    LoginPage,
+    RegisterPage,
+    MapPage,
+    BattlePhasePage,
+    ArmyPage,
+    TeamPage
   ],
   imports: [
     BrowserModule,
@@ -23,11 +37,18 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage
+    ListPage,
+    MapPage,
+    LoginPage,
+    RegisterPage,
+    ArmyPage,
+    TeamPage,
+    BattlePhasePage,
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    Geolocation,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
