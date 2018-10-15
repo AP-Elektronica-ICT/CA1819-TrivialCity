@@ -1,7 +1,0 @@
-{
-  "name": "TrivialCity",
-  "integrations": {
-    "cordova": {}
-  },
-  "type": "ionic-angular"
-}
