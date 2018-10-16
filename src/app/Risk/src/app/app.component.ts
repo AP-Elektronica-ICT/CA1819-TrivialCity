@@ -11,6 +11,8 @@ import { MapPage } from '../pages/map/map';
 import { BattlePhasePage } from '../pages/battle-phase/battle-phase';
 import { ArmyPage } from '../pages/army/army';
 import { TeamPage } from '../pages/team/team';
+import { ProfilePage } from '../pages/profile/profile';
+import { BattlePhaseContPage } from '../pages/battle-phase-cont/battle-phase-cont';
 
 @Component({
   templateUrl: 'app.html'
@@ -35,6 +37,7 @@ export class MyApp {
       { title: 'Team', component: TeamPage },
       { title: 'Register', component: RegisterPage },
       { title: 'Battle Phase', component: BattlePhasePage },
+      { title: 'Profile', component: ProfilePage },
     ];
 
   }

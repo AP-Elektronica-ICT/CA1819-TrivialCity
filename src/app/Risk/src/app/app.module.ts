@@ -16,6 +16,8 @@ import { MapPage } from '../pages/map/map';
 import { BattlePhasePage } from '../pages/battle-phase/battle-phase';
 import { ArmyPage } from '../pages/army/army';
 import { TeamPage } from '../pages/team/team';
+import { ProfilePage } from '../pages/profile/profile';
+import { BattlePhaseContPage } from '../pages/battle-phase-cont/battle-phase-cont';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { TeamPage } from '../pages/team/team';
     MapPage,
     BattlePhasePage,
     ArmyPage,
-    TeamPage
+    TeamPage,
+    ProfilePage,
+    BattlePhaseContPage
   ],
   imports: [
     BrowserModule,
@@ -44,6 +48,8 @@ import { TeamPage } from '../pages/team/team';
     ArmyPage,
     TeamPage,
     BattlePhasePage,
+    ProfilePage,
+    BattlePhaseContPage
   ],
   providers: [
     StatusBar,
