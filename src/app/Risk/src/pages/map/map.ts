@@ -54,9 +54,25 @@ export class MapPage {
           lng: 4.439990
         },
         p7: {
-          lat: 51.228790,
-          lng: 4.426193
-        }
+          lat: 51.226783,
+          lng: 4.436743
+        },
+        p8: {
+          lat: 51.227663,
+          lng: 4.435061
+        },
+        p9: {
+          lat: 51.227942,
+          lng: 4.433815
+        },
+        p10: {
+          lat: 51.227836,
+          lng: 4.430798
+        },
+        p11: {
+          lat: 51.228767,
+          lng: 4.426224
+        },
     },{
       name: 'Het Eilandje',
       p1: {
@@ -68,44 +84,214 @@ export class MapPage {
         lng: 4.411271
       },
       p3: {
+        lat: 51.226936,
+        lng: 4.405197
+      },
+      p4: {
+        lat: 51.227091,
+        lng: 4.401156
+      },
+      p5: {
         lat: 51.227080,
         lng: 4.399555
       },
-      p4: {
+      p6: {
         lat: 51.232166,
         lng: 4.401722
       },
-      p5: {
+      p7: {
         lat: 51.235310,
         lng: 4.401036
       },
-      p6: {
+      p8: {
         lat: 51.238508,
         lng: 4.397946
       },
-      p7: {
+      p9: {
         lat: 51.241786,
         lng: 4.404469
       },
-      p8: {
+      p10: {
         lat: 51.241899,
         lng: 4.407903
       },
-      p9: {
+      p11: {
         lat: 51.239587,
         lng: 4.420263
       },
-      p10: {
+      p12: {
         lat: 51.235015,
         lng: 4.420325
       },  
-      p11: {
+      p13: {
         lat: 51.231278,
         lng: 4.419713
       },
-      p12: {
+      p14: {
         lat: 51.230859,
         lng: 4.413208
+      }
+    },{
+      name: 'Seefhoek',
+      p1: {
+        lat: 51.226317,
+        lng: 4.414693
+      },
+      p2: {
+        lat: 51.228767,
+        lng: 4.426224
+      },
+      p3: {
+        lat: 51.227836,
+        lng: 4.430798
+      },
+      p4: {
+        lat: 51.227942,
+        lng: 4.433815,
+      },
+      p5: {
+        lat: 51.227663,
+        lng: 4.435061
+      },
+      p6: {
+        lat: 51.226783,
+        lng: 4.436743
+      },
+      p7: {
+        lat: 51.221772,
+        lng: 4.436900
+      },
+      p8: {
+        lat: 51.219695,
+        lng: 4.435456
+      },
+      p9: {
+        lat: 51.218802,
+        lng: 4.431648
+      },
+      p10: {
+        lat: 51.218956,
+        lng: 4.431175
+      },
+      p11: {
+        lat: 51.217511,
+        lng: 4.428144
+      },
+      p12: {
+        lat: 51.218701,
+        lng: 4.423484
+      },
+      p13: {
+        lat: 51.219779,
+        lng: 4.416132
+      },
+      p14: {
+        lat: 51.220934,
+        lng: 4.416598
+      }
+    },{
+      name: 'Borgerhout',
+      p1: {
+        lat: 51.227991,
+        lng: 4.439990
+      },
+      p2: {
+        lat: 51.220914,
+        lng: 4.449414
+      },
+      p3: {
+        lat: 51.217855,
+        lng: 4.447352
+      },
+      p4: {
+        lat: 51.215694,
+        lng: 4.446721
+      },
+      p5: {
+        lat: 51.213827,
+        lng: 4.440785
+      },
+      p6: {
+        lat: 51.215598,
+        lng: 4.432207
+      },
+      p7: {
+        lat: 51.216351,
+        lng: 4.430431
+      },
+      p8: {
+        lat: 51.217257,
+        lng: 4.429056
+      },
+      p9: {
+        lat: 51.217511,
+        lng: 4.428144
+      },
+      p10: {
+        lat: 51.218956,
+        lng: 4.431175
+      },
+      p11: {
+        lat: 51.218802,
+        lng: 4.431648
+      },
+      p12: {
+        lat: 51.219695,
+        lng: 4.435456
+      },
+      p13:  {
+        lat: 51.221772,
+        lng: 4.436900
+      },
+      p14: {
+        lat: 51.226783,
+        lng: 4.436743
+      }
+    },{
+      name: 'De Kaai',
+      p1: {
+        lat: 51.227080,
+        lng: 4.399555
+      },
+      p2: {
+        lat: 51.227091,
+        lng: 4.401156
+      },
+      p3: {
+        lat: 51.226356,
+        lng: 4.400389
+      },
+      p4: {
+        lat: 51.222221,
+        lng: 4.397784
+      },
+      p5: {
+        lat: 51.218815,
+        lng: 4.395516
+      },
+      p6: {
+        lat: 51.219131,
+        lng: 4.394291
+      },
+      p7: {
+        lat: 51.221740,
+        lng: 4.396078
+      },
+      p8: {
+        lat: 51.221836,
+        lng: 4.395771
+      },
+      p9: {
+        lat: 51.222668,
+        lng: 4.396323
+      },
+      p10: {
+        lat: 51.222697,
+        lng: 4.396713
+      },
+      p11: {
+        lat: 51.227080,
+        lng: 4.399555
       }
     }];
 
@@ -119,6 +305,10 @@ export class MapPage {
     [this.districts[0].p5.lat, this.districts[0].p5.lng],
     [this.districts[0].p6.lat, this.districts[0].p6.lng],
     [this.districts[0].p7.lat, this.districts[0].p7.lng],
+    [this.districts[0].p8.lat, this.districts[0].p8.lng],
+    [this.districts[0].p9.lat, this.districts[0].p9.lng],
+    [this.districts[0].p10.lat, this.districts[0].p10.lng],
+    [this.districts[0].p11.lat, this.districts[0].p11.lng],
   ],
   [//Het Eilandje
     [this.districts[1].p1.lat, this.districts[1].p1.lng],
@@ -133,9 +323,53 @@ export class MapPage {
     [this.districts[1].p10.lat, this.districts[1].p10.lng],
     [this.districts[1].p11.lat, this.districts[1].p11.lng],
     [this.districts[1].p12.lat, this.districts[1].p12.lng],
+    [this.districts[1].p13.lat, this.districts[1].p13.lng],
+    [this.districts[1].p14.lat, this.districts[1].p14.lng],
   ],
-  [//
-
+  [//Seefhoek
+    [this.districts[2].p1.lat, this.districts[2].p1.lng],
+    [this.districts[2].p2.lat, this.districts[2].p2.lng],
+    [this.districts[2].p3.lat, this.districts[2].p3.lng],
+    [this.districts[2].p4.lat, this.districts[2].p4.lng],
+    [this.districts[2].p5.lat, this.districts[2].p5.lng],
+    [this.districts[2].p6.lat, this.districts[2].p6.lng],
+    [this.districts[2].p7.lat, this.districts[2].p7.lng],
+    [this.districts[2].p8.lat, this.districts[2].p8.lng],
+    [this.districts[2].p9.lat, this.districts[2].p9.lng],
+    [this.districts[2].p10.lat, this.districts[2].p10.lng],
+    [this.districts[2].p11.lat, this.districts[2].p11.lng],
+    [this.districts[2].p12.lat, this.districts[2].p12.lng],
+    [this.districts[2].p13.lat, this.districts[2].p13.lng],
+    [this.districts[2].p14.lat, this.districts[2].p14.lng],
+  ],
+  [//Borgerhout
+    [this.districts[3].p1.lat, this.districts[3].p1.lng],
+    [this.districts[3].p2.lat, this.districts[3].p2.lng],
+    [this.districts[3].p3.lat, this.districts[3].p3.lng],
+    [this.districts[3].p4.lat, this.districts[3].p4.lng],
+    [this.districts[3].p5.lat, this.districts[3].p5.lng],
+    [this.districts[3].p6.lat, this.districts[3].p6.lng],
+    [this.districts[3].p7.lat, this.districts[3].p7.lng],
+    [this.districts[3].p8.lat, this.districts[3].p8.lng],
+    [this.districts[3].p9.lat, this.districts[3].p9.lng],
+    [this.districts[3].p10.lat, this.districts[3].p10.lng],
+    [this.districts[3].p11.lat, this.districts[3].p11.lng],
+    [this.districts[3].p12.lat, this.districts[3].p12.lng],
+    [this.districts[3].p13.lat, this.districts[3].p13.lng],
+    [this.districts[3].p14.lat, this.districts[3].p14.lng],
+  ],
+  [//De Kaai
+    [this.districts[4].p1.lat, this.districts[4].p1.lng],
+    [this.districts[4].p2.lat, this.districts[4].p2.lng],
+    [this.districts[4].p3.lat, this.districts[4].p3.lng],
+    [this.districts[4].p4.lat, this.districts[4].p4.lng],
+    [this.districts[4].p5.lat, this.districts[4].p5.lng],
+    [this.districts[4].p6.lat, this.districts[4].p6.lng],
+    [this.districts[4].p7.lat, this.districts[4].p7.lng],
+    [this.districts[4].p8.lat, this.districts[4].p8.lng],
+    [this.districts[4].p9.lat, this.districts[4].p9.lng],
+    [this.districts[4].p10.lat, this.districts[4].p10.lng],
+    [this.districts[4].p11.lat, this.districts[4].p11.lng],
   ]
 ]);
 
@@ -176,10 +410,6 @@ export class MapPage {
       })
     //This adds custom district polygons to the map
     this.polygon.addTo(this.map);
-
-    //This adds exemplary Merskem GeoJSON to map
-    //this.geojsonlayer.addData(this.geojsonfeature[0]);
-    leaflet.GeoJSON(this.geojsonfeature).addTo(this.map);
   }
 
 }
