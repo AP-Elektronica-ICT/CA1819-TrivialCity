@@ -15,5 +15,20 @@
 
 
 <ion-content padding>
+   <div class="container">
+      <form >
+          <div class="row">
+                <ion-item>
+                  <ion-intput [(ngModel)]='loginModel.userName'  placeholder="your username" name="userName" ngDefaultControl ></ion-intput>         
+                </ion-item>
+                <ion-item>
+                  <ion-intput  [(ngModel)]='loginModel.password' placeholder="your pass" name="password" ngDefaultControl  ></ion-intput>         
+                </ion-item>
+                <input mdbInputDirective type="text" name="name" [(ngModel)]="loginModel.userName" id="form1" class="form-control">
+                <input mdbInputDirective type="text" name="pass" [(ngModel)]="loginModel.password" id="form2" class="form-control">
 
+                <button (click)='logUser()'ion-button full>Login</button>
+          </div>
+      </form>
+   </div>
 </ion-content>

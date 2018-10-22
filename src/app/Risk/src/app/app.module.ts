@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule } from '@angular/core';
+import { ErrorHandler, NgModule , CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
@@ -18,6 +18,7 @@ import { ArmyPage } from '../pages/army/army';
 import { TeamPage } from '../pages/team/team';
 import { ProfilePage } from '../pages/profile/profile';
 import { BattlePhaseContPage } from '../pages/battle-phase-cont/battle-phase-cont';
+import {HttpClientModule} from '@angular/common/http'
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { BattlePhaseContPage } from '../pages/battle-phase-cont/battle-phase-con
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    HttpClientModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -50,6 +52,9 @@ import { BattlePhaseContPage } from '../pages/battle-phase-cont/battle-phase-con
     BattlePhasePage,
     ProfilePage,
     BattlePhaseContPage
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA,
   ],
   providers: [
     StatusBar,
