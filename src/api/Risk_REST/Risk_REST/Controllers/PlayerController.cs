@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Risk_REST.DataLayerClasses;
 using Risk_REST.Models;
 namespace Risk_REST.Controllers
 {
@@ -23,10 +24,8 @@ namespace Risk_REST.Controllers
         [HttpGet]
         public IEnumerable<Player> Get()
         {
-            String connectionString = _configuration.GetConnectionString("localDB");
-
-            Player player1 = new Player(1, "Mathias", "matti@bla.com", "123456", "AntwerpBurger", 30, 200, 2, 30, 600);
-            return new Player[] { player1 };
+            DataLayer dataLayer = new DataLayer(_configuration);
+            return dataLayer.getPlayer(0);
         }
 
         // GET api/players/5
