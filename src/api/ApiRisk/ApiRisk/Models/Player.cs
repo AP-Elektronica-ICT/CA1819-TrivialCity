@@ -44,4 +44,3 @@ namespace ApiRisk.Models
         public int playerSilverCoins { get => mPlayerSilverCoins; set => mPlayerSilverCoins = value; }
     }
 }
-}
