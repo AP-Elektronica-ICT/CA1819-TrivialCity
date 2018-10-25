@@ -19,6 +19,7 @@ import { TeamPage } from '../pages/team/team';
 import { ProfilePage } from '../pages/profile/profile';
 import { BattlePhaseContPage } from '../pages/battle-phase-cont/battle-phase-cont';
 import {HttpClientModule} from '@angular/common/http'
+import { DeviceOrientation, DeviceOrientationCompassHeading } from '@ionic-native/device-orientation';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import {HttpClientModule} from '@angular/common/http'
     StatusBar,
     SplashScreen,
     Geolocation,
+    DeviceOrientation,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

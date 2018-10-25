@@ -83,10 +83,11 @@
     <plugin name="cordova-plugin-ionic-webview" spec="^2.0.0" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
     <plugin name="cordova-plugin-safariviewcontroller" spec="1.5.4" />
-    <engine name="android" spec="7.1.1" />
-    <engine name="browser" spec="~5.0.4" />
     <plugin name="cordova-plugin-device-orientation" spec="2.0.1" />
     <plugin name="cordova-plugin-geolocation" spec="^4.0.1">
         <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="To locate you" />
     </plugin>
+    <allow-navigation href="http://172.16.145.15:8100" sessionid="7d73bf77" />
+    <engine name="android" spec="7.1.1" />
+    <engine name="browser" spec="5.0.4" />
 </widget>
