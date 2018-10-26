@@ -306,83 +306,92 @@ export class MapPage {
       }
     }];
 
-  polygon = leaflet.polygon([
+  teamRedPolygon = [
     [
-    //Den Dam
-    [this.districts[0].p1.lat, this.districts[0].p1.lng],
-    [this.districts[0].p2.lat, this.districts[0].p2.lng],
-    [this.districts[0].p3.lat, this.districts[0].p3.lng],
-    [this.districts[0].p4.lat, this.districts[0].p4.lng],
-    [this.districts[0].p5.lat, this.districts[0].p5.lng],
-    [this.districts[0].p6.lat, this.districts[0].p6.lng],
-    [this.districts[0].p7.lat, this.districts[0].p7.lng],
-    [this.districts[0].p8.lat, this.districts[0].p8.lng],
-    [this.districts[0].p9.lat, this.districts[0].p9.lng],
-    [this.districts[0].p10.lat, this.districts[0].p10.lng],
-    [this.districts[0].p11.lat, this.districts[0].p11.lng],
-  ],
-  [//Het Eilandje
-    [this.districts[1].p1.lat, this.districts[1].p1.lng],
-    [this.districts[1].p2.lat, this.districts[1].p2.lng],
-    [this.districts[1].p3.lat, this.districts[1].p3.lng],
-    [this.districts[1].p4.lat, this.districts[1].p4.lng],
-    [this.districts[1].p5.lat, this.districts[1].p5.lng],
-    [this.districts[1].p6.lat, this.districts[1].p6.lng],
-    [this.districts[1].p7.lat, this.districts[1].p7.lng],
-    [this.districts[1].p8.lat, this.districts[1].p8.lng],
-    [this.districts[1].p9.lat, this.districts[1].p9.lng],
-    [this.districts[1].p10.lat, this.districts[1].p10.lng],
-    [this.districts[1].p11.lat, this.districts[1].p11.lng],
-    [this.districts[1].p12.lat, this.districts[1].p12.lng],
-    [this.districts[1].p13.lat, this.districts[1].p13.lng],
-    [this.districts[1].p14.lat, this.districts[1].p14.lng],
-  ],
-  [//Seefhoek
-    [this.districts[2].p1.lat, this.districts[2].p1.lng],
-    [this.districts[2].p2.lat, this.districts[2].p2.lng],
-    [this.districts[2].p3.lat, this.districts[2].p3.lng],
-    [this.districts[2].p4.lat, this.districts[2].p4.lng],
-    [this.districts[2].p5.lat, this.districts[2].p5.lng],
-    [this.districts[2].p6.lat, this.districts[2].p6.lng],
-    [this.districts[2].p7.lat, this.districts[2].p7.lng],
-    [this.districts[2].p8.lat, this.districts[2].p8.lng],
-    [this.districts[2].p9.lat, this.districts[2].p9.lng],
-    [this.districts[2].p10.lat, this.districts[2].p10.lng],
-    [this.districts[2].p11.lat, this.districts[2].p11.lng],
-    [this.districts[2].p12.lat, this.districts[2].p12.lng],
-    [this.districts[2].p13.lat, this.districts[2].p13.lng],
-    [this.districts[2].p14.lat, this.districts[2].p14.lng],
-  ],
-  [//Borgerhout
-    [this.districts[3].p1.lat, this.districts[3].p1.lng],
-    [this.districts[3].p2.lat, this.districts[3].p2.lng],
-    [this.districts[3].p3.lat, this.districts[3].p3.lng],
-    [this.districts[3].p4.lat, this.districts[3].p4.lng],
-    [this.districts[3].p5.lat, this.districts[3].p5.lng],
-    [this.districts[3].p6.lat, this.districts[3].p6.lng],
-    [this.districts[3].p7.lat, this.districts[3].p7.lng],
-    [this.districts[3].p8.lat, this.districts[3].p8.lng],
-    [this.districts[3].p9.lat, this.districts[3].p9.lng],
-    [this.districts[3].p10.lat, this.districts[3].p10.lng],
-    [this.districts[3].p11.lat, this.districts[3].p11.lng],
-    [this.districts[3].p12.lat, this.districts[3].p12.lng],
-    [this.districts[3].p13.lat, this.districts[3].p13.lng],
-    [this.districts[3].p14.lat, this.districts[3].p14.lng],
-  ],
-  [//De Kaai
-    [this.districts[4].p1.lat, this.districts[4].p1.lng],
-    [this.districts[4].p2.lat, this.districts[4].p2.lng],
-    [this.districts[4].p3.lat, this.districts[4].p3.lng],
-    [this.districts[4].p4.lat, this.districts[4].p4.lng],
-    [this.districts[4].p5.lat, this.districts[4].p5.lng],
-    [this.districts[4].p6.lat, this.districts[4].p6.lng],
-    [this.districts[4].p7.lat, this.districts[4].p7.lng],
-    [this.districts[4].p8.lat, this.districts[4].p8.lng],
-    [this.districts[4].p9.lat, this.districts[4].p9.lng],
-    [this.districts[4].p10.lat, this.districts[4].p10.lng],
-    [this.districts[4].p11.lat, this.districts[4].p11.lng],
+      //Den Dam
+      [this.districts[0].p1.lat, this.districts[0].p1.lng],
+      [this.districts[0].p2.lat, this.districts[0].p2.lng],
+      [this.districts[0].p3.lat, this.districts[0].p3.lng],
+      [this.districts[0].p4.lat, this.districts[0].p4.lng],
+      [this.districts[0].p5.lat, this.districts[0].p5.lng],
+      [this.districts[0].p6.lat, this.districts[0].p6.lng],
+      [this.districts[0].p7.lat, this.districts[0].p7.lng],
+      [this.districts[0].p8.lat, this.districts[0].p8.lng],
+      [this.districts[0].p9.lat, this.districts[0].p9.lng],
+      [this.districts[0].p10.lat, this.districts[0].p10.lng],
+      [this.districts[0].p11.lat, this.districts[0].p11.lng],
+    ],
+    [//Het Eilandje
+      [this.districts[1].p1.lat, this.districts[1].p1.lng],
+      [this.districts[1].p2.lat, this.districts[1].p2.lng],
+      [this.districts[1].p3.lat, this.districts[1].p3.lng],
+      [this.districts[1].p4.lat, this.districts[1].p4.lng],
+      [this.districts[1].p5.lat, this.districts[1].p5.lng],
+      [this.districts[1].p6.lat, this.districts[1].p6.lng],
+      [this.districts[1].p7.lat, this.districts[1].p7.lng],
+      [this.districts[1].p8.lat, this.districts[1].p8.lng],
+      [this.districts[1].p9.lat, this.districts[1].p9.lng],
+      [this.districts[1].p10.lat, this.districts[1].p10.lng],
+      [this.districts[1].p11.lat, this.districts[1].p11.lng],
+      [this.districts[1].p12.lat, this.districts[1].p12.lng],
+      [this.districts[1].p13.lat, this.districts[1].p13.lng],
+      [this.districts[1].p14.lat, this.districts[1].p14.lng],
+    ],
   ]
-]);
+
+  teamBluePolygon = [
+    [//Seefhoek
+      [this.districts[2].p1.lat, this.districts[2].p1.lng],
+      [this.districts[2].p2.lat, this.districts[2].p2.lng],
+      [this.districts[2].p3.lat, this.districts[2].p3.lng],
+      [this.districts[2].p4.lat, this.districts[2].p4.lng],
+      [this.districts[2].p5.lat, this.districts[2].p5.lng],
+      [this.districts[2].p6.lat, this.districts[2].p6.lng],
+      [this.districts[2].p7.lat, this.districts[2].p7.lng],
+      [this.districts[2].p8.lat, this.districts[2].p8.lng],
+      [this.districts[2].p9.lat, this.districts[2].p9.lng],
+      [this.districts[2].p10.lat, this.districts[2].p10.lng],
+      [this.districts[2].p11.lat, this.districts[2].p11.lng],
+      [this.districts[2].p12.lat, this.districts[2].p12.lng],
+      [this.districts[2].p13.lat, this.districts[2].p13.lng],
+      [this.districts[2].p14.lat, this.districts[2].p14.lng],
+    ],
+  ]
+
+  teamGreenPolygon = [
+    [//Borgerhout
+      [this.districts[3].p1.lat, this.districts[3].p1.lng],
+      [this.districts[3].p2.lat, this.districts[3].p2.lng],
+      [this.districts[3].p3.lat, this.districts[3].p3.lng],
+      [this.districts[3].p4.lat, this.districts[3].p4.lng],
+      [this.districts[3].p5.lat, this.districts[3].p5.lng],
+      [this.districts[3].p6.lat, this.districts[3].p6.lng],
+      [this.districts[3].p7.lat, this.districts[3].p7.lng],
+      [this.districts[3].p8.lat, this.districts[3].p8.lng],
+      [this.districts[3].p9.lat, this.districts[3].p9.lng],
+      [this.districts[3].p10.lat, this.districts[3].p10.lng],
+      [this.districts[3].p11.lat, this.districts[3].p11.lng],
+      [this.districts[3].p12.lat, this.districts[3].p12.lng],
+      [this.districts[3].p13.lat, this.districts[3].p13.lng],
+      [this.districts[3].p14.lat, this.districts[3].p14.lng],
+    ],
+  ]
+
+  teamYellowPolygon = [
+    [//De Kaai
+      [this.districts[4].p1.lat, this.districts[4].p1.lng],
+      [this.districts[4].p2.lat, this.districts[4].p2.lng],
+      [this.districts[4].p3.lat, this.districts[4].p3.lng],
+      [this.districts[4].p4.lat, this.districts[4].p4.lng],
+      [this.districts[4].p5.lat, this.districts[4].p5.lng],
+      [this.districts[4].p6.lat, this.districts[4].p6.lng],
+      [this.districts[4].p7.lat, this.districts[4].p7.lng],
+      [this.districts[4].p8.lat, this.districts[4].p8.lng],
+      [this.districts[4].p9.lat, this.districts[4].p9.lng],
+      [this.districts[4].p10.lat, this.districts[4].p10.lng],
+      [this.districts[4].p11.lat, this.districts[4].p11.lng],
+    ]
+];
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
@@ -391,21 +400,21 @@ export class MapPage {
               private platform: Platform) {
 
               platform.ready().then(() => {
-
+                
+                //Device Orientation subscription
                 const options={frequency:100};
                 const orientationSubscription = deviceOrientation.watchHeading(options).subscribe(
                 (data3: DeviceOrientationCompassHeading) => {this.playerMarker.setRotationAngle(data3.magneticHeading),this.player.orientation = data3.magneticHeading}
                 ,(error: any) => console.log(error+" - error message"));
-                
+
+                //Geolocation subscription
                 const positionSubscription = geolocation.watchPosition()
-                
                 .filter((p) => p.coords !== undefined) //filter out errors
                 .subscribe(position => {
                   this.playerMarker.setLatLng([position.coords.latitude, position.coords.longitude])
                   this.player.lat = position.coords.latitude,
                   this.player.lng = position.coords.longitude
                 })
-
 
               })
 
@@ -416,27 +425,9 @@ export class MapPage {
   }
 
   ionViewDidEnter() {
-    this.getCurrentPos();
     this.loadmap();
   }
 
-  getCurrentPos(){
-    this.geolocation.getCurrentPosition().then((resp) => {
-      this.player.lat = resp.coords.latitude
-      this.player.lng = resp.coords.longitude
-    }).catch((error) => {
-      console.log('Error getting location', error);
-    })
-  }
-
-  watch = this.geolocation.watchPosition();
-  
-  getPosSubscription(){
-    this.watch.subscribe((data) => {
-      this.player.lat = data.coords.latitude
-      this.player.lng = data.coords.longitude
-    });
-  }
 
   loadmap(){
     // This adds the map to the screen
@@ -465,7 +456,10 @@ export class MapPage {
           alert(err.message);
       })
     //This adds custom district polygons to the map
-    this.polygon.addTo(this.map);
+    leaflet.polygon(this.teamRedPolygon,{color: 'Red'}).addTo(this.map);
+    leaflet.polygon(this.teamBluePolygon,{color: 'Blue'}).addTo(this.map);
+    leaflet.polygon(this.teamGreenPolygon,{color: 'Green'}).addTo(this.map);
+    leaflet.polygon(this.teamYellowPolygon,{color: 'Yellow'}).addTo(this.map);
   }
 
 }
