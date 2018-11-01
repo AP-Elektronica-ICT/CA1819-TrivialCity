@@ -20,6 +20,8 @@ import { ProfilePage } from '../pages/profile/profile';
 import { BattlePhaseContPage } from '../pages/battle-phase-cont/battle-phase-cont';
 import {HttpClientModule} from '@angular/common/http'
 import { DeviceOrientation, DeviceOrientationCompassHeading } from '@ionic-native/device-orientation';
+import { AuthService } from '../services/auth.service';
+import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,7 @@ import { DeviceOrientation, DeviceOrientationCompassHeading } from '@ionic-nativ
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot(),
     HttpClientModule,
   ],
   bootstrap: [IonicApp],
@@ -61,6 +64,8 @@ import { DeviceOrientation, DeviceOrientationCompassHeading } from '@ionic-nativ
     StatusBar,
     SplashScreen,
     Geolocation,
+    //Storage,
+    AuthService,
     DeviceOrientation,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]

@@ -14,6 +14,10 @@ import { TeamPage } from '../pages/team/team';
 import { ProfilePage } from '../pages/profile/profile';
 import { BattlePhaseContPage } from '../pages/battle-phase-cont/battle-phase-cont';
 
+// Import Auth0Cordova
+import Auth0Cordova from '@auth0/cordova';
+
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -27,6 +31,19 @@ export class MyApp {
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
     this.initializeApp();
 
+    platform.ready().then(() => {
+      // Okay, so the platform is ready and our plugins are available.
+      // Here you can do any higher level native things you might need.
+      statusBar.styleDefault();
+      splashScreen.hide();
+
+      // Redirect back to app after authenticating
+      (window as any).handleOpenURL = (url: string) => {
+        Auth0Cordova.onRedirectUri(url);
+      }
+    });
+
+   
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage },

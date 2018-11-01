@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { AuthService } from '../../services/auth.service';
 
 /**
  * Generated class for the RegisterPage page.
@@ -15,8 +16,15 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class RegisterPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+
+  user: any;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams,public auth: AuthService ) {
   }
+
+  /*ngOnInit(): void {
+    this.auth.get('profile').then(user => this.user = user);
+    }*/
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RegisterPage');
