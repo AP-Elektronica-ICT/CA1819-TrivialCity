@@ -24,7 +24,7 @@ import Auth0Cordova from '@auth0/cordova';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = LoginPage;
+  rootPage: any = RegisterPage;
 
   pages: Array<{title: string, component: any}>;
 
