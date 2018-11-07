@@ -13,6 +13,32 @@
 </ion-header>
 
 
-<ion-content padding>
-
+<ion-content padding style="text-align: center">
+  <ion-grid>
+    <ion-row style="margin: auto">
+      <h3>The enemy fought with {{results.enemyDiceAmount}} troops</h3>
+    </ion-row>
+    <ion-row style="margin: auto; background-color:gray">
+      <ion-column>
+        <img [src]="imgSrc_Enemy[0]" style="width:64px;">
+      </ion-column>
+      <ion-column *ngIf="imgSrc_Enemy[1]">
+        <img [src]="imgSrc_Enemy[1]" style="width:64px;">
+      </ion-column>
+    </ion-row>
+    <ion-row style="margin: auto">
+      <h3>You fought with {{results.playerDiceAmount}} troops</h3>
+    </ion-row>
+    <ion-row style="margin: auto; background-color:gray">
+      <ion-column>
+          <img [src]="imgSrc_Player[0]" style="width:64px;">
+      </ion-column>
+      <ion-column>
+          <img [src]="imgSrc_Player[1]" *ngIf="imgSrc_Player[1]" style="width:64px;">
+      </ion-column>
+      <ion-column>
+          <img [src]="imgSrc_Player[2]" *ngIf="imgSrc_Player[2]" style="width:64px;">
+      </ion-column>
+    </ion-row>
+  </ion-grid>
 </ion-content>
