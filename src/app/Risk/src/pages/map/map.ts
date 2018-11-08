@@ -415,7 +415,6 @@ export class MapPage {
                   this.player.lat = position.coords.latitude,
                   this.player.lng = position.coords.longitude
                 })
-
               })
 
   }
