@@ -10,7 +10,6 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Geolocation } from '@ionic-native/geolocation';
 
-import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
 import { MapPage } from '../pages/map/map';
 import { BattlePhasePage } from '../pages/battle-phase/battle-phase';
@@ -28,7 +27,6 @@ import { IonicStorageModule } from '@ionic/storage';
     MyApp,
     HomePage,
     ListPage,
-    LoginPage,
     RegisterPage,
     MapPage,
     BattlePhasePage,
@@ -49,7 +47,6 @@ import { IonicStorageModule } from '@ionic/storage';
     HomePage,
     ListPage,
     MapPage,
-    LoginPage,
     RegisterPage,
     ArmyPage,
     TeamPage,

@@ -1,0 +1,23 @@
+Terrorist Sprites By:
+      N        N             A             N       N            A             K    K     I I I I I I I
+      NN     N          A   A          NN    N         A    A          KK               I
+      N  N   N       A         A       N  N  N      A          A       K                  I
+      N     NN      AAAAAA      N    NN     AAAAAA       KK               I
+      N        N   A                A    N       N  A                 A    K    K    I I I I I I I
+
+If you use this guard sprite in any way, you must give credit to me. (Nanaki)
+They are put in order of appearence for the code itself. The purple MUST stay
+that way or the the area surrounding the guard will be the color you changed it. (duh)
+The Paused and LOADING pics are to replace the "Paused" and "GET PSYCHED!"
+Pics in the VGRAPH.(WL1,WL6,SOD,) File. I made these sprites throught flo edit, Microsoft Paint, and even Paint Phop Pro 7.
+
+MORE INFO ON NANAKI'S PRODJECTS
+
+I had finished an old WOLF shareware version called "Tailsstein" It was the first add-on I made. 
+It has not been posted on the net so if you want it, email me at Jtschuld3@netscape.net. Right now I'm working on the sequal. "The Fall of Tails" a full version Spear of Destiny with more renewed graphics, guns, and I have even put an escort mission in where you must Get B.J into a truck to safty. Nifty eh?
+I am willing to take some requests from anyone who want's me to help with sprites, Images in VGRAPH, walls, you name it! I can paint it. DON'T ASK ME BOUT' CODING!!! I suck at coding and know nothing about it. I will come out with the guns I used, along with the gun static spries. I will even put out my Tails sprites that took me even longer to make! I will give out text I had redone, and anything else that I had changed to the public. Have fun with these sprites!
+
+                    Nanaki                                 
+
+
+
