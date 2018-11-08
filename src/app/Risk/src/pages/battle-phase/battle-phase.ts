@@ -25,11 +25,11 @@ export class BattlePhasePage {
   errormsg: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.getEnemyDiceAmount();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BattlePhasePage');
-    this.getEnemyDiceAmount();
   }
 
   getEnemyDiceAmount(){

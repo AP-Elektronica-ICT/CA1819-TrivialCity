@@ -40,5 +40,8 @@
           <img [src]="imgSrc_Player[2]" *ngIf="imgSrc_Player[2]" style="width:64px;">
       </ion-column>
     </ion-row>
+    <ion-row>
+      <h3>You have {{battleResults[0]}} troops remaining. The enemy has {{battleResults[1]}} troops remaining</h3>
+    </ion-row>
   </ion-grid>
 </ion-content>
