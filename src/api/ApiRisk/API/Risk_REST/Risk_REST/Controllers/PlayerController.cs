@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Risk_REST.DataLayerClasses;
 using Risk_REST.Models;
 namespace Risk_REST.Controllers
 {
+    
+   //[Authorize]
+    [EnableCors("CorsPolicy")]
     [Route("api/player")]
-    [Authorize]
     public class PlayerController : Controller
     {
 

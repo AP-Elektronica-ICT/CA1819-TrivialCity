@@ -95,6 +95,7 @@
         <variable name="ANDROID_HOST" value="inias.eu.auth0.com" />
         <variable name="ANDROID_PATHPREFIX" value="/cordova/io.ionic.starter/callback" />
     </plugin>
+    <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
     <engine name="android" spec="7.1.1" />
     <engine name="browser" spec="5.0.4" />
 </widget>

@@ -6,7 +6,7 @@ import { stringify } from "@angular/core/src/render3/util";
 
 
 
-
+// wordt niet gebruikt maar wanneer verwijderd wordt werkt .filter in map.ts niet meer!
 
 @Injectable()
 export class LoginService{

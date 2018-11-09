@@ -20,7 +20,10 @@ import { BattlePhaseContPage } from '../pages/battle-phase-cont/battle-phase-con
 import {HttpClientModule} from '@angular/common/http'
 import { DeviceOrientation, DeviceOrientationCompassHeading } from '@ionic-native/device-orientation';
 import { AuthService } from '../services/auth.service';
+
 import { IonicStorageModule } from '@ionic/storage';
+import { ApiService } from '../services/api.service';
+import { Http, HttpModule } from '@angular/http';
 
 @NgModule({
   declarations: [
@@ -40,6 +43,7 @@ import { IonicStorageModule } from '@ionic/storage';
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
     HttpClientModule,
+    HttpModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -61,6 +65,7 @@ import { IonicStorageModule } from '@ionic/storage';
     StatusBar,
     SplashScreen,
     Geolocation,
+    ApiService,
     //Storage,
     AuthService,
     DeviceOrientation,
