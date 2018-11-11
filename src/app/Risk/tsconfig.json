@@ -13,6 +13,11 @@
     "sourceMap": true,
     "target": "es5"
   },
+  "proxies": [
+    {
+      "path":"/api/player",
+      "proxyUrl": "http://localhost:53169/api"
+    }],
   "include": [
     "src/**/*.ts"
   ],

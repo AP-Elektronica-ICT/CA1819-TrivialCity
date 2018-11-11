@@ -9,7 +9,7 @@ import { BaseService } from './base.service';
 
 @Injectable()
 export class ApiService extends BaseService  {
-  private baseApi: string = 'http://localhost:53169/api/';
+  private baseApi: string = 'http://169.254.193.167:53169/api/';  // 'http://localhost:53169/api/';      <--- eigen ip address invullen 
 
   constructor(private http: Http) {
     super();

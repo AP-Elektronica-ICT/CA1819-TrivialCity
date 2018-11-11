@@ -11,7 +11,7 @@ using Risk_REST.Models;
 namespace Risk_REST.Controllers
 {
     
-   //[Authorize]
+    [Authorize]
     [EnableCors("CorsPolicy")]
     [Route("api/player")]
     public class PlayerController : Controller

@@ -49,9 +49,12 @@ namespace Risk_REST
             {
                 options.AddPolicy("CorsPolicy",
                     builder => builder.AllowAnyOrigin()
+                    //.WithOrigins("http://localhost:8080/", "http://localhost:8100/", "http://192.168.0.177/*" )
                     .AllowAnyMethod()
                     .AllowAnyHeader()
+                    .AllowAnyOrigin()
                     .AllowCredentials());
+                    
             });
 
 
@@ -72,7 +75,12 @@ namespace Risk_REST
 
             app.UseStaticFiles();
 
-            app.UseCors("CorsPolicy");
+             app.UseCors("CorsPolicy");
+
+          /*  app.UseCors(builder =>
+            builder.WithOrigins("http://*")
+           .AllowAnyHeader()
+             );*/
             /*app.UseCors(options => options.WithOrigins("http://localhost:8100/")
                             .AllowAnyMethod()
                             .AllowAnyHeader()
