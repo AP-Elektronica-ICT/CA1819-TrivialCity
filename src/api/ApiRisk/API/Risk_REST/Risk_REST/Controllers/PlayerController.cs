@@ -6,8 +6,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Risk_REST.DataLayerClasses;
 using Risk_REST.Models;
+using Risk.REST.Services.BusinessLayerClasses;
+
 namespace Risk_REST.Controllers
 {
     
@@ -29,16 +30,16 @@ namespace Risk_REST.Controllers
         [HttpGet]
         public IEnumerable<Player> Get()
         {
-            DataLayer dataLayer = new DataLayer(_configuration);
-            return dataLayer.getPlayer(0);
+            BusinessLayer businessLayer = new BusinessLayer(_configuration);
+            return businessLayer.getPlayer(0);
         }
 
         // GET api/player/5
         [HttpGet("{id}", Name = "getPlayer")]
         public IEnumerable<Player> Get(int id)
         {
-            DataLayer dataLayer = new DataLayer(_configuration);
-            return dataLayer.getPlayer(id);
+            BusinessLayer businessLayer = new BusinessLayer(_configuration);
+            return businessLayer.getPlayer(id);
         }
 
         // POST api/player

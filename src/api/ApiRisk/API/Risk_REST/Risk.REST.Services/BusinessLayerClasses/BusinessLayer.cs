@@ -6,13 +6,13 @@ using System.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Risk_REST.Models;
 
-namespace Risk_REST.DataLayerClasses
+namespace Risk.REST.Services.BusinessLayerClasses
 {
-    public class DataLayer
+    class BusinessLayer
     {
         SqlConnection connection;
 
-        public DataLayer(IConfiguration configuration)
+        public BusinessLayer(IConfiguration configuration)
         {
             String connectionString = configuration.GetConnectionString("localDB");
             connection = new SqlConnection(connectionString);
@@ -97,7 +97,7 @@ namespace Risk_REST.DataLayerClasses
             {
                 while (reader.Read())
                 {
-                    Team team = new Team(Convert.ToInt64(reader["TeamId"]), reader["TeamColor"].ToString(),Convert.ToInt32(reader["TeamTotalOccupiedAreas"]));
+                    Team team = new Team(Convert.ToInt64(reader["TeamId"]), reader["TeamColor"].ToString(), Convert.ToInt32(reader["TeamTotalOccupiedAreas"]));
                     teamList.Add(team);
                 }
             }

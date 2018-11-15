@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Risk_REST.DataLayerClasses;
+using Risk.REST.Services.BusinessLayerClasses;
 using Risk_REST.Models;
 using System;
 using System.Collections.Generic;
@@ -25,16 +25,16 @@ namespace Risk_REST.Controllers
         [HttpGet]
         public IEnumerable<Area> Get()
         {
-            DataLayer dataLayer = new DataLayer(_configuration);
-            return dataLayer.getArea(0);
+            BusinessLayer businessLayer = new BusinessLayer(_configuration);
+            return businessLayer.getArea(0);
         }
 
         // GET api/area/5
         [HttpGet("{id}", Name = "getArea")]
         public IEnumerable<Area> Get(int id)
         {
-            DataLayer dataLayer = new DataLayer(_configuration);
-            return dataLayer.getArea(id);
+            BusinessLayer businessLayer = new BusinessLayer(_configuration);
+            return businessLayer.getArea(id);
         }
 
         // POST api/area
