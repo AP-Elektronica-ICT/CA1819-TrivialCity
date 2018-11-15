@@ -22,7 +22,7 @@ export class BattlePhaseContPage {
   enemyResults: any[] = [];
   battleResults: any[] = [];
 
-  imgSrc_Enemy: any[] = [];
+  imgSrc_Enemy: any[] = []; 
   imgSrc_Player: any[] = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
@@ -66,7 +66,7 @@ export class BattlePhaseContPage {
     else{
       this.lowestDiceAmount = this.results.playerDiceAmount;
     }
-
+ 
       for (let i: number = 0; i < this.lowestDiceAmount; i++) {
         if (this.playerResults[i] && this.enemyResults[i]) {
           if (this.playerResults[i] > this.enemyResults[i]) {
@@ -77,12 +77,5 @@ export class BattlePhaseContPage {
           }
         }
       }
-
-      /*for(let i: number = 0; i < 2; i++){
-        if(this.battleResults[i] < 0){
-          this.battleResults[i] = 0;
-        }
-      }*/
-
   }
 }
