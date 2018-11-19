@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { ApiService, Player } from '../../services/api.service';
+import { ApiService, Players } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -14,14 +14,28 @@ export class ListPage {
 
 
   _number : string = "1";
-  PlayerData: Player;
+  PlayerData: Players[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams ,  private service: ApiService ,public auth: AuthService) {
     // If we navigated to this page, we will have an item available as a nav param
     
   }
 
+Check(){
+  //this.service.GetPlayer2().subscribe(data => this.PlayerData = data);
+  //console.log(this.PlayerData);
+  this.service.GetToken();
+}
 
+Check2(){
+  //this.service.GetPlayer2().subscribe(data => this.PlayerData = data);
+  //console.log(this.PlayerData);
+  this.service.TestApi();
+}
+
+Check3(){
+  this.service.TestAll();
+}
 
   get Search() {
     return this._number;
@@ -30,5 +44,6 @@ export class ListPage {
   set Search(value: string) {
     this._number = value;
     this.service.GetPlayer(this._number).subscribe(data => this.PlayerData = data);
+    console.log(this.PlayerData)
   } 
 }

@@ -4,6 +4,15 @@
     "declaration": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "types": [
+      // add node as an option
+      "node"
+   ],
+   // typeRoots option has been previously configured
+   "typeRoots": [
+      // add path to @types
+      "node_modules/@types"
+   ],
     "lib": [
       "dom",
       "es2015"
@@ -16,7 +25,7 @@
   "proxies": [
     {
       "path":"/api/player",
-      "proxyUrl": "http://localhost:53169/api"
+      "proxyUrl":"http://192.168.0.247:53169/api" //"http://localhost:53169/api"
     }],
   "include": [
     "src/**/*.ts"

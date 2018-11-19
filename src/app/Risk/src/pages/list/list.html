@@ -14,29 +14,26 @@
   ion-button
   block
   color="primary"
-  *ngIf="auth.loggedIn"
-  (click)="GetPlayer()">get data api</button>
+  *ngIf="auth.loggedIn"   
+  (click)="Check()">get token</button>
 
-  <div class="card" *ngIf="PlayerData">
-    <div class="card-header"> </div>
-      <div class="card-block">
-          <table class="table table-hover">
-              <thead>
-                  <tr>
-                      <th>Name</th>
-                      <th>League</th>
-                      <th>Cards</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr *ngFor="let d of PlayerData" >      <!-- | async -->
-                      <td >{{d.PlayerId}}</td>   
-                      <td >{{d.PlayerUsername}}</td>   
-                      <td >{{d.PlayerEmail}}</td>  
+ <div *ngIf="PlayerData">
 
-                  </tr>
-              </tbody>
-          </table>
-      </div>
-    </div>
+<h2>{{PlayerData.PlayerUsername}}</h2>
+     
+ </div>
+<h2>test</h2>
+    <button
+      ion-button
+      block
+      color="primary"
+      *ngIf="auth.loggedIn"  
+      (click)="Check2()">SendApi</button>
+
+      <button
+      ion-button
+      block
+      color="primary"
+      *ngIf="auth.loggedIn"  
+      (click)="Check3()">s</button>
 </ion-content>
