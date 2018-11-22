@@ -6,40 +6,41 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Risk_REST.Models;
-using Risk.REST.Services.BusinessLayerClasses;
+using Risk_REST.Services.Data;
 
 namespace Risk_REST.Controllers
 {
     
-    [Authorize]
+    //[Authorize]
     [EnableCors("CorsPolicy")]
     [Route("api/player")]
     public class PlayerController : Controller
     {
 
-        IConfiguration _configuration;
+        private readonly Risk_AntwerpContext context;
 
-        public PlayerController(IConfiguration configuration)
+        public PlayerController(Risk_AntwerpContext context)
         {
-            _configuration = configuration;
+            this.context = context;
         }
 
 
         // GET api/player
         [HttpGet]
-        public IEnumerable<Player> Get()
+        public IActionResult GetAllPlayers()
         {
-            BusinessLayer businessLayer = new BusinessLayer(_configuration);
-            return businessLayer.getPlayer(0);
+            var player = context.Players.ToList();
+
+            return new OkObjectResult(player);
         }
 
         // GET api/player/5
         [HttpGet("{id}", Name = "getPlayer")]
-        public IEnumerable<Player> Get(int id)
+        public IActionResult GetPlayerById(int id)
         {
-            BusinessLayer businessLayer = new BusinessLayer(_configuration);
-            return businessLayer.getPlayer(id);
+            var player = context.Players.SingleOrDefault(t => t.PlayerId == id);
+
+            return new OkObjectResult(player);
         }
 
         // POST api/player

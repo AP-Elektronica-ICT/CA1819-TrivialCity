@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Risk.REST.Services.BusinessLayerClasses;
-using Risk_REST.Models;
+using Risk_REST.Services.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,28 +12,30 @@ namespace Risk_REST.Controllers
     public class AreaController : Controller
     {
 
-        IConfiguration _configuration;
+        private readonly Risk_AntwerpContext context;
 
-        public AreaController(IConfiguration configuration)
+        public AreaController(Risk_AntwerpContext context)
         {
-            _configuration = configuration;
+            this.context = context;
         }
 
 
         // GET api/area
         [HttpGet]
-        public IEnumerable<Area> Get()
+        public IActionResult GetAllAreas()
         {
-            BusinessLayer businessLayer = new BusinessLayer(_configuration);
-            return businessLayer.getArea(0);
+            var area = context.Area.ToList();
+
+            return new OkObjectResult(area);
         }
 
         // GET api/area/5
         [HttpGet("{id}", Name = "getArea")]
-        public IEnumerable<Area> Get(int id)
+        public IActionResult GetAreaById(int id)
         {
-            BusinessLayer businessLayer = new BusinessLayer(_configuration);
-            return businessLayer.getArea(id);
+            var area = context.Area.SingleOrDefault(t => t.AreaId == id);
+
+            return new OkObjectResult(area);
         }
 
         // POST api/area

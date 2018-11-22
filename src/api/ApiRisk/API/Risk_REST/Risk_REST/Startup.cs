@@ -10,7 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore;
 using Risk_REST.Auth;
+using Risk_REST.Services.Data;
 
 namespace Risk_REST
 {
@@ -27,6 +29,7 @@ namespace Risk_REST
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddDbContext<Risk_AntwerpContext>(options => options.UseSqlServer(@"Server=risk-antwerp.database.windows.net,1433;Initial Catalog=Risk_Antwerp;Persist Security Info=False;User ID=Risk_Antwerp;Password=R1sk_4ntw3rp;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
 
             // 1. Add Authentication Services
             services.AddAuthentication(options =>

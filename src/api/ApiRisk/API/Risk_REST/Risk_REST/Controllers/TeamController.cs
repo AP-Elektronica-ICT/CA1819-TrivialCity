@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Risk.REST.Services.BusinessLayerClasses;
-using Risk_REST.Models;
+using Risk_REST.Services.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,28 +12,30 @@ namespace Risk_REST.Controllers
     public class TeamController : Controller
     {
 
-        IConfiguration _configuration;
+        private readonly Risk_AntwerpContext context;
 
-        public TeamController(IConfiguration configuration)
+        public TeamController(Risk_AntwerpContext context)
         {
-            _configuration = configuration;
+            this.context = context;
         }
 
 
         // GET api/team
         [HttpGet]
-        public IEnumerable<Team> Get()
+        public IActionResult GetAllTeams()
         {
-            BusinessLayer businessLayer = new BusinessLayer(_configuration);
-            return businessLayer.getTeam(0);
+            var team = context.Teams.ToList();
+
+            return new OkObjectResult(team);
         }
 
         // GET api/team/5
         [HttpGet("{id}", Name = "getTeam")]
-        public IEnumerable<Team> Get(int id)
+        public IActionResult GetTeamById(int id)
         {
-            BusinessLayer businessLayer = new BusinessLayer(_configuration);
-            return businessLayer.getTeam(id);
+            var team = context.Teams.SingleOrDefault(t => t.TeamId == id);
+
+            return new OkObjectResult(team);
         }
 
         // POST api/team
