@@ -9,7 +9,7 @@ import { HomePage } from '../home/home';
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
+// ------------------------------------ login/register -----------------------------
 @IonicPage()
 @Component({
   selector: 'page-register',
