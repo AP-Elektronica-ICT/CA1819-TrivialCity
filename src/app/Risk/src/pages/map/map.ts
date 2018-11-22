@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, Alert } from 'ionic-angular';
 import leaflet from 'leaflet';
 import { DeviceOrientation, DeviceOrientationCompassHeading } from '@ionic-native/device-orientation';
 import { Geolocation } from '@ionic-native/geolocation';
@@ -7,6 +7,7 @@ import 'leaflet-rotatedmarker';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/interval';
 import { Observable } from 'rxjs';
+import { BattlePhasePage } from '../battle-phase/battle-phase';
 
 /**
  * Generated class for the MapPage page.
@@ -30,6 +31,7 @@ export class MapPage {
     teamColor: 'blue',
     orientation: 0,
   }
+  battleBtnIsVisible = false;
 
   loop;
 
@@ -423,7 +425,7 @@ export class MapPage {
           this.player.lat = position.coords.latitude,
             this.player.lng = position.coords.longitude
 
-          const loop = Observable.interval(1000).subscribe((val) => { this.playerPositionChecker() })
+          const loop = Observable.interval(1000).subscribe((val) => { this.territoryChecker() })
         })
     })
 
@@ -435,6 +437,10 @@ export class MapPage {
 
   ionViewDidEnter() {
     this.loadmap();
+  }
+
+  goToBattlePhase(){
+    this.navCtrl.push(BattlePhasePage);
   }
 
 
@@ -474,11 +480,11 @@ export class MapPage {
 
   }
 
-  playerPositionChecker() {
+  territoryChecker() {
     if (this.player.lat && this.player.lng) {
       for (let i = 0; i < this.polygons.length; i++) {
         if (this.polygons[i].getBounds().contains(this.playerMarker.getLatLng()) && this.polygons[i].options.color != this.player.teamColor) {
-          console.log("player is in enemy territory");
+          this.battleBtnIsVisible = true;
         }
       }
     }
