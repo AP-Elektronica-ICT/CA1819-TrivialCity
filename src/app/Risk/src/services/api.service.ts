@@ -22,7 +22,7 @@ export class ApiService extends BaseService  {
   token2 :Token ;
   Body :any ;
 
-  constructor(private http2: Http, private http: HTTP) {
+  constructor(private http2: Http, private http: HttpClient) {
     super();
   }
 
@@ -211,6 +211,7 @@ return this.http.get<Players[]>(`${this.baseApi}/player/1`)
 .map(res => res)
 .catch(this.handleError);
 }
+
 
 }
 
