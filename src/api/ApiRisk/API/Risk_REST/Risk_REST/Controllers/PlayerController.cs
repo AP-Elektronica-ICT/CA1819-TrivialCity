@@ -11,7 +11,7 @@ using Risk_REST.Services.Data;
 namespace Risk_REST.Controllers
 {
     
-    //[Authorize]
+   // [Authorize]
     [EnableCors("CorsPolicy")]
     [Route("api/player")]
     public class PlayerController : Controller
@@ -32,6 +32,11 @@ namespace Risk_REST.Controllers
             var player = context.Players.ToList();
 
             return new OkObjectResult(player);
+
+          /*  return Json(new
+            {
+                Message = "Hello from a private endpoint! You need to be authenticated to see this."
+            });*/
         }
 
         // GET api/player/5

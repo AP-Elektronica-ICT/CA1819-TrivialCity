@@ -57,7 +57,9 @@ namespace Risk_REST
                     .AllowAnyHeader()
                     .AllowAnyOrigin()
                     .AllowCredentials());
-                    
+                    //.WithHeaders("Access-Control-Allow-Methods", "*"));
+
+
             });
 
 
@@ -79,6 +81,8 @@ namespace Risk_REST
             app.UseStaticFiles();
 
              app.UseCors("CorsPolicy");
+
+            
 
           /*  app.UseCors(builder =>
             builder.WithOrigins("http://*")

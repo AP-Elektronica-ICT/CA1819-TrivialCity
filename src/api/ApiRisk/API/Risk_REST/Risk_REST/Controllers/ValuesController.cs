@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Risk_REST.Controllers
 {
+
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {

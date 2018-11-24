@@ -24,6 +24,8 @@ import { AuthService } from '../services/auth.service';
 import { IonicStorageModule } from '@ionic/storage';
 import { ApiService } from '../services/api.service';
 import { Http, HttpModule } from '@angular/http';
+import { testapi } from '../services/testapi.service';
+import { HTTP  } from '@ionic-native/http';
 
 @NgModule({
   declarations: [
@@ -40,10 +42,10 @@ import { Http, HttpModule } from '@angular/http';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot(),
     HttpClientModule,
     HttpModule,
+    IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot(),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -66,6 +68,8 @@ import { Http, HttpModule } from '@angular/http';
     SplashScreen,
     Geolocation,
     ApiService,
+    HTTP,
+    testapi,
     //Storage,
     AuthService,
     DeviceOrientation,
