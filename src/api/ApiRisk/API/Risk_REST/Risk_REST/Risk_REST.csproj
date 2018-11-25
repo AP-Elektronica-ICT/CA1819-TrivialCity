@@ -24,7 +24,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Risk_REST.Services\Risk_REST.Services.csproj" />
-    <ProjectReference Include="..\Risk_REST.UserTesting\Risk_REST.UserTesting.csproj" />
   </ItemGroup>
 
 </Project>
