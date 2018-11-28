@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Risk_REST.Models;
 using Risk_REST.Services.Data;
 
 namespace Risk_REST.Controllers
@@ -45,20 +46,46 @@ namespace Risk_REST.Controllers
 
         // POST api/player
         [HttpPost]
-        public void Post([FromBody]string value)
+        public IActionResult AddPlayer([FromBody] Players newPlayer)
         {
+            Players player = newPlayer;
+
+            context.Players.Add(player);
+            context.SaveChanges();
+            return new OkObjectResult(player);
         }
 
         // PUT api/player/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public IActionResult UpdatePlayer(int id, [FromBody] Players updatePlayer)
         {
+            var player = context.Players.Find(updatePlayer.PlayerId);
+
+            if (player == null)
+            {
+                return NotFound();
+            }
+
+            context.Players.Update(player);
+            context.SaveChanges();
+            return new OkObjectResult(player);
+
         }
 
         // DELETE api/player/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult DeletePlayer(int id)
         {
+            var player = context.Players.Find(id);
+
+            if (player == null)
+            {
+                return NotFound();
+            }
+
+            context.Players.Remove(player);
+            context.SaveChanges();
+            return NoContent();
         }
     }
 }

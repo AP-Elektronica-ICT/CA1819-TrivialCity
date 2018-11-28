@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Risk_REST.Models;
 
 namespace Risk_REST.Services.Data
 {
