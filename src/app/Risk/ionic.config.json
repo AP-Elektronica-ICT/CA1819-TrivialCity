@@ -3,6 +3,12 @@
   "integrations": {
     "cordova": {}
   },
+  "proxies": [
+    {
+      "path": "/api",
+      "proxyUrl": "http://172.16.155.154:53169/api"
+    }
+  ],
   "type": "ionic-angular",
   "pro_id": "e42fe9eb"
 }

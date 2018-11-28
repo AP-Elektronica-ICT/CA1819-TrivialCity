@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
+//using System.Web.Http.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Risk_REST.Models;
@@ -11,9 +12,11 @@ using Risk_REST.Services.Data;
 
 namespace Risk_REST.Controllers
 {
-    
-    //[Authorize]
-    [EnableCors("CorsPolicy")]
+
+    // [Authorize]
+   [EnableCors("CorsPolicy")]
+    // [EnableCors("CorsPolicy")]
+    //[EnableCors("*", "*", "*")]
     [Route("api/player")]
     public class PlayerController : Controller
     {
@@ -33,6 +36,11 @@ namespace Risk_REST.Controllers
             var player = context.Players.ToList();
 
             return new OkObjectResult(player);
+
+          /*  return Json(new
+            {
+                Message = "Hello from a private endpoint! You need to be authenticated to see this."
+            });*/
         }
 
         // GET api/player/5
