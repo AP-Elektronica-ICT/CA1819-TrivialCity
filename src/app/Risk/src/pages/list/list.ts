@@ -19,7 +19,7 @@ export class ListPage {
   test: Observable<any>;
 
   _number : string = "1";
-  PlayerData: any;//Players[];
+  PlayerData: Players[] = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams ,  private service: ApiService ,private servicetest: testapi,public auth: AuthService , private http: HttpClient) {
     // If we navigated to this page, we will have an item available as a nav param
@@ -40,7 +40,7 @@ Check2(){
 }
 
 Check3(){
- this.service.TestAll();
+ this.service.testFIX();
  /*this.test = this.service.testFIX();
  this.test
  .subscribe(data => {
@@ -63,7 +63,8 @@ Check4(){
 
 Check5(){
   //this.service.testdata();
-  this.servicetest.getP()//.subscribe(data => this.PlayerData = data);
+  this.servicetest.getplaaayers().subscribe(data => this.PlayerData = data);
+  //this.servicetest.getP()//.subscribe(data => this.PlayerData = data);
   console.log(this.PlayerData);
   console.log("pressed check5");
 }

@@ -16,7 +16,7 @@ import { Http2Server } from 'http2';
 
 @Injectable()
 export class ApiService extends BaseService  {
-  private baseApi: string =   'http://192.168.0.248:53169/api';         //'http://172.16.210.101:53169/api/'    ;// 'http://169.254.193.167:53169/api/';  // 'http://localhost:53169/api/';      <--- eigen ip address invullen 
+  private baseApi: string =   'http://172.16.155.154:53169/api';         //'http://172.16.210.101:53169/api/'    ;// 'http://169.254.193.167:53169/api/';  // 'http://localhost:53169/api/';      <--- eigen ip address invullen 
 
   AuhtToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5qZ3dSRVl3TkRjMk56aENOMFUwTXprek5rUTJRemxDUTBFNVJrTTRRVGsyUmpCRVF6TTRRUSJ9.eyJpc3MiOiJodHRwczovL2luaWFzLmV1LmF1dGgwLmNvbS8iLCJzdWIiOiJPSDZMdFdQdTZwMnU0VlNuU3ducDRQbmFleGJVVWd6d0BjbGllbnRzIiwiYXVkIjoiaHR0cHM6Ly9BbnR3ZXJwUmlzay9hcGkiLCJpYXQiOjE1NDMwNzA3MzgsImV4cCI6MTU0MzE1NzEzOCwiYXpwIjoiT0g2THRXUHU2cDJ1NFZTblN3bnA0UG5hZXhiVVVnenciLCJndHkiOiJjbGllbnQtY3JlZGVudGlhbHMifQ.QMt7oHNpHNRqcRTqtL8nsp-gHGpJrRdMH3hRlDr86N1QVE-8kuSRL0L0CAUTOEiro4UbidmzAHLfAhwKFwizlSlToB1dV81_hakFks06Tak_2w3UXoy_MotjdfenxOJGnMPiCYGuOPEIzkK-0JyP_mi2-wPwHDJ2cpPkGOBnyu0WKmX-Mev5-hR6BVy1B5Sqwdtvw5pU6D_nMFvOlnF5DQjZ0kyyQ1enlKbMkNmS9HFS--SN2d2qDPwjIUXu4PLlnhvy88F2oW5wGNZBJ8JrgMbcV65PfqBkG463p3laxR6KM2AFZLh_-BoeXpFDAwhctFBiUs177onlelz62A-apA";
   token2 :Token ;
@@ -92,7 +92,8 @@ TestApi(){
 console.log("test word gedrukt");
 var options = { method: 'GET',
   url: `${this.baseApi}/player`,  /**api/values',*/
-  headers: {  'content-type': 'application/json' , Authorization: `Bearer ${this.AuhtToken}` } };
+  headers: {   "Access-Control-Allow-Credentials": true,
+  "Access-Control-Allow-Origin": "*", 'content-type': 'application/json' , Authorization: `Bearer ${this.AuhtToken}` } };
 
 request(options, function (error, response, body) {
   this.Body = body;
@@ -208,8 +209,8 @@ request(options, function (error, response, body) {
 testFIX():Observable<Players[]>{
 
 return this.http.get<Players[]>(`${this.baseApi}/player/1`)
-.map(res => res)
-.catch(this.handleError);
+//.map(res => res)
+//.catch(this.handleError);
 }
 
 

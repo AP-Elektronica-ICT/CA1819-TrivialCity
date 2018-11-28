@@ -18,7 +18,7 @@ namespace Risk_REST
 {
     public class Startup
     {
-
+        
         public string domain = "https://inias.eu.auth0.com/";
         public Startup(IConfiguration configuration)
         {
@@ -63,6 +63,14 @@ namespace Risk_REST
             });
 
 
+            services.AddCors();
+
+
+            //services.AddCors();
+           // services.AddMvc();
+            //services.AddScoped<>
+
+
             // register the scope authorization handler
             services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
         }
@@ -81,13 +89,15 @@ namespace Risk_REST
             app.UseStaticFiles();
 
              app.UseCors("CorsPolicy");
+          //  app.UseCors(builder => builder.AllowAnyOrigin());
+            //app.UseMvc();
+            //    app.UseCors(Microsoft.AspNetCore.Cors.EnableCorsAttribute.);
 
-            
 
-          /*  app.UseCors(builder =>
-            builder.WithOrigins("http://*")
-           .AllowAnyHeader()
-             );*/
+            /*  app.UseCors(builder =>
+              builder.WithOrigins("http://*")
+             .AllowAnyHeader()
+               );*/
             /*app.UseCors(options => options.WithOrigins("http://localhost:8100/")
                             .AllowAnyMethod()
                             .AllowAnyHeader()

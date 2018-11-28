@@ -24,8 +24,8 @@
   },
   "proxies": [
     {
-      "path":"/api/player",
-      "proxyUrl":"http://192.168.0.247:53169/api" //"http://localhost:53169/api"
+      "path":"/api",
+      "proxyUrl":"http://172.16.155.154:53169/api" //"http://localhost:53169/api"
     }],
   "include": [
     "src/**/*.ts"
