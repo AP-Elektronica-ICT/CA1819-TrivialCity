@@ -27,8 +27,6 @@ namespace Risk_REST.Services.Data
         public virtual DbSet<Positions> Positions { get; set; }
         public virtual DbSet<Teams> Teams { get; set; }
 
-        // Unable to generate entity type for table 'dbo.Team_Area'. Please see the warning messages.
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
