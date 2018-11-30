@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using Risk_REST.Auth;
 using Risk_REST.Services.Data;
+using Risk_REST.Services;
 
 namespace Risk_REST
 {

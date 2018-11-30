@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Risk_REST.Services.Data
+namespace Risk_REST.Models
 {
     public partial class AspNetUsers
     {
