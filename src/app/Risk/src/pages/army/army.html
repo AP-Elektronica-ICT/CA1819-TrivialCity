@@ -14,6 +14,13 @@
 </ion-header>
 
 
-<ion-content padding>
-
+<ion-content padding class="army">
+  <div class="Troops" *ngIf="PlayerInfo">
+    <div>
+      <h2>Your Troops: {{PlayerInfo.playerTroops}} </h2> <img class="fotoTroops"  src='../../assets/imgs/YourTroops.png' alt="foto troops">
+        
+      <h2>Your ReserveTroops: {{PlayerInfo.playerReserveTroops}} </h2>
+    </div>
+  </div>
+  <button ion-button block color="primary" (click)="test()">Get player</button>
 </ion-content>

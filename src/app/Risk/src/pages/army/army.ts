@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { ApiService } from '../../services/api.service';
+import { ApiService, Player } from '../../services/api.service';
 
 /**
  * Generated class for the ArmyPage page.
@@ -16,11 +16,21 @@ import { ApiService } from '../../services/api.service';
 })
 export class ArmyPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams ) {
+  PlayerInfo:Player[] = [];
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private service: ApiService ) {
   }
+
+
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ArmyPage');
+    this.service.GetYourInfo(this.service.GetYourId()).subscribe(data => this.PlayerInfo = data);
+    
+  }
+
+  test(){
+    console.log(this.PlayerInfo);
   }
 
 }

@@ -24,7 +24,7 @@ import { AuthService } from '../services/auth.service';
 import { IonicStorageModule } from '@ionic/storage';
 import { ApiService } from '../services/api.service';
 import { Http, HttpModule } from '@angular/http';
-import { HTTP  } from '@ionic-native/http';
+
 
 @NgModule({
   declarations: [

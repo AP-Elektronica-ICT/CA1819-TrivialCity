@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions } from '@angular/http';
+
 import { Observable } from 'rxjs/Rx';
-import { HTTP } from '@ionic-native/http';
 import { pluck, share, shareReplay, tap } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import { BaseService } from './base.service';
@@ -10,7 +9,7 @@ import { ContentType } from '@angular/http/src/enums';
 import "rxjs/Rx";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import 'rxjs/add/operator/map';
-import { Http2Server } from 'http2';
+
 
 
 
@@ -23,6 +22,14 @@ export class ApiService extends BaseService {
   constructor(private http: HttpClient) {
     super();
   }
+
+  private httpHeader = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.AuhtToken}`
+    })
+  }
+
 
 
   GetToken() {
@@ -46,18 +53,18 @@ export class ApiService extends BaseService {
   }
 
 
-  private httpHeader = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.AuhtToken}`
-    })
+
+  GetPlayers(): Observable<Player[]> {
+    return this.http.get<Player[]>(`${this.baseApi}/player`, this.httpHeader);
   }
 
-  GetPlayers(): Observable<Players[]> {
-    return this.http.get<Players[]>(`${this.baseApi}/player`, this.httpHeader);
+  GetYourInfo(_number: number): Observable<Player[]> {
+    return this.http.get<Player[]>(`${this.baseApi}/player/${_number}`, this.httpHeader);
   }
 
-
+  GetYourId(): number {
+    return 2;
+  }
 
 
 }
@@ -66,10 +73,18 @@ export class ApiService extends BaseService {
 
 
 
-export interface Players {
-  PlayerId: string;
-  PlayerUsername: string;
-  PlayerEmail: string;
+export interface Player {
+  playerId: string;
+  teamId: number;
+  areaId: number;
+  auth_id: number;
+  playerUsername: string;
+  playerEmail: string;
+  playerTitle: string;
+  playerExp: number;
+  playerSilverCoins: number;
+  playerTroops: number;
+  playerReserveTroops: number;
 }
 
 export interface Token {
