@@ -24,6 +24,7 @@ namespace Risk_REST.Services.Data
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<MigrationHistory> MigrationHistory { get; set; }
         public virtual DbSet<Players> Players { get; set; }
+        public virtual DbSet<Positions> Positions { get; set; }
         public virtual DbSet<Teams> Teams { get; set; }
 
         // Unable to generate entity type for table 'dbo.Team_Area'. Please see the warning messages.
@@ -41,10 +42,6 @@ namespace Risk_REST.Services.Data
         {
             modelBuilder.Entity<Area>(entity =>
             {
-                entity.Property(e => e.AreaLatitude).HasColumnType("decimal(8, 6)");
-
-                entity.Property(e => e.AreaLongitude).HasColumnType("decimal(9, 6)");
-
                 entity.Property(e => e.AreaName)
                     .IsRequired()
                     .HasMaxLength(50);
@@ -166,15 +163,11 @@ namespace Risk_REST.Services.Data
             {
                 entity.HasKey(e => e.PlayerId);
 
-                entity.Property(e => e.PlayerActiveDutyDate).HasColumnType("date");
+                entity.Property(e => e.AuthId)
+                    .HasColumnName("Auth_Id")
+                    .HasMaxLength(255);
 
                 entity.Property(e => e.PlayerEmail).HasMaxLength(200);
-
-                entity.Property(e => e.PlayerLatitude).HasColumnType("decimal(8, 6)");
-
-                entity.Property(e => e.PlayerLongitude).HasColumnType("decimal(9, 6)");
-
-                entity.Property(e => e.PlayerPassword).HasMaxLength(200);
 
                 entity.Property(e => e.PlayerTitle).HasMaxLength(120);
 
@@ -189,6 +182,22 @@ namespace Risk_REST.Services.Data
                     .WithMany(p => p.Players)
                     .HasForeignKey(d => d.TeamId)
                     .HasConstraintName("FK__Players__TeamId__71D1E811");
+            });
+
+            modelBuilder.Entity<Positions>(entity =>
+            {
+                entity.HasKey(e => e.PositionId);
+
+                entity.Property(e => e.PositionId).ValueGeneratedNever();
+
+                entity.Property(e => e.Latitude).HasColumnType("decimal(9, 6)");
+
+                entity.Property(e => e.Longitude).HasColumnType("decimal(9, 6)");
+
+                entity.HasOne(d => d.Area)
+                    .WithMany(p => p.Positions)
+                    .HasForeignKey(d => d.AreaId)
+                    .HasConstraintName("FK__Positions__AreaI__02FC7413");
             });
 
             modelBuilder.Entity<Teams>(entity =>

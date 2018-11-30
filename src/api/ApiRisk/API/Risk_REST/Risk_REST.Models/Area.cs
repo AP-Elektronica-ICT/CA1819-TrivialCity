@@ -8,14 +8,14 @@ namespace Risk_REST.Models
         public Area()
         {
             Players = new HashSet<Players>();
+            Positions = new HashSet<Positions>();
         }
 
         public int AreaId { get; set; }
         public string AreaName { get; set; }
         public string AreaOccupiedBy { get; set; }
-        public decimal? AreaLatitude { get; set; }
-        public decimal? AreaLongitude { get; set; }
 
         public ICollection<Players> Players { get; set; }
+        public ICollection<Positions> Positions { get; set; }
     }
 }
