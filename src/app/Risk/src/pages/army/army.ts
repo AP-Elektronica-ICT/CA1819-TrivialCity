@@ -16,9 +16,9 @@ import { ApiService, Player } from '../../services/api.service';
 })
 export class ArmyPage {
 
-  PlayerInfo:Player[] = [];
+  PlayerInfo: Player;//[] = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private service: ApiService ) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private service: ApiService) {
   }
 
 
@@ -26,11 +26,34 @@ export class ArmyPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad ArmyPage');
     this.service.GetYourInfo(this.service.GetYourId()).subscribe(data => this.PlayerInfo = data);
-    
+
   }
 
-  test(){
+  test() {
     console.log(this.PlayerInfo);
   }
+
+  MoveTroops(_troops: number) {
+    setTimeout(() => {
+      this.service.PutInfo(this.service.GetYourId(),
+        {
+          playerId: this.service.GetYourId(),
+          teamId: this.PlayerInfo.teamId,
+          areaId: this.PlayerInfo.areaId,
+          auth_id: this.PlayerInfo.auth_id,
+          playerUsername: this.PlayerInfo.playerUsername,
+          playerEmail: this.PlayerInfo.playerEmail,
+          playerLevel: this.PlayerInfo.playerLevel,
+          playerExp: this.PlayerInfo.playerExp,
+          playerSilverCoins: this.PlayerInfo.playerSilverCoins,
+          playerTroops: `${(this.PlayerInfo.playerTroops) + _troops}`,
+          playerReserveTroops: `${(this.PlayerInfo.playerTroops) - _troops}`
+        })
+        .subscribe(data => this.PlayerInfo = data);
+      alert("Troops have arrived");
+    }, 5000);
+  }
+
+
 
 }

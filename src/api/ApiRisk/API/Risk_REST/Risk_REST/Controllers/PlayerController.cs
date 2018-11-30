@@ -74,7 +74,10 @@ namespace Risk_REST.Controllers
                 return NotFound();
             }
 
-            context.Players.Update(player);
+            player = updatePlayer;
+           
+
+            //context.Players.Update(updatePlayer);
             context.SaveChanges();
             return new OkObjectResult(player);
 

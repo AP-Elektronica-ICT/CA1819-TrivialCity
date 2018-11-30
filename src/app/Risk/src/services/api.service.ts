@@ -58,8 +58,12 @@ export class ApiService extends BaseService {
     return this.http.get<Player[]>(`${this.baseApi}/player`, this.httpHeader);
   }
 
-  GetYourInfo(_number: number): Observable<Player[]> {
-    return this.http.get<Player[]>(`${this.baseApi}/player/${_number}`, this.httpHeader);
+  GetYourInfo(_number: number): Observable<Player> {
+    return this.http.get<Player>(`${this.baseApi}/player/${_number}`, this.httpHeader);
+  }
+
+  PutInfo(_number: number , body: any): Observable<Player>{
+    return this.http.put<Player>(`${this.baseApi}/player/${_number}`, body ,this.httpHeader);
   }
 
   GetYourId(): number {
@@ -81,6 +85,7 @@ export interface Player {
   playerUsername: string;
   playerEmail: string;
   playerTitle: string;
+  playerLevel: number;
   playerExp: number;
   playerSilverCoins: number;
   playerTroops: number;
