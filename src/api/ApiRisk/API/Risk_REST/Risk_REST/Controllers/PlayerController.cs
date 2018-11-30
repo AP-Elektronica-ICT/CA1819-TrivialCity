@@ -13,8 +13,8 @@ using Risk_REST.Services.Data;
 namespace Risk_REST.Controllers
 {
 
-    // [Authorize]
-   [EnableCors("CorsPolicy")]
+  //   [Authorize]
+  // [EnableCors("CorsPolicy")]
     // [EnableCors("CorsPolicy")]
     //[EnableCors("*", "*", "*")]
     [Route("api/player")]

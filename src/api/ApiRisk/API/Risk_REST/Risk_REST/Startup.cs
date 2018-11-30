@@ -29,6 +29,14 @@ namespace Risk_REST
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddCors(o => o.AddPolicy("myPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            }));
+
             services.AddMvc();
             services.AddDbContext<Risk_AntwerpContext>(options => options.UseSqlServer(@"Server=risk-antwerp.database.windows.net,1433;Initial Catalog=Risk_Antwerp;Persist Security Info=False;User ID=Risk_Antwerp;Password=R1sk_4ntw3rp;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
 
@@ -49,22 +57,24 @@ namespace Risk_REST
                 options.AddPolicy("read:app", policy => policy.Requirements.Add(new HasScopeRequirement("read:app", domain)));
             });
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy("CorsPolicy",
-                    builder => builder.AllowAnyOrigin()
-                    //.WithOrigins("http://localhost:8080/", "http://localhost:8100/", "http://192.168.0.177/*" )
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowAnyOrigin()
-                    .AllowCredentials());
-                    //.WithHeaders("Access-Control-Allow-Methods", "*"));
+            /* services.AddCors(options =>
+             {
+                 options.AddPolicy("CorsPolicy",
+                     builder => builder.AllowAnyOrigin()
+                     //.WithOrigins("http://localhost:8080/", "http://localhost:8100/", "http://192.168.0.177/*" )
+                     .AllowAnyMethod()
+                     .AllowAnyHeader()
+                     .AllowAnyOrigin()
+                     .AllowCredentials());
+                     //.WithHeaders("Access-Control-Allow-Methods", "*"));
 
 
-            });
+             });*/
+
+          
 
 
-            services.AddCors();
+          //  services.AddCors();
 
 
             //services.AddCors();
@@ -78,6 +88,9 @@ namespace Risk_REST
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+
+          
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -88,9 +101,9 @@ namespace Risk_REST
             }
 
             app.UseStaticFiles();
+            app.UseCors("myPolicy");
 
-             app.UseCors("CorsPolicy");
-          //  app.UseCors(builder => builder.AllowAnyOrigin());
+            //  app.UseCors(builder => builder.AllowAnyOrigin());
             //app.UseMvc();
             //    app.UseCors(Microsoft.AspNetCore.Cors.EnableCorsAttribute.);
 
