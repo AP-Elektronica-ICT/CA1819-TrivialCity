@@ -8,50 +8,17 @@
 </ion-header>
 
 <ion-content>
-    <input type="text" class="form-control" [(ngModel)]="Search">
 
-  <button
-  ion-button
-  block
-  color="primary"
-  *ngIf="auth.loggedIn"   
-  (click)="Check()">get token</button>
 
- <div *ngIf="PlayerData">
+  <button ion-button block color="primary" *ngIf="auth.loggedIn" (click)="Check()">Get Token</button>
 
-<h2>{{PlayerData.PlayerUsername}}</h2>
-     
- </div>
-<h2>test</h2>
-    <button
-      ion-button
-      block
-      color="primary"
-       
-      (click)="Check2()">SendApi</button>
+  <div *ngIf="PlayerData">
 
-      <button
-      ion-button
-      block
-      color="primary"
-      (click)="Check3()">s</button>
-      <button
-      ion-button
-      block
-      color="primary"
-       
-      (click)="Check4()">test2</button>
-      <button
-      ion-button
-      block
-      color="primary"
-        
-      (click)="Check5()">testgewoon</button>
-      <button
-      ion-button
-      block
-      color="primary"
-      
-      (click)="Check6()">testgewoon2</button>
-    
+    <h2>{{PlayerData.PlayerUsername}}</h2>
+
+  </div>
+  <h2>test</h2>
+  <button ion-button block color="primary" (click)="Check2()">Get players</button>
+
+
 </ion-content>
