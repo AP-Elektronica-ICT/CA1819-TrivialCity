@@ -37,7 +37,7 @@ export class ArmyPage {
   
 
   MoveTroops(_troops: number) {
-    this.TroopsStrart();
+    this.Alert("Troops are now walking 2 your location!");
     this.pService.start();
     setTimeout(() => {
       this.service.PutInfo(this.service.GetYourId(),
@@ -48,25 +48,18 @@ export class ArmyPage {
         })
         .subscribe(data => this.PlayerInfo = data);
       //alert("Troops have arrived");
-      this.TroopsArrivedAlert();
+      this.Alert("Troops has arrived!");
       this.pService.done();
     }, 50000);
   }
 
-  TroopsArrivedAlert(){
-    let TroopsArrivedAlert = this.alertC.create({
-      message:"Troops has arrived!"
-    });
-    TroopsArrivedAlert.present();
-  }
 
-  TroopsStrart(){
-    let TroopsArrivedAlert = this.alertC.create({
-      message:"Troops are now walking 2 your location!"
-    });
-    TroopsArrivedAlert.present();
-  }
 
-  
+  Alert(message:string){
+    let Alertm = this.alertC.create({
+      message:`${message}`
+    });
+    Alertm.present();
+  }
 
 }
