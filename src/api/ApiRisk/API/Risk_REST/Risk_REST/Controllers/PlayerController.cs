@@ -13,7 +13,7 @@ using Risk_REST.Services.Data;
 namespace Risk_REST.Controllers
 {
 
-     [Authorize]
+    // [Authorize]
   // [EnableCors("CorsPolicy")]
     // [EnableCors("CorsPolicy")]
     //[EnableCors("*", "*", "*")]
@@ -74,10 +74,24 @@ namespace Risk_REST.Controllers
                 return NotFound();
             }
 
-            player = updatePlayer;
+            player.PlayerId = updatePlayer.PlayerId;
+            player.TeamId = updatePlayer.TeamId;
+            player.AreaId = updatePlayer.AreaId;
+            player.AuthId = updatePlayer.AuthId;
+            player.PlayerUsername = updatePlayer.PlayerUsername;
+            player.PlayerEmail = updatePlayer.PlayerEmail;
+            player.PlayerTitle = updatePlayer.PlayerTitle;
+            player.PlayerLevel = updatePlayer.PlayerExp;
+            player.PlayerExp = updatePlayer.PlayerExp;
+            player.PlayerSilverCoins = updatePlayer.PlayerSilverCoins;
+            player.PlayerTroops = updatePlayer.PlayerTroops;
+            player.PlayerReserveTroops = updatePlayer.PlayerReserveTroops;
+           // player.PlayerTroops = updatePlayer.PlayerTroops;
+
+           //player = updatePlayer;
            
 
-            //context.Players.Update(updatePlayer);
+            context.Players.Update(player);
             context.SaveChanges();
             return new OkObjectResult(player);
 

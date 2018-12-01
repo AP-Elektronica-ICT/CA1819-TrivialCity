@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { ApiService, Player } from '../../services/api.service';
 
 /**
@@ -18,7 +18,7 @@ export class ArmyPage {
 
   PlayerInfo: Player;//[] = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private service: ApiService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private service: ApiService , private alertC:AlertController) {
   }
 
 
@@ -32,6 +32,8 @@ export class ArmyPage {
   test() {
     console.log(this.PlayerInfo);
   }
+
+  
 
   MoveTroops(_troops: number) {
     setTimeout(() => {
@@ -47,11 +49,19 @@ export class ArmyPage {
           playerExp: this.PlayerInfo.playerExp,
           playerSilverCoins: this.PlayerInfo.playerSilverCoins,
           playerTroops: `${(this.PlayerInfo.playerTroops) + _troops}`,
-          playerReserveTroops: `${(this.PlayerInfo.playerTroops) - _troops}`
+          playerReserveTroops: `${(this.PlayerInfo.playerReserveTroops) - _troops}`
         })
         .subscribe(data => this.PlayerInfo = data);
-      alert("Troops have arrived");
+      //alert("Troops have arrived");
+      this.TroopsArrivedAlert();
     }, 5000);
+  }
+
+  TroopsArrivedAlert(){
+    let TroopsArrivedAlert = this.alertC.create({
+      message:"Troops has arrived!"
+    });
+    TroopsArrivedAlert.present();
   }
 
 
