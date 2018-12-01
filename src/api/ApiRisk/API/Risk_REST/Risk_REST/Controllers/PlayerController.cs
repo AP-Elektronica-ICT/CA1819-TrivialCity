@@ -75,22 +75,30 @@ namespace Risk_REST.Controllers
             }
 
             player.PlayerId = updatePlayer.PlayerId;
-            player.TeamId = updatePlayer.TeamId;
-            player.AreaId = updatePlayer.AreaId;
-            player.AuthId = updatePlayer.AuthId;
-            player.PlayerUsername = updatePlayer.PlayerUsername;
-            player.PlayerEmail = updatePlayer.PlayerEmail;
-            player.PlayerTitle = updatePlayer.PlayerTitle;
-            player.PlayerLevel = updatePlayer.PlayerExp;
-            player.PlayerExp = updatePlayer.PlayerExp;
-            player.PlayerSilverCoins = updatePlayer.PlayerSilverCoins;
-            player.PlayerTroops = updatePlayer.PlayerTroops;
-            player.PlayerReserveTroops = updatePlayer.PlayerReserveTroops;
-           // player.PlayerTroops = updatePlayer.PlayerTroops;
 
-           //player = updatePlayer;
-           
-
+            if (updatePlayer.TeamId != null)
+                player.TeamId = updatePlayer.TeamId;
+            if (updatePlayer.AreaId != null)
+                player.AreaId = updatePlayer.AreaId;
+            if (updatePlayer.AuthId != null)
+                player.AuthId = updatePlayer.AuthId;
+            if (updatePlayer.PlayerUsername != null)
+                player.PlayerUsername = updatePlayer.PlayerUsername;
+            if (updatePlayer.PlayerEmail != null)
+                player.PlayerEmail = updatePlayer.PlayerEmail;
+            if (updatePlayer.PlayerTitle != null)
+                player.PlayerTitle = updatePlayer.PlayerTitle;
+            if (updatePlayer.PlayerLevel != null)
+                player.PlayerLevel = updatePlayer.PlayerLevel;
+            if (updatePlayer.PlayerExp != null)
+                player.PlayerExp = updatePlayer.PlayerExp;
+            if (updatePlayer.PlayerSilverCoins != null)
+                player.PlayerSilverCoins = updatePlayer.PlayerSilverCoins;
+            if (updatePlayer.PlayerTroops != null)
+                player.PlayerTroops = updatePlayer.PlayerTroops;
+            if (updatePlayer.PlayerReserveTroops != null)
+                player.PlayerReserveTroops = updatePlayer.PlayerReserveTroops;
+       
             context.Players.Update(player);
             context.SaveChanges();
             return new OkObjectResult(player);

@@ -40,14 +40,6 @@ export class ArmyPage {
       this.service.PutInfo(this.service.GetYourId(),
         {
           playerId: this.service.GetYourId(),
-          teamId: this.PlayerInfo.teamId,
-          areaId: this.PlayerInfo.areaId,
-          auth_id: this.PlayerInfo.auth_id,
-          playerUsername: this.PlayerInfo.playerUsername,
-          playerEmail: this.PlayerInfo.playerEmail,
-          playerLevel: this.PlayerInfo.playerLevel,
-          playerExp: this.PlayerInfo.playerExp,
-          playerSilverCoins: this.PlayerInfo.playerSilverCoins,
           playerTroops: `${(this.PlayerInfo.playerTroops) + _troops}`,
           playerReserveTroops: `${(this.PlayerInfo.playerReserveTroops) - _troops}`
         })
