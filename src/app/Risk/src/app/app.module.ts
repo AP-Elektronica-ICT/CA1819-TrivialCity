@@ -24,6 +24,7 @@ import { AuthService } from '../services/auth.service';
 import { IonicStorageModule } from '@ionic/storage';
 import { ApiService } from '../services/api.service';
 import { Http, HttpModule } from '@angular/http';
+import {NgProgressModule} from "ng2-progressbar"
 
 
 @NgModule({
@@ -45,6 +46,7 @@ import { Http, HttpModule } from '@angular/http';
     HttpModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
+    NgProgressModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [

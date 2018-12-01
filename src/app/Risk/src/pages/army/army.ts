@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { ApiService, Player } from '../../services/api.service';
+import { NgProgressService } from 'ng2-progressbar';
 
 /**
  * Generated class for the ArmyPage page.
@@ -18,7 +19,7 @@ export class ArmyPage {
 
   PlayerInfo: Player;//[] = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private service: ApiService , private alertC:AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private service: ApiService , private alertC:AlertController , private pService: NgProgressService  ) {
   }
 
 
@@ -36,6 +37,8 @@ export class ArmyPage {
   
 
   MoveTroops(_troops: number) {
+    this.TroopsStrart();
+    this.pService.start();
     setTimeout(() => {
       this.service.PutInfo(this.service.GetYourId(),
         {
@@ -46,7 +49,8 @@ export class ArmyPage {
         .subscribe(data => this.PlayerInfo = data);
       //alert("Troops have arrived");
       this.TroopsArrivedAlert();
-    }, 5000);
+      this.pService.done();
+    }, 50000);
   }
 
   TroopsArrivedAlert(){
@@ -56,6 +60,13 @@ export class ArmyPage {
     TroopsArrivedAlert.present();
   }
 
+  TroopsStrart(){
+    let TroopsArrivedAlert = this.alertC.create({
+      message:"Troops are now walking 2 your location!"
+    });
+    TroopsArrivedAlert.present();
+  }
 
+  
 
 }
