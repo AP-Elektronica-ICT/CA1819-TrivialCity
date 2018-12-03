@@ -6,7 +6,7 @@
   "proxies": [
     {
       "path": "/api",
-      "proxyUrl": "http://172.16.155.154:53169/api"
+      "proxyUrl": "http://172.16.222.94:53169/api"
     }
   ],
   "type": "ionic-angular",
