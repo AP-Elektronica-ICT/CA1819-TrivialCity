@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AuthService } from '../../services/auth.service';
 import { HomePage } from '../home/home';
+import { TeamPage } from '../team/team';
+import { ApiService, Player } from '../../services/api.service';
+import { ProfilePage } from '../profile/profile';
 
 /**
  * Generated class for the RegisterPage page.
@@ -17,23 +20,30 @@ import { HomePage } from '../home/home';
 })
 export class RegisterPage {
 
+  PlayerInfo: Player;
+  // user: any;
 
- // user: any;
-
-  constructor(public navCtrl: NavController, public navParams: NavParams,public auth: AuthService ) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public auth: AuthService, private service: ApiService) {
   }
 
   /*ngOnInit(): void {
     this.auth.get('profile').then(user => this.user = user);
     }*/
 
-
-  Go2App(){
-    this.navCtrl.setRoot(HomePage);
-  }
-  
   ionViewDidLoad() {
     console.log('ionViewDidLoad RegisterPage');
+    this.service.GetYourInfo(this.service.GetYourId()).subscribe(data => this.PlayerInfo = data);
   }
+  Go2App() {
+    if (this.PlayerInfo.teamId == null) {
+      this.navCtrl.setRoot(TeamPage);
+    }
+
+    if (this.PlayerInfo.teamId != null) {
+      this.navCtrl.setRoot(ProfilePage)
+    }
+  }
+
+
 
 }
