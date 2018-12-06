@@ -25,6 +25,8 @@ import { IonicStorageModule } from '@ionic/storage';
 import { ApiService } from '../services/api.service';
 import { Http, HttpModule } from '@angular/http';
 import {NgProgressModule} from "ng2-progressbar"
+import { TeamViewPage } from '../pages/teamView/teamView';
+import { TeamViewModule } from '../pages/teamView/teamView.module';
 
 
 @NgModule({
@@ -38,7 +40,8 @@ import {NgProgressModule} from "ng2-progressbar"
     ArmyPage,
     TeamPage,
     ProfilePage,
-    BattlePhaseContPage
+    BattlePhaseContPage,
+    TeamViewPage,
   ],
   imports: [
     BrowserModule,
@@ -57,6 +60,7 @@ import {NgProgressModule} from "ng2-progressbar"
     RegisterPage,
     ArmyPage,
     TeamPage,
+    TeamViewPage,
     BattlePhasePage,
     ProfilePage,
     BattlePhaseContPage

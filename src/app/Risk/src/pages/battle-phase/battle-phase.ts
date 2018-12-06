@@ -33,13 +33,15 @@ export class BattlePhasePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BattlePhasePage');
-    this.service.GetYourInfo(this.service.GetYourId()).subscribe(data => {
+
+    this.service.GetInfo(this.service.GetYourId()).subscribe(data => {
       this.player = data;
       this.service.getArea(Number(this.player.areaId)).subscribe(data => {
         this.area = data
         this.getBotDiceAmount();
       })
     })
+
   }
 
   getBotDiceAmount() {

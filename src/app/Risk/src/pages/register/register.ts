@@ -32,7 +32,7 @@ export class RegisterPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RegisterPage');
-    this.service.GetYourInfo(this.service.GetYourId()).subscribe(data => this.PlayerInfo = data);
+    this.service.GetInfo(this.service.GetYourId()).subscribe(data => this.PlayerInfo = data);
   }
   Go2App() {
     if (this.PlayerInfo.teamId == null) {

@@ -27,7 +27,7 @@ export class TeamPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad TeamPage');
     this.service.GetTeams().subscribe(data => this.Teams = data);
-    this.service.GetYourInfo(this.service.GetYourId()).subscribe(data => this.PlayerInfo = data);
+    this.service.GetInfo(this.service.GetYourId()).subscribe(data => this.PlayerInfo = data);
   }
 
   CheckPlayerInfo() {

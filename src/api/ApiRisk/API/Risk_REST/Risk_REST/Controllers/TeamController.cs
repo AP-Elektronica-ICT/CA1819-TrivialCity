@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Risk_REST.Models;
 using Risk_REST.Services.Data;
 using System;
 using System.Collections.Generic;
@@ -46,8 +47,28 @@ namespace Risk_REST.Controllers
 
         // PUT api/team/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public IActionResult UpdateTeam(int id, [FromBody] Teams updateTeam )
         {
+            var team = context.Teams.Find(updateTeam.TeamId);
+
+            if (team == null)
+            {
+                return NotFound();
+            }
+
+            team.TeamId = updateTeam.TeamId;
+
+            if (updateTeam.TeamColor != null)
+                team.TeamColor = updateTeam.TeamColor;
+            if (updateTeam.TeamTotalOccupiedAreas != null)
+                team.TeamTotalOccupiedAreas = updateTeam.TeamTotalOccupiedAreas;
+            if (updateTeam.Players != null)
+                team.Players = updateTeam.Players;
+
+            context.Teams.Update(team);
+            context.SaveChanges();
+            return new OkObjectResult(team);
+
         }
 
         // DELETE api/team/5
