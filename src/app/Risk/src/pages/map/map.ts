@@ -9,6 +9,8 @@ import 'rxjs/add/observable/interval';
 import { Observable } from 'rxjs';
 import { BattlePhasePage } from '../battle-phase/battle-phase';
 
+import { ApiService, Player } from '../../services/api.service';
+
 /**
  * Generated class for the MapPage page.
  *
@@ -29,8 +31,13 @@ export class MapPage {
     lat: '',
     lng: '',
     teamColor: 'blue',
+    troopCount: 20,
     orientation: 0,
   }
+
+  playerData: Player;
+  //this.api.getPlayerData().subscribe(res => this.playerData = res);
+
   battleBtnIsVisible = false;
 
   loop;
@@ -403,11 +410,13 @@ export class MapPage {
   teamBlueLayer = leaflet.featureGroup([this.seefhoek]);
   teamYellowLayer = leaflet.featureGroup([this.borgerhout]);
   teamGreenLayer = leaflet.featureGroup([this.kaai]);
+
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private deviceOrientation: DeviceOrientation,
     private geolocation: Geolocation,
-    private platform: Platform) {
+    private platform: Platform,
+    private api: ApiService) {
 
     platform.ready().then(() => {
 
@@ -439,7 +448,7 @@ export class MapPage {
     this.loadmap();
   }
 
-  goToBattlePhase(){
+  goToBattlePhase() {
     this.navCtrl.push(BattlePhasePage);
   }
 

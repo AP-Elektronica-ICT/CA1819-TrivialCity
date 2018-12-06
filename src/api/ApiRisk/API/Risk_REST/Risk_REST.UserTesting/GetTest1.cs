@@ -18,22 +18,6 @@ namespace Risk_REST.UserTesting
     {
         private Risk_AntwerpContext context;
 
-        /*   [Fact]
-public void Test1()
-{
-
-}*/
-        /*  private DirectControllerAction _action;
-          private readonly Risk_AntwerpContext context;
-
-          [SetUp]
-          public void SetUpTestAuth()
-          {
-              var controller = new PlayerController(context);
-              _action = controller.Action();
-          }*/
-        // private readonly Risk_AntwerpContext context;
-
         [Fact]
         public void testMetdod1()
         {
@@ -50,7 +34,7 @@ public void Test1()
         }
 
         [Fact]
-        public void testMetdod2()
+        public void testMethod2()
         {
             PlayerController c = new PlayerController(context);
           
