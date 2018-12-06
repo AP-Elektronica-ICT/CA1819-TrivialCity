@@ -62,12 +62,16 @@ export class ApiService extends BaseService {
     return this.http.get<Player>(`${this.baseApi}/player/${_number}`, this.httpHeader);
   }
 
-  PutInfo(_number: number , body: any): Observable<Player>{
-    return this.http.put<Player>(`${this.baseApi}/player/${_number}`, body ,this.httpHeader);
+  PutInfo(_number: number, body: any): Observable<Player> {
+    return this.http.put<Player>(`${this.baseApi}/player/${_number}`, body, this.httpHeader);
   }
 
   GetYourId(): number {
     return 2;
+  }
+
+  GetTeams(): Observable<Team[]> {
+    return this.http.get<Team[]>(`${this.baseApi}/team`, this.httpHeader)
   }
 
 
@@ -96,4 +100,11 @@ export interface Token {
   access_token: string;
   expires_in: number;
   token_type: string;
+}
+
+export interface Team {
+  teamId: number;
+  teamColor: string;
+  teamTotalOccupiedAreas: number;
+  players: any[];
 }
