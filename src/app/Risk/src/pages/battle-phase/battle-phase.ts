@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { BrowserTransferStateModule } from '@angular/platform-browser';
 import { BattlePhaseContPage } from '../battle-phase-cont/battle-phase-cont';
-import { ApiService, Player } from '../../services/api.service';
+import { ApiService, Player, Area } from '../../services/api.service';
+import { ThrowStmt } from '@angular/compiler';
+import { delay } from 'rxjs/operators';
 
 /**
  * Generated class for the BattlePhasePage page.
@@ -19,50 +21,54 @@ import { ApiService, Player } from '../../services/api.service';
 export class BattlePhasePage {
 
   player: Player;
-  enemy: Player;
+  area: Area;
 
   playerDiceAmount: number = 0;
-  enemyDiceAmount: number = 0;
+  botDiceAmount: number = 0;
 
   errormsg: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public service: ApiService) {
-    this.getEnemyDiceAmount();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BattlePhasePage');
-    this.service.GetYourInfo(this.service.GetYourId()).subscribe(data => this.player = data)
-    this.service.GetYourInfo(this.service.GetYourId()).subscribe(data => this.enemy = data)
+    this.service.GetYourInfo(this.service.GetYourId()).subscribe(data => {
+      this.player = data;
+      this.service.getArea(Number(this.player.areaId)).subscribe(data => {
+        this.area = data
+        this.getBotDiceAmount();
+      })
+    })
   }
 
-  getEnemyDiceAmount(){
-    if(this.enemy.playerTroops > 3){
-      this.enemyDiceAmount = Math.floor((Math.random() * 2)+1);
+  getBotDiceAmount() {
+    if (this.area.defendingTroops > 3) {
+      this.botDiceAmount = Math.floor((Math.random() * 2) + 1);
     }
-    else{
-      this.enemyDiceAmount = Math.floor((Math.random() * this.enemy.playerTroops)+1);
+    else {
+      this.botDiceAmount = Math.floor((Math.random() * this.area.defendingTroops) + 1);
     }
   }
 
-  getPlayerDiceAmount(amount: any){
-    if(this.playerDiceAmount == 0 && amount == 0){
+  getPlayerDiceAmount(amount: any) {
+    if (this.playerDiceAmount == 0 && amount == 0) {
       this.errormsg = 'please select an amount of dice';
     }
-    else{
-      if((this.player.playerTroops > 3 && amount <= 3)||(this.player.playerTroops < 3 && amount < 3)){
+    else {
+      if ((this.player.playerTroops > 3 && amount <= 3) || (this.player.playerTroops < 3 && amount < 3)) {
         this.playerDiceAmount = amount;
       }
-      else if(this.player.playerTroops < 3 && amount == 3){
+      else if (this.player.playerTroops < 3 && amount == 3) {
         this.errormsg = 'You don´t have that amount of troops left!'
       }
     }
   }
 
-  goToBattlePhaseCont(){
+  goToBattlePhaseCont() {
     this.navCtrl.push(BattlePhaseContPage, {
       data: {
-        enemyDiceAmount: this.enemyDiceAmount,
+        botDiceAmount: this.botDiceAmount,
         playerDiceAmount: this.playerDiceAmount
       }
     })

@@ -13,17 +13,17 @@
 </ion-header>
 
 
-<ion-content padding style="text-align: center">
+<ion-content padding style="text-align: center" *ngIf="player && area">
   <ion-grid>
     <ion-row style="margin: auto">
-      <h3>The enemy fought with {{results.enemyDiceAmount}} troops</h3>
+      <h3>The enemy fought with {{results.botDiceAmount}} troops</h3>
     </ion-row>
     <ion-row style="margin: auto; background-color:gray">
       <ion-column>
-        <img [src]="imgSrc_Enemy[0]" style="width:64px;">
+        <img [src]="imgSrc_Bot[0]" style="width:64px;">
       </ion-column>
-      <ion-column *ngIf="imgSrc_Enemy[1]">
-        <img [src]="imgSrc_Enemy[1]" style="width:64px;">
+      <ion-column *ngIf="imgSrc_Bot[1]">
+        <img [src]="imgSrc_Bot[1]" style="width:64px;">
       </ion-column>
     </ion-row>
     <ion-row style="margin: auto">
@@ -42,6 +42,10 @@
     </ion-row>
     <ion-row>
       <h3>You have {{battleResults[0]}} troops remaining. The enemy has {{battleResults[1]}} troops remaining</h3>
+    </ion-row>
+    <ion-row>
+      <h3>You have {{player.playerTroops}} troops remaining.</h3>
+      <h3>The area you attacked has {{area.defendingTroops}} troops remaining</h3>
     </ion-row>
   </ion-grid>
 </ion-content>

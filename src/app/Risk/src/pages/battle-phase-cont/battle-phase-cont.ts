@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { BattlePhasePage } from '../battle-phase/battle-phase';
-import { ApiService, Player } from '../../services/api.service';
+import { ApiService, Player, Area } from '../../services/api.service';
 
 /**
  * Generated class for the BattlePhaseContPage page.
@@ -18,33 +18,34 @@ import { ApiService, Player } from '../../services/api.service';
 export class BattlePhaseContPage {
 
   player: Player;
-  enemy: Player;
+  area: Area;
 
   lowestDiceAmount: number = 0;
   results: any = {};
   playerResults: any[] = [];
-  enemyResults: any[] = [];
+  botResults: any[] = [];
   battleResults: any[] = [];
 
-  imgSrc_Enemy: any[] = []; 
+  imgSrc_Bot: any[] = [];
   imgSrc_Player: any[] = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public service: ApiService) {
     this.results = navParams.get('data');
     this.battleResults[0] = this.results.playerDiceAmount;
-    this.battleResults[1] = this.results.enemyDiceAmount;
-
-    this.getPlayerDiceResults();
-    this.getEnemyDiceResults();
-
-    this.getBattleResults();
-    console.log(this.results);
+    this.battleResults[1] = this.results.botDiceAmount;
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BattlePhaseContPage');
-    this.service.GetYourInfo(this.service.GetYourId()).subscribe(data => this.player = data);
-    this.service.GetYourInfo(this.service.GetYourId()).subscribe(data => this.enemy = data);
+    this.service.GetYourInfo(this.service.GetYourId()).subscribe(data => {
+      this.player = data
+      this.service.getArea(this.player.areaId).subscribe(data => {
+        this.area = data
+        this.getPlayerDiceResults();
+        this.getBotDiceResults();
+        this.getBattleResults();
+      });
+    });
   }
 
   getPlayerDiceResults() {
@@ -53,43 +54,47 @@ export class BattlePhaseContPage {
       this.imgSrc_Player[i] = `../../assets/imgs/dice-${this.playerResults[i]}.png`;
     }
     this.playerResults.sort((a, b) => b - a);
-    console.log("player results sorted: "+this.playerResults);
+    console.log("player results sorted: " + this.playerResults);
   }
 
-  getEnemyDiceResults() {
-    for (let i: number = 0; i < this.results.enemyDiceAmount; i++) {
-      this.enemyResults[i] = Math.floor((Math.random() * 6) + 1);
-      this.imgSrc_Enemy[i] = `../../assets/imgs/dice-${this.enemyResults[i]}.png`;
+  getBotDiceResults() {
+    for (let i: number = 0; i < this.results.botDiceAmount; i++) {
+      this.botResults[i] = Math.floor((Math.random() * 6) + 1);
+      this.imgSrc_Bot[i] = `../../assets/imgs/dice-${this.botResults[i]}.png`;
     }
-    this.enemyResults.sort((a, b) => b - a);
-    console.log("enemy results sorted: "+this.enemyResults)
+    this.botResults.sort((a, b) => b - a);
+    console.log("bot results sorted: " + this.botResults)
   }
 
   getBattleResults() {
-    if(this.results.playerDiceAmount > this.results.enemyDiceAmount){
-      this.lowestDiceAmount = this.results.enemyDiceAmount;
+    if (this.results.playerDiceAmount > this.results.botDiceAmount) {
+      this.lowestDiceAmount = this.results.botDiceAmount;
     }
-    else{
+    else {
       this.lowestDiceAmount = this.results.playerDiceAmount;
     }
- 
-      for (let i: number = 0; i < this.lowestDiceAmount; i++) {
-        if (this.playerResults[i] && this.enemyResults[i]) {
-          if (this.playerResults[i] > this.enemyResults[i]) {
-            this.enemy.playerTroops -= 1;
-            this.service.PutInfo(this.service.GetYourId(), {
-              playerId: this.service.GetYourId(),
-              playerTroops: `${this.enemy.playerTroops}`
-            })
-          }
-          else {
-            this.player.playerTroops -= 1;
-            this.service.PutInfo(this.service.GetYourId(), {
-              playerId: this.service.GetYourId(),
-              playerTroops: `${this.player.playerTroops}`
-            })
-          }
+
+    for (let i: number = 0; i < this.lowestDiceAmount; i++) {
+      if (this.playerResults[i] && this.botResults[i]) {
+        if (this.playerResults[i] > this.botResults[i]) {
+          this.area.defendingTroops -= 1;
+          this.service.PutArea(this.player.areaId, {
+            areaId: this.player.areaId,
+            defendingTroops: `${this.area.defendingTroops}`
+          }).subscribe(data => {
+            this.area = data;
+          })
+        }
+        else {
+          this.player.playerTroops -= 1;
+          this.service.PutInfo(this.service.GetYourId(), {
+            playerId: this.service.GetYourId(),
+            playerTroops: `${this.player.playerTroops}`
+          }).subscribe(data => {
+            this.player = data;
+          })
         }
       }
+    }
   }
 }

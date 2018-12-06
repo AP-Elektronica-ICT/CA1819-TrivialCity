@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Risk_REST.Models;
 using Risk_REST.Services.Data;
 using System;
 using System.Collections.Generic;
@@ -40,14 +41,40 @@ namespace Risk_REST.Controllers
 
         // POST api/area
         [HttpPost]
-        public void Post([FromBody]string value)
+        public IActionResult AddArea([FromBody] Area newArea)
         {
+            Area area = newArea;
+
+            context.Area.Add(area);
+            context.SaveChanges();
+            return new OkObjectResult(area);
         }
 
         // PUT api/area/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public IActionResult Put(int id, [FromBody] Area updateArea)
         {
+            var area = context.Area.Find(updateArea.AreaId);
+
+            if (area == null)
+            {
+                return NotFound();
+            }
+
+            area.AreaId = updateArea.AreaId;
+
+            if (updateArea.AreaOccupiedBy != null)
+                area.AreaOccupiedBy = updateArea.AreaOccupiedBy;
+            if (updateArea.AreaId != null)
+                area.AreaId = updateArea.AreaId;
+            if (updateArea.AreaName != null)
+                area.AreaName = updateArea.AreaName;
+            if (updateArea.DefendingTroops != null)
+                area.DefendingTroops = updateArea.DefendingTroops;
+
+            context.Area.Update(area);
+            context.SaveChanges();
+            return new OkObjectResult(area);
         }
 
         // DELETE api/area/5
