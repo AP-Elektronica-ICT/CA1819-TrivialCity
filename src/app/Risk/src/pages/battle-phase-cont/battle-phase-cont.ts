@@ -43,8 +43,8 @@ export class BattlePhaseContPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BattlePhaseContPage');
-    this.service.GetYourInfo(this.service.GetYourId()).subscribe(data => this.player = data);
-    this.service.GetYourInfo(this.service.GetYourId()).subscribe(data => this.enemy = data);
+    this.service.GetInfo(this.service.GetYourId()).subscribe(data => this.player = data);
+    this.service.GetInfo(this.service.GetYourId()).subscribe(data => this.enemy = data);
   }
 
   getPlayerDiceResults() {

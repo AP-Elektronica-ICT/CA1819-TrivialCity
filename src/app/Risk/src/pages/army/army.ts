@@ -27,7 +27,7 @@ export class ArmyPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ArmyPage');
-    this.service.GetYourInfo(this.service.GetYourId()).subscribe(data => this.PlayerInfo = data);
+    this.service.GetInfo(this.service.GetYourId()).subscribe(data => this.PlayerInfo = data);
 
   }
 
@@ -51,7 +51,6 @@ export class ArmyPage {
             playerReserveTroops: `${(this.PlayerInfo.playerReserveTroops) - _troops}`
           })
           .subscribe(data => this.PlayerInfo = data);
-        //alert("Troops have arrived");
         this.Alert("Troops has arrived!");
         this.pService.done();
       }, 10000);

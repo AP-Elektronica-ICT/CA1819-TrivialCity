@@ -1,0 +1,19 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>TeamView</ion-title>
+    </ion-navbar>
+</ion-header>
+
+
+<ion-content padding class="teamView">
+    <button ion-button block color="primary" (click)="Check()">Get Teams</button>
+    <div class="Teams" *ngIf="TeamsInfo">
+        <tr *ngFor="let data of TeamsInfo"> <!-- | async -->
+            <td>{{data.teamColor}}</td>
+            <td>{{data.players}}</td>
+
+    </div>
+</ion-content>
