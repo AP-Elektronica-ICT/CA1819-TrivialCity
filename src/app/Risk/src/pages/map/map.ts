@@ -457,7 +457,7 @@ export class MapPage {
     // This adds the map to the screen
     this.map = leaflet.map("map").fitWorld();
     leaflet.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attributions: 'Sam',
+      attributions: 'Player',
       maxZoom: 20
     }).addTo(this.map);
 

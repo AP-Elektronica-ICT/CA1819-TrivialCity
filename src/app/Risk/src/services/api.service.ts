@@ -58,20 +58,36 @@ export class ApiService extends BaseService {
     return this.http.get<Player[]>(`${this.baseApi}/player`, this.httpHeader);
   }
 
+
   GetInfo(_number: number): Observable<Player> {
     return this.http.get<Player>(`${this.baseApi}/player/${_number}`, this.httpHeader);
   }
 
-  PutInfo(_number: number , body: any): Observable<Player>{
-    return this.http.put<Player>(`${this.baseApi}/player/${_number}`, body ,this.httpHeader);
+  GetAreas(): Observable<Area[]> {
+    return this.http.get<Area[]>(`${this.baseApi}/area`, this.httpHeader)
+  }
+
+  getArea(_number: number): Observable<Area> {
+    return this.http.get<Area>(`${this.baseApi}/area/${_number}`, this.httpHeader)
+  }
+
+  
+
+  PutInfo(_number: number, body: any): Observable<Player> {
+    return this.http.put<Player>(`${this.baseApi}/player/${_number}`, body, this.httpHeader);
+  }
+
+  PutArea(_number: number , body: any): Observable<Area>{
+    return this.http.put<Area>(`${this.baseApi}/area/${_number}`, body ,this.httpHeader)
   }
 
   GetYourId(): number {
     return 2;
   }
 
-  GetTeams(): Observable<Team[]>{
-    return this.http.get<Team[]>(`${this.baseApi}/team`, this.httpHeader);
+
+  GetTeams(): Observable<Team[]> {
+    return this.http.get<Team[]>(`${this.baseApi}/team`, this.httpHeader)
   }
 
 
@@ -96,6 +112,7 @@ export interface Player {
   playerReserveTroops: number;
 }
 
+
 export interface Team{
   teamId: number;
   teamColor: string;
@@ -103,8 +120,21 @@ export interface Team{
   players: Player[];
 }
 
+
+export interface Area {
+  areaId: number;
+  areaName: string;
+  areaOccupiedBy: string;
+  defendingTroops: number;
+  players: any[];
+  positions: any[];
+}
+
+
+
 export interface Token {
   access_token: string;
   expires_in: number;
   token_type: string;
 }
+

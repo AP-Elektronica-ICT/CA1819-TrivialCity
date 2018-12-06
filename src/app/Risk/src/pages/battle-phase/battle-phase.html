@@ -14,15 +14,15 @@
 </ion-header>
 
 
-<ion-content padding style="text-align: center">
+<ion-content padding style="text-align: center" *ngIf="area">
   <ion-grid>
     <ion-row>
       <ion-column style="margin: auto">
         <h3>Battle Phase</h3>
         <br>
-        <p>{{enemyTroops}} enemy troops remaining</p>
+        <p>{{area.defendingTroops}} enemy troops remaining</p>
         <br>
-        <p>The enemy will fight with {{enemyDiceAmount}} troops!</p>
+        <p>The enemy will fight with {{botDiceAmount}} troops!</p>
         <img src="../../assets/imgs/Teams/Red/Soldiers/mguard_s_1.png">
       </ion-column>
     </ion-row>
