@@ -18,34 +18,10 @@ namespace Risk_REST.UserTesting
     {
         private Risk_AntwerpContext context;
 
-        [Fact]
-        public void testMetdod1()
-        {
-            PlayerController c = new PlayerController(context);
-            /* IActionResult player = c.GetPlayerById(1);
-             // NUnit.Framework.Assert.AreEqual("1", player.PlayerId)
-             // Xunit.Assert.IsType<ViewResult>(player);
-             Xunit.Assert.Equal()*/
-            IActionResult result = c.GetPlayerById(1);
-            OkObjectResult viewResult = Xunit.Assert.IsType<OkObjectResult>(result);
-            Players model = Xunit.Assert.IsType<Players>(viewResult);
-            Xunit.Assert.Equal(1, model.PlayerId);
-         
-        }
+       
 
         [Fact]
-        public void testMethod2()
-        {
-            PlayerController c = new PlayerController(context);
-          
-            IActionResult result = c.GetPlayerById(1);
-
-            Xunit.Assert.IsType<OkObjectResult>(result);
-
-        }
-
-        [Fact]
-        public  void  testCorrectId()
+        public  void  TestCorrectPlayer()
         {
             var c = new PlayerController(new Risk_AntwerpContext());
 
@@ -55,6 +31,34 @@ namespace Risk_REST.UserTesting
            var player = okResult.Value.Should().BeAssignableTo<Players>().Subject;
 
             player.PlayerId.Should().Be(2);
+
+        }
+
+        [Fact]
+        public void TestCorrectTeam()
+        {
+            var c = new TeamController(new Risk_AntwerpContext());
+
+            var result = c.GetTeamById(1);
+
+            var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
+            var team = okResult.Value.Should().BeAssignableTo<Teams>().Subject;
+
+            team.TeamId.Should().Be(1);
+
+        }
+
+        [Fact]
+        public void TestCorrectArea()
+        {
+            var c = new AreaController(new Risk_AntwerpContext());
+
+            var result = c.GetAreaById(3);
+
+            var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
+            var area = okResult.Value.Should().BeAssignableTo<Area>().Subject;
+
+            area.AreaId.Should().Be(3);
 
         }
 
