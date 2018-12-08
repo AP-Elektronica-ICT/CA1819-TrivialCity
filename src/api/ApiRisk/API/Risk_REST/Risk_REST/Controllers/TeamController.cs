@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Risk_REST.Models;
 using Risk_REST.Services.Data;
@@ -27,6 +28,11 @@ namespace Risk_REST.Controllers
         {
             var team = context.Teams.ToList();
 
+            if (team == null)
+            {
+                return NotFound();
+            }
+
             return new OkObjectResult(team);
         }
 
@@ -35,6 +41,28 @@ namespace Risk_REST.Controllers
         public IActionResult GetTeamById(int id)
         {
             var team = context.Teams.SingleOrDefault(t => t.TeamId == id);
+                
+            //.Include(t => t.Players).SingleOrDefault(t => t.TeamId == id);
+
+            if (team == null)
+            {
+                return NotFound();
+            }
+
+            return new OkObjectResult(team);
+        }
+
+        [HttpGet("{id}/players", Name = "getTeamPlayers")]
+        public IActionResult GetTeamPlayersById(int id)
+        {
+            var team = context.Teams
+                .Where(m => m.TeamId == id)
+                .Select(m => m.Players).Single();
+
+            if (team == null)
+            {
+                return NotFound();
+            }
 
             return new OkObjectResult(team);
         }
