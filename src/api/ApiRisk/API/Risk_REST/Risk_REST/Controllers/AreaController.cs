@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Risk_REST.Models;
 using Risk_REST.Services.Data;
@@ -25,8 +26,8 @@ namespace Risk_REST.Controllers
         [HttpGet]
         public IActionResult GetAllAreas()
         {
+            //var area = context.Area.Include("Positions").ToList();
             var area = context.Area.ToList();
-
             return new OkObjectResult(area);
         }
 
