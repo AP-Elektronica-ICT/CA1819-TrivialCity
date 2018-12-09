@@ -17,10 +17,7 @@ import { ApiService,  Team, Player } from '../../services/api.service';
 export class TeamViewPage {
 
    teamsInfo: Team[] = [];
-   team1Players: Player[] = [];
-   team2Players: Player[] = [];
-   team3Players: Player[] = [];
-   team4Players: Player[] = [];
+
 
   constructor(public navCtrl: NavController, public navParams: NavParams , private service: ApiService) {
   }
@@ -28,18 +25,20 @@ export class TeamViewPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad TeamView');
     this.service.GetTeams().subscribe(data => this.teamsInfo = data);
-    this.service.GetTeamPlayers(1).subscribe(data => this.team1Players = data);
-    this.service.GetTeamPlayers(2).subscribe(data => this.team2Players = data);
-    this.service.GetTeamPlayers(3).subscribe(data => this.team3Players = data);
-    this.service.GetTeamPlayers(4).subscribe(data => this.team4Players = data);
+    if(this.teamsInfo != undefined && this.teamsInfo != [] ){
+      this.service.GetTeamPlayers(1).subscribe(data => this.teamsInfo[0].players = data);
+      this.service.GetTeamPlayers(2).subscribe(data => this.teamsInfo[1].players = data);
+      this.service.GetTeamPlayers(3).subscribe(data => this.teamsInfo[2].players = data);
+      this.service.GetTeamPlayers(4).subscribe(data => this.teamsInfo[3].players = data);
+    }
   }
 
 
 
   Check(){
+    
+   // this.playerCount = this.team1Players.length;
       console.log(this.teamsInfo);
-      console.log(this.team1Players);
-      console.log(this.team3Players);
       //console.log(this.TeamsInfo[0]);
   }
 
