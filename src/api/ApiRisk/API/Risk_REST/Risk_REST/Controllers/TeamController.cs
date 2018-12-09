@@ -27,6 +27,9 @@ namespace Risk_REST.Controllers
         public IActionResult GetAllTeams()
         {
             var team = context.Teams.ToList();
+                  
+
+
 
             if (team == null)
             {

@@ -64,11 +64,11 @@ export class ApiService extends BaseService {
   }
 
   GetAreas(): Observable<Area[]> {
-    return this.http.get<Area[]>(`${this.baseApi}/area`, this.httpHeader)
+    return this.http.get<Area[]>(`${this.baseApi}/area`, this.httpHeader);
   }
 
   getArea(_number: number): Observable<Area> {
-    return this.http.get<Area>(`${this.baseApi}/area/${_number}`, this.httpHeader)
+    return this.http.get<Area>(`${this.baseApi}/area/${_number}`, this.httpHeader);
   }
 
   
@@ -78,7 +78,7 @@ export class ApiService extends BaseService {
   }
 
   PutArea(_number: number , body: any): Observable<Area>{
-    return this.http.put<Area>(`${this.baseApi}/area/${_number}`, body ,this.httpHeader)
+    return this.http.put<Area>(`${this.baseApi}/area/${_number}`, body ,this.httpHeader);
   }
 
   GetYourId(): number {
@@ -87,9 +87,13 @@ export class ApiService extends BaseService {
 
 
   GetTeams(): Observable<Team[]> {
-    return this.http.get<Team[]>(`${this.baseApi}/team`, this.httpHeader)
+    return this.http.get<Team[]>(`${this.baseApi}/team`, this.httpHeader);
+    
   }
 
+  GetTeamPlayers(_number: number): Observable<Player[]>{
+  return this.http.get<Player[]>(`${this.baseApi}/team/${_number}/players`, this.httpHeader);
+  }
 
 }
 
