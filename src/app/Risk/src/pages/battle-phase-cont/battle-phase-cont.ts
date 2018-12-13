@@ -79,8 +79,9 @@ export class BattlePhaseContPage {
       if (this.playerResults[i] && this.botResults[i]) {
         if (this.playerResults[i] > this.botResults[i]) {
           this.area.defendingTroops -= 1;
-          this.service.PutArea(this.player.areaId, {
-            areaId: this.player.areaId,
+          this.battleResults[1] =-1;
+          this.service.PutArea(this.area.areaId, {
+            areaId: this.area.areaId,
             defendingTroops: `${this.area.defendingTroops}`
           }).subscribe(data => {
             this.area = data;
@@ -88,6 +89,7 @@ export class BattlePhaseContPage {
         }
         else {
           this.player.playerTroops -= 1;
+          this.battleResults[0] -=1 ;
           this.service.PutInfo(this.service.GetYourId(), {
             playerId: this.service.GetYourId(),
             playerTroops: `${this.player.playerTroops}`

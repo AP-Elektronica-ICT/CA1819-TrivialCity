@@ -17,8 +17,8 @@ import { NgProgressService } from 'ng2-progressbar';
 })
 export class ArmyPage {
 
-  public TroopsSend: number;
-  PlayerInfo: Player;//[] = [];
+  public troopsSend: number;
+  playerInfo: Player;//[] = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private service: ApiService, private alertC: AlertController, private pService: NgProgressService) {
   }
@@ -27,19 +27,19 @@ export class ArmyPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ArmyPage');
-    this.service.GetInfo(this.service.GetYourId()).subscribe(data => this.PlayerInfo = data);
+    this.service.GetInfo(this.service.GetYourId()).subscribe(data => this.playerInfo = data);
 
   }
 
   test() {
-    console.log(this.PlayerInfo);
-    console.log(this.TroopsSend);
+    console.log(this.playerInfo);
+    console.log(this.troopsSend);
   }
 
 
 
   MoveTroops(_troops: number) {
-    _troops = Number(this.TroopsSend);
+    _troops = Number(this.troopsSend);
     if (_troops != null && _troops != 0 && _troops > 0) {
       this.Alert("Troops are now walking 2 your location!");
       this.pService.start();
@@ -47,10 +47,10 @@ export class ArmyPage {
         this.service.PutInfo(this.service.GetYourId(),
           {
             playerId: this.service.GetYourId(),
-            playerTroops: `${(this.PlayerInfo.playerTroops) + _troops}`,
-            playerReserveTroops: `${(this.PlayerInfo.playerReserveTroops) - _troops}`
+            playerTroops: `${(this.playerInfo.playerTroops) + _troops}`,
+            playerReserveTroops: `${(this.playerInfo.playerReserveTroops) - _troops}`
           })
-          .subscribe(data => this.PlayerInfo = data);
+          .subscribe(data => this.playerInfo = data);
         this.Alert("Troops has arrived!");
         this.pService.done();
       }, 10000);

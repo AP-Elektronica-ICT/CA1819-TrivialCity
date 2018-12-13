@@ -9,11 +9,14 @@
 
 
 <ion-content padding class="teamView">
-    <button ion-button block color="primary" (click)="Check()">Get Teams</button>
-    <div class="Teams" *ngIf="TeamsInfo">
-        <tr *ngFor="let data of TeamsInfo"> <!-- | async -->
-            <td>{{data.teamColor}}</td>
-            <td>{{data.players}}</td>
+  <!-- <button ion-button block color="primary" (click)="Check()">Get Teams</button>  --> 
 
+    <div class="Teams" *ngIf="teamsInfo"> 
+        <tr *ngFor="let data of teamsInfo"> 
+            <td> <h2>Team </h2> {{data.teamColor}}</td>
+            <td><h2>Areas</h2> {{data.teamTotalOccupiedAreas}}</td>
+            <td><h2>Players</h2>{{data.players.length}} </td>
+        </tr>
     </div>
+    <img class="fotoTeams"  src='../../assets/imgs/teams.png' alt="foto troops">
 </ion-content>

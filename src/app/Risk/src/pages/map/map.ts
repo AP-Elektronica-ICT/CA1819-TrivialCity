@@ -445,6 +445,7 @@ export class MapPage {
   }
 
   ionViewDidEnter() {
+    
     this.loadmap();
   }
 
