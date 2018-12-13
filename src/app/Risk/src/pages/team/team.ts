@@ -41,7 +41,7 @@ export class TeamPage {
 
     if (color == "Blue") {
       this.TeamId = 1;
-      this.service.PutInfo(this.service.GetYourId(),
+      this.service.PutPlayer(this.service.GetYourId(),
         {
           playerId: this.service.GetYourId(),
           teamId: this.TeamId
@@ -51,7 +51,7 @@ export class TeamPage {
 
     if (color == "Red") {
       this.TeamId = 2;
-      this.service.PutInfo(this.service.GetYourId(),
+      this.service.PutPlayer(this.service.GetYourId(),
         {
           playerId: this.service.GetYourId(),
           teamId: this.TeamId
@@ -61,7 +61,7 @@ export class TeamPage {
 
     if (color == "Green") {
       this.TeamId = 3;
-      this.service.PutInfo(this.service.GetYourId(),
+      this.service.PutPlayer(this.service.GetYourId(),
         {
           playerId: this.service.GetYourId(),
           teamId: this.TeamId
@@ -71,7 +71,7 @@ export class TeamPage {
 
     if (color == "Yellow") {
       this.TeamId = 4;
-      this.service.PutInfo(this.service.GetYourId(),
+      this.service.PutPlayer(this.service.GetYourId(),
         {
           playerId: this.service.GetYourId(),
           teamId: this.TeamId

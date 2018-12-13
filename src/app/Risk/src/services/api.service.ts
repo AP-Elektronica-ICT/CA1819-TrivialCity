@@ -65,11 +65,11 @@ export class ApiService extends BaseService {
     return this.http.get<Area[]>(`${this.baseApi}/area`, this.httpHeader);
   }
 
-  getArea(_number: number): Observable<Area> {
+  GetArea(_number: number): Observable<Area> {
     return this.http.get<Area>(`${this.baseApi}/area/${_number}`, this.httpHeader);
   }
 
-  PutInfo(_number: number, body: any): Observable<Player> {
+  PutPlayer(_number: number, body: any): Observable<Player> {
     return this.http.put<Player>(`${this.baseApi}/player/${_number}`, body, this.httpHeader);
   }
 
@@ -105,7 +105,7 @@ export class ApiService extends BaseService {
 
 
 export interface Player {
-  playerId: string;
+  playerId: number;
   teamId: number;
   areaId: number;
   auth_id: number;

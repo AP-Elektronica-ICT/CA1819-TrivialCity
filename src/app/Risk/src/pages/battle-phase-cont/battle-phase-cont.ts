@@ -44,7 +44,7 @@ export class BattlePhaseContPage {
     this.service.GetInfo(this.service.GetYourId()).subscribe(data => {
       this.player = data
       this.service.GetTeam(this.player.teamId).subscribe(data => this.playerTeamColor = data.teamColor)
-      this.service.getArea(this.player.areaId).subscribe(data => {
+      this.service.GetArea(this.player.areaId).subscribe(data => {
         this.area = data
         this.getPlayerDiceResults();
         this.getBotDiceResults();
@@ -104,7 +104,7 @@ export class BattlePhaseContPage {
             if(this.player.playerTroops < 0){
               this.player.playerTroops = 0;
             }
-            this.service.PutInfo(this.service.GetYourId(), {
+            this.service.PutPlayer(this.service.GetYourId(), {
               playerId: this.service.GetYourId(),
               playerTroops: `${this.player.playerTroops}`
             }).subscribe(data => {

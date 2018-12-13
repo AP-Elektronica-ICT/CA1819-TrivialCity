@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, Alert } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import leaflet from 'leaflet';
 import { DeviceOrientation, DeviceOrientationCompassHeading } from '@ionic-native/device-orientation';
 import { Geolocation } from '@ionic-native/geolocation';
@@ -9,7 +9,8 @@ import 'rxjs/add/observable/interval';
 import { Observable } from 'rxjs';
 import { BattlePhasePage } from '../battle-phase/battle-phase';
 
-import { ApiService, Player, Team, Area, Position } from '../../services/api.service';
+import { ApiService, Player, Team, Area } from '../../services/api.service';
+import { delay } from 'rxjs/operator/delay';
 
 /**
  * Generated class for the MapPage page.
@@ -34,9 +35,11 @@ export class MapPage {
   }
 
   player: Player;
-  playerTeam: Team
+  playerTeam: Team;
 
   areas: Area[] = [];
+
+  playerAreaId: number;
 
   polygons: any[];
 
@@ -61,274 +64,6 @@ export class MapPage {
       rotationAngle: this.playerLocation.orientation
     })
 
-  districts: any[] = [{
-    name: 'Den Dam',
-    p1: {
-      lat: 51.226317,
-      lng: 4.414693
-    },
-    p2: {
-      lat: 51.230859,
-      lng: 4.413208
-    },
-    p3: {
-      lat: 51.231278,
-      lng: 4.419713
-    },
-    p4: {
-      lat: 51.235015,
-      lng: 4.420325
-    },
-    p5: {
-      lat: 51.234914,
-      lng: 4.428972
-    },
-    p6: {
-      lat: 51.227991,
-      lng: 4.439990
-    },
-    p7: {
-      lat: 51.226783,
-      lng: 4.436743
-    },
-    p8: {
-      lat: 51.227663,
-      lng: 4.435061
-    },
-    p9: {
-      lat: 51.227942,
-      lng: 4.433815
-    },
-    p10: {
-      lat: 51.227836,
-      lng: 4.430798
-    },
-    p11: {
-      lat: 51.228767,
-      lng: 4.426224
-    },
-  }, {
-    name: 'Het Eilandje',
-    p1: {
-      lat: 51.226317,
-      lng: 4.414693,
-    },
-    p2: {
-      lat: 51.227108,
-      lng: 4.411271
-    },
-    p3: {
-      lat: 51.226936,
-      lng: 4.405197
-    },
-    p4: {
-      lat: 51.227091,
-      lng: 4.401156
-    },
-    p5: {
-      lat: 51.227080,
-      lng: 4.399555
-    },
-    p6: {
-      lat: 51.232166,
-      lng: 4.401722
-    },
-    p7: {
-      lat: 51.235310,
-      lng: 4.401036
-    },
-    p8: {
-      lat: 51.238508,
-      lng: 4.397946
-    },
-    p9: {
-      lat: 51.241786,
-      lng: 4.404469
-    },
-    p10: {
-      lat: 51.241899,
-      lng: 4.407903
-    },
-    p11: {
-      lat: 51.239587,
-      lng: 4.420263
-    },
-    p12: {
-      lat: 51.235015,
-      lng: 4.420325
-    },
-    p13: {
-      lat: 51.231278,
-      lng: 4.419713
-    },
-    p14: {
-      lat: 51.230859,
-      lng: 4.413208
-    }
-  }, {
-    name: 'Seefhoek',
-    p1: {
-      lat: 51.226317,
-      lng: 4.414693
-    },
-    p2: {
-      lat: 51.228767,
-      lng: 4.426224
-    },
-    p3: {
-      lat: 51.227836,
-      lng: 4.430798
-    },
-    p4: {
-      lat: 51.227942,
-      lng: 4.433815,
-    },
-    p5: {
-      lat: 51.227663,
-      lng: 4.435061
-    },
-    p6: {
-      lat: 51.226783,
-      lng: 4.436743
-    },
-    p7: {
-      lat: 51.221772,
-      lng: 4.436900
-    },
-    p8: {
-      lat: 51.219695,
-      lng: 4.435456
-    },
-    p9: {
-      lat: 51.218802,
-      lng: 4.431648
-    },
-    p10: {
-      lat: 51.218956,
-      lng: 4.431175
-    },
-    p11: {
-      lat: 51.217511,
-      lng: 4.428144
-    },
-    p12: {
-      lat: 51.218701,
-      lng: 4.423484
-    },
-    p13: {
-      lat: 51.219779,
-      lng: 4.416132
-    },
-    p14: {
-      lat: 51.220934,
-      lng: 4.416598
-    }
-  }, {
-    name: 'Borgerhout',
-    p1: {
-      lat: 51.227991,
-      lng: 4.439990
-    },
-    p2: {
-      lat: 51.220914,
-      lng: 4.449414
-    },
-    p3: {
-      lat: 51.217855,
-      lng: 4.447352
-    },
-    p4: {
-      lat: 51.215694,
-      lng: 4.446721
-    },
-    p5: {
-      lat: 51.213827,
-      lng: 4.440785
-    },
-    p6: {
-      lat: 51.215598,
-      lng: 4.432207
-    },
-    p7: {
-      lat: 51.216351,
-      lng: 4.430431
-    },
-    p8: {
-      lat: 51.217257,
-      lng: 4.429056
-    },
-    p9: {
-      lat: 51.217511,
-      lng: 4.428144
-    },
-    p10: {
-      lat: 51.218956,
-      lng: 4.431175
-    },
-    p11: {
-      lat: 51.218802,
-      lng: 4.431648
-    },
-    p12: {
-      lat: 51.219695,
-      lng: 4.435456
-    },
-    p13: {
-      lat: 51.221772,
-      lng: 4.436900
-    },
-    p14: {
-      lat: 51.226783,
-      lng: 4.436743
-    }
-  }, {
-    name: 'De Kaai',
-    p1: {
-      lat: 51.227080,
-      lng: 4.399555
-    },
-    p2: {
-      lat: 51.227091,
-      lng: 4.401156
-    },
-    p3: {
-      lat: 51.226356,
-      lng: 4.400389
-    },
-    p4: {
-      lat: 51.222221,
-      lng: 4.397784
-    },
-    p5: {
-      lat: 51.218815,
-      lng: 4.395516
-    },
-    p6: {
-      lat: 51.219131,
-      lng: 4.394291
-    },
-    p7: {
-      lat: 51.221740,
-      lng: 4.396078
-    },
-    p8: {
-      lat: 51.221836,
-      lng: 4.395771
-    },
-    p9: {
-      lat: 51.222668,
-      lng: 4.396323
-    },
-    p10: {
-      lat: 51.222697,
-      lng: 4.396713
-    },
-    p11: {
-      lat: 51.227080,
-      lng: 4.399555
-    }
-  }];
-
   //Every individual polygon with coordinates and color
   denDam;
   eilandje;
@@ -346,6 +81,7 @@ export class MapPage {
     this.service.GetInfo(this.service.GetYourId()).subscribe(data => {
       this.player = data
       this.service.GetTeam(this.player.teamId).subscribe(data => this.playerTeam = data)
+      this.service.GetArea(this.player.areaId)
       this.service.GetAreas().subscribe(data => this.areas = data)
       if (this.areas != undefined && this.areas.length >= 0) {
         this.service.getAreaPositions(1).subscribe(data => {
@@ -371,7 +107,7 @@ export class MapPage {
                     [this.areas[0].positions[8].latitude, this.areas[0].positions[8].longitude],
                     [this.areas[0].positions[9].latitude, this.areas[0].positions[9].longitude],
                     [this.areas[0].positions[10].latitude, this.areas[0].positions[10].longitude],
-                  ], { color: this.areas[0].areaOccupiedBy })
+                  ], { color: this.areas[0].areaOccupiedBy, title: 1 })
 
                   this.borgerhout = leaflet.polygon([
                     //Borgerhout
@@ -389,7 +125,7 @@ export class MapPage {
                     [this.areas[1].positions[11].latitude, this.areas[1].positions[11].longitude],
                     [this.areas[1].positions[12].latitude, this.areas[1].positions[12].longitude],
                     [this.areas[1].positions[13].latitude, this.areas[1].positions[13].longitude],
-                  ], { color: this.areas[1].areaOccupiedBy })
+                  ], { color: this.areas[1].areaOccupiedBy, title: 2 })
 
                   this.eilandje = leaflet.polygon([
                     //Eilandje
@@ -407,7 +143,7 @@ export class MapPage {
                     [this.areas[2].positions[11].latitude, this.areas[2].positions[11].longitude],
                     [this.areas[2].positions[12].latitude, this.areas[2].positions[12].longitude],
                     [this.areas[2].positions[13].latitude, this.areas[2].positions[13].longitude],
-                  ], { color: this.areas[2].areaOccupiedBy })
+                  ], { color: this.areas[2].areaOccupiedBy, title: 3 })
 
                   this.seefhoek = leaflet.polygon([
                     //Seefhoek
@@ -425,7 +161,7 @@ export class MapPage {
                     [this.areas[3].positions[11].latitude, this.areas[3].positions[11].longitude],
                     [this.areas[3].positions[12].latitude, this.areas[3].positions[12].longitude],
                     [this.areas[3].positions[13].latitude, this.areas[3].positions[13].longitude],
-                  ], { color: this.areas[3].areaOccupiedBy })
+                  ], { color: this.areas[3].areaOccupiedBy, title: 4 })
 
                   this.kaai = leaflet.polygon([
                     //De kaai
@@ -439,7 +175,8 @@ export class MapPage {
                     [this.areas[4].positions[7].latitude, this.areas[4].positions[7].longitude],
                     [this.areas[4].positions[8].latitude, this.areas[4].positions[8].longitude],
                     [this.areas[4].positions[9].latitude, this.areas[4].positions[9].longitude],
-                  ], { color: this.areas[4].areaOccupiedBy })
+                  ], { color: this.areas[4].areaOccupiedBy, title: 5 })
+
                   this.loadmap();
                 });
               });
@@ -451,7 +188,7 @@ export class MapPage {
 
     platform.ready().then(() => {
       //Device Orientation subscription
-      const options = { frequency: 100 };
+      const options = { frequency: 50 };
       const orientationSubscription = deviceOrientation.watchHeading(options).subscribe(
         (data3: DeviceOrientationCompassHeading) => { this.playerMarker.setRotationAngle(data3.magneticHeading), this.playerLocation.orientation = data3.magneticHeading }
         , (error: any) => console.log(error + " - error message"));
@@ -463,15 +200,11 @@ export class MapPage {
           this.playerMarker.setLatLng([position.coords.latitude, position.coords.longitude])
           this.playerLocation.lat = position.coords.latitude,
             this.playerLocation.lng = position.coords.longitude
-
-          const loop = Observable.interval(1000).subscribe((val) => {
-            /*this.service.PutInfo(this.player.playerId, {
-              playerId: `${this.player.playerId}`,
-              areaId: `${this.areas}`
-            })*/
-            this.territoryChecker() 
-          })
         })
+      const loop = Observable.interval(5000).subscribe((val) => {
+        this.territoryChecker();
+        console.log(this.player)
+      })
     })
 
   }
@@ -539,11 +272,24 @@ export class MapPage {
   territoryChecker() {
     if (this.playerLocation.lat && this.playerLocation.lng && this.polygons) {
       for (let i = 0; i < this.polygons.length; i++) {
-        if (this.polygons[i].getBounds().contains(this.playerMarker.getLatLng()) && this.polygons[i].options.color != this.playerTeam.teamColor) {
-          this.battleBtnIsVisible = true;
+        if (this.polygons[i].getBounds().contains(this.playerMarker.getLatLng())) {
+
+          this.playerAreaId = this.polygons[i].options.title;
+          console.log(this.playerAreaId)
+
+          if (this.polygons[i].options.color != this.playerTeam.teamColor) {
+            this.battleBtnIsVisible = true;
+          }
+          else {
+            this.battleBtnIsVisible = false;
+          }
         }
         else {
-          this.battleBtnIsVisible = false;
+          this.playerAreaId = 2;
+          this.service.PutPlayer(this.player.playerId, {
+            playerId: `${this.player.playerId}`,
+            areaId: `${this.playerAreaId}`
+          }).subscribe(data => this.player = data)
         }
       }
     }
