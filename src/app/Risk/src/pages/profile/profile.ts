@@ -24,6 +24,6 @@ export class ProfilePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProfilePage');
-    this.service.GetYourInfo(this.service.GetYourId()).subscribe(data => this.PlayerInfo = data);
+    this.service.GetInfo(this.service.GetYourId()).subscribe(data => this.PlayerInfo = data);
   }
 }

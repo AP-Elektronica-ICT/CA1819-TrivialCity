@@ -40,7 +40,7 @@ export class RegisterPage {
     }
 
     if (this.PlayerInfo.teamId != null) {
-      this.navCtrl.setRoot(ProfilePage)
+      this.navCtrl.setRoot(TeamPage)
     }
   }
 
