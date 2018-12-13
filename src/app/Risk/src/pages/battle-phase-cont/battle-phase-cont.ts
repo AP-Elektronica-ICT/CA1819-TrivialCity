@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { BattlePhasePage } from '../battle-phase/battle-phase';
 import { ApiService, Player, Area } from '../../services/api.service';
 
@@ -18,7 +18,10 @@ import { ApiService, Player, Area } from '../../services/api.service';
 export class BattlePhaseContPage {
 
   player: Player;
+  playerTeamColor: any;
   area: Area;
+
+  captureConfirmed: Boolean = false;
 
   lowestDiceAmount: number = 0;
   results: any = {};
@@ -29,7 +32,7 @@ export class BattlePhaseContPage {
   imgSrc_Bot: any[] = [];
   imgSrc_Player: any[] = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public service: ApiService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public service: ApiService, public alertCtrl: AlertController) {
     this.results = navParams.get('data');
     this.battleResults[0] = this.results.playerDiceAmount;
     this.battleResults[1] = this.results.botDiceAmount;
@@ -40,6 +43,7 @@ export class BattlePhaseContPage {
 
     this.service.GetInfo(this.service.GetYourId()).subscribe(data => {
       this.player = data
+      this.service.GetTeam(this.player.teamId).subscribe(data => this.playerTeamColor = data.teamColor)
       this.service.getArea(this.player.areaId).subscribe(data => {
         this.area = data
         this.getPlayerDiceResults();
@@ -76,28 +80,86 @@ export class BattlePhaseContPage {
     }
 
     for (let i: number = 0; i < this.lowestDiceAmount; i++) {
-      if (this.playerResults[i] && this.botResults[i]) {
-        if (this.playerResults[i] > this.botResults[i]) {
-          this.area.defendingTroops -= 1;
-          this.battleResults[1] =-1;
-          this.service.PutArea(this.area.areaId, {
-            areaId: this.area.areaId,
-            defendingTroops: `${this.area.defendingTroops}`
-          }).subscribe(data => {
-            this.area = data;
-          })
-        }
-        else {
-          this.player.playerTroops -= 1;
-          this.battleResults[0] -=1 ;
-          this.service.PutInfo(this.service.GetYourId(), {
-            playerId: this.service.GetYourId(),
-            playerTroops: `${this.player.playerTroops}`
-          }).subscribe(data => {
-            this.player = data;
-          })
+      if (this.player.playerTroops == 0) {
+
+      }
+      else {
+        if (this.playerResults[i] && this.botResults[i]) {
+          if (this.playerResults[i] > this.botResults[i]) {
+            this.area.defendingTroops -= 1;
+            this.battleResults[1] -= -1;
+            if(this.area.defendingTroops > 0){
+              this.area.defendingTroops = 0;
+            }
+            this.service.PutArea(this.area.areaId, {
+              areaId: this.area.areaId,
+              defendingTroops: `${this.area.defendingTroops}`
+            }).subscribe(data => {
+              this.area = data;
+            })
+          }
+          else {
+            this.player.playerTroops -= 1;
+            this.battleResults[0] -= 1;
+            if(this.player.playerTroops < 0){
+              this.player.playerTroops = 0;
+            }
+            this.service.PutInfo(this.service.GetYourId(), {
+              playerId: this.service.GetYourId(),
+              playerTroops: `${this.player.playerTroops}`
+            }).subscribe(data => {
+              this.player = data;
+            })
+          }
         }
       }
     }
+  }
+
+  CaptureArea(){
+    if(this.captureConfirmed == false){
+      let alert = this.alertCtrl.create({
+        title: 'Leave Troops',
+        inputs: [
+          {
+            name: 'amount',
+            placeholder: 'Amount',
+            type: 'number',
+          }
+        ],
+        buttons: [
+          {
+            text: 'Capture',
+            handler: data => {
+              data.amount = Math.floor(data.amount);
+              if(data.amount <= 0){
+                this.captureConfirmed = false;
+                this.errorAlert();
+              }
+              else{
+                this.captureConfirmed = true;
+                this.service.PutArea(this.area.areaId, {
+                  areaId: this.area.areaId,
+                  areaOccupiedBy: `${this.playerTeamColor}`,
+                  defendingTroops: `${data.amount}`,
+                }).subscribe(data => {
+                  this.area = data;
+                })
+              }
+            }
+          }
+        ]
+      });
+      alert.present();
+    }
+  }
+
+  errorAlert(){
+      let errorAlert = this.alertCtrl.create({
+        title: 'Invalid Amount',
+        subTitle: 'Please insert a valid amount of troops.',
+        buttons: ['Dismiss']
+      });
+      errorAlert.present();
   }
 }

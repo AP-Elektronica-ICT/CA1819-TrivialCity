@@ -30,8 +30,6 @@ export class ApiService extends BaseService {
     })
   }
 
-
-
   GetToken() {
     var request = require("request");
 
@@ -71,28 +69,33 @@ export class ApiService extends BaseService {
     return this.http.get<Area>(`${this.baseApi}/area/${_number}`, this.httpHeader);
   }
 
-  
-
   PutInfo(_number: number, body: any): Observable<Player> {
     return this.http.put<Player>(`${this.baseApi}/player/${_number}`, body, this.httpHeader);
   }
 
-  PutArea(_number: number , body: any): Observable<Area>{
-    return this.http.put<Area>(`${this.baseApi}/area/${_number}`, body ,this.httpHeader);
+  PutArea(_number: number, body: any): Observable<Area> {
+    return this.http.put<Area>(`${this.baseApi}/area/${_number}`, body, this.httpHeader);
   }
 
   GetYourId(): number {
     return 2;
   }
 
-
   GetTeams(): Observable<Team[]> {
     return this.http.get<Team[]>(`${this.baseApi}/team`, this.httpHeader);
-    
+
   }
 
-  GetTeamPlayers(_number: number): Observable<Player[]>{
-  return this.http.get<Player[]>(`${this.baseApi}/team/${_number}/players`, this.httpHeader);
+  GetTeam(_number: number): Observable<Team> {
+    return this.http.get<Team>(`${this.baseApi}/team/${_number}`, this.httpHeader);
+  }
+
+  GetTeamPlayers(_number: number): Observable<Player[]> {
+    return this.http.get<Player[]>(`${this.baseApi}/team/${_number}/players`, this.httpHeader);
+  }
+
+  getAreaPositions(_number: number): Observable<Position[]> {
+    return this.http.get<Position[]>(`${this.baseApi}/area/${_number}/positions`, this.httpHeader);
   }
 
 }
@@ -117,7 +120,7 @@ export interface Player {
 }
 
 
-export interface Team{
+export interface Team {
   teamId: number;
   teamColor: string;
   teamTotalOccupiedAreas: number;
@@ -130,8 +133,16 @@ export interface Area {
   areaName: string;
   areaOccupiedBy: string;
   defendingTroops: number;
-  players: any[];
-  positions: any[];
+  players: Player[];
+  positions: Position[];
+}
+
+export interface Position {
+  positionId: number;
+  areaId: number;
+  latitude: number;
+  longitude: number;
+  area?: any;
 }
 
 
