@@ -120,6 +120,7 @@ export class BattlePhaseContPage {
     if(this.captureConfirmed == false){
       let alert = this.alertCtrl.create({
         title: 'Leave Troops',
+        subTitle: `You currently have ${this.player.playerTroops} troops remaining`,
         inputs: [
           {
             name: 'amount',
@@ -132,16 +133,17 @@ export class BattlePhaseContPage {
             text: 'Capture',
             handler: data => {
               data.amount = Math.floor(data.amount);
-              if(data.amount <= 0){
+              if(data.amount <= 0 || data.amount > this.player.playerTroops){
                 this.captureConfirmed = false;
                 this.errorAlert();
               }
               else{
+                this.player.playerTroops -= data.amount;
                 this.captureConfirmed = true;
                 this.service.PutArea(this.area.areaId, {
                   areaId: this.area.areaId,
                   areaOccupiedBy: `${this.playerTeamColor}`,
-                  defendingTroops: `${data.amount}`,
+                  defendingTroops: `${this.player.playerTroops}`,
                 }).subscribe(data => {
                   this.area = data;
                 })

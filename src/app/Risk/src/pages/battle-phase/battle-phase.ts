@@ -36,7 +36,7 @@ export class BattlePhasePage {
 
     this.service.GetInfo(this.service.GetYourId()).subscribe(data => {
       this.player = data;
-      this.service.getArea(Number(this.player.areaId)).subscribe(data => {
+      this.service.GetArea(Number(this.player.areaId)).subscribe(data => {
         this.area = data
         this.getBotDiceAmount();
       })

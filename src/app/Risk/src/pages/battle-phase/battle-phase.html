@@ -14,8 +14,8 @@
 </ion-header>
 
 
-<ion-content padding style="text-align: center" *ngIf="area">
-  <ion-grid>
+<ion-content padding *ngIf="area && player" class="bg">
+  <ion-grid style="text-align: center" *ngIf="player.areaId != 0">
     <ion-row>
       <ion-column style="margin: auto">
         <h3>Battle Phase</h3>
@@ -47,6 +47,13 @@
         <br>
         <button ion-button [color]="danger" (click)="goToBattlePhaseCont()">Fight!</button>
       </ion-column>
+    </ion-row>
+  </ion-grid>
+  <ion-grid text-center style="margin-top: 50px" *ngIf="player.areaId == 0">
+    <ion-row style="margin: 0 auto;">
+      <h3>You are not in a (capturable) zone!</h3>
+      <br>
+      <p>please return to a capturable zone to in order to battle.</p>
     </ion-row>
   </ion-grid>
 </ion-content>

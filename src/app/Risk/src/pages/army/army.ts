@@ -44,7 +44,7 @@ export class ArmyPage {
       this.Alert("Troops are now walking 2 your location!");
       this.pService.start();
       setTimeout(() => {
-        this.service.PutInfo(this.service.GetYourId(),
+        this.service.PutPlayer(this.service.GetYourId(),
           {
             playerId: this.service.GetYourId(),
             playerTroops: `${(this.playerInfo.playerTroops) + _troops}`,

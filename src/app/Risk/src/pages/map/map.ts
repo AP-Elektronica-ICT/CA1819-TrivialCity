@@ -43,11 +43,7 @@ export class MapPage {
 
   polygons: any[];
 
-  teamRedLayer;
-  teamBlueLayer;
-  teamYellowLayer;
-  teamGreenLayer;
-
+  polygonsLayer;
 
   battleBtnIsVisible = false;
 
@@ -231,12 +227,8 @@ export class MapPage {
 
     //Polygon Array
     this.polygons = [this.denDam, this.eilandje, this.seefhoek, this.borgerhout, this.kaai];
-    //Add every individual polygon to the layer of a team
-    this.teamRedLayer = leaflet.featureGroup([this.denDam, this.eilandje]);
-    this.teamBlueLayer = leaflet.featureGroup([this.seefhoek]);
-    this.teamYellowLayer = leaflet.featureGroup([this.borgerhout]);
-    this.teamGreenLayer = leaflet.featureGroup([this.kaai]);
-
+    //Add every individual polygon to the polygon layer
+    this.polygonsLayer = leaflet.featureGroup([this.denDam, this.eilandje, this.seefhoek, this.borgerhout, this.kaai]);
 
     // This adds the map to the screen
     this.map = leaflet.map("map").fitWorld();
@@ -266,10 +258,8 @@ export class MapPage {
     })
     //This adds custom district polygons to the map
 
-    this.teamRedLayer.addTo(this.map);
-    this.teamBlueLayer.addTo(this.map);
-    this.teamGreenLayer.addTo(this.map);
-    this.teamYellowLayer.addTo(this.map);
+    this.polygonsLayer.addTo(this.map);
+
 
   }
 
@@ -289,7 +279,7 @@ export class MapPage {
           }
         }
         else {
-          this.playerAreaId = 3;
+          this.playerAreaId = 0;
         }
       }
     }
