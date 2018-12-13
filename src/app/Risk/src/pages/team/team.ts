@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { ApiService, Team, Player } from '../../services/api.service';
 import { ProfilePage } from '../profile/profile';
+import { AuthService } from '../../services/auth.service';
 
 /**
  * Generated class for the TeamPage page.
@@ -21,7 +22,7 @@ export class TeamPage {
   PlayerInfo: Player;
   TeamId: number;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private service: ApiService, private alertC: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private service: ApiService, private alertC: AlertController, public auth: AuthService) {
   }
 
   ionViewDidLoad() {
