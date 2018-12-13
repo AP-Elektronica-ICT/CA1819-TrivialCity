@@ -203,6 +203,10 @@ export class MapPage {
         })
       const loop = Observable.interval(5000).subscribe((val) => {
         this.territoryChecker();
+        this.service.PutPlayer(this.player.playerId, {
+          playerId: `${this.player.playerId}`,
+          areaId: `${this.playerAreaId}`
+        }).subscribe(data => this.player = data)
         console.log(this.player)
       })
     })
@@ -285,11 +289,7 @@ export class MapPage {
           }
         }
         else {
-          this.playerAreaId = 2;
-          this.service.PutPlayer(this.player.playerId, {
-            playerId: `${this.player.playerId}`,
-            areaId: `${this.playerAreaId}`
-          }).subscribe(data => this.player = data)
+          this.playerAreaId = 3;
         }
       }
     }
