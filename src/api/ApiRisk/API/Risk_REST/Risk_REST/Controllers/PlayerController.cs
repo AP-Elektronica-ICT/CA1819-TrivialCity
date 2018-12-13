@@ -3,57 +3,122 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
+//using System.Web.Http.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Risk_REST.DataLayerClasses;
 using Risk_REST.Models;
+using Risk_REST.Services.Data;
+
 namespace Risk_REST.Controllers
 {
+
+    // [Authorize]
+  // [EnableCors("CorsPolicy")]
+    // [EnableCors("CorsPolicy")]
+    //[EnableCors("*", "*", "*")]
     [Route("api/player")]
-    [Authorize]
     public class PlayerController : Controller
     {
 
-        IConfiguration _configuration;
+        private readonly Risk_AntwerpContext context;
 
-        public PlayerController(IConfiguration configuration)
+        public PlayerController(Risk_AntwerpContext context)
         {
-            _configuration = configuration;
+            this.context = context;
         }
 
 
         // GET api/player
         [HttpGet]
-        public IEnumerable<Player> Get()
+        public IActionResult GetAllPlayers()
         {
-            DataLayer dataLayer = new DataLayer(_configuration);
-            return dataLayer.getPlayer(0);
+            var player = context.Players.ToList();
+
+            return new OkObjectResult(player);
+
+          /*  return Json(new
+            {
+                Message = "Hello from a private endpoint! You need to be authenticated to see this."
+            });*/
         }
 
         // GET api/player/5
         [HttpGet("{id}", Name = "getPlayer")]
-        public IEnumerable<Player> Get(int id)
+        public IActionResult GetPlayerById(int id)
         {
-            DataLayer dataLayer = new DataLayer(_configuration);
-            return dataLayer.getPlayer(id);
+            var player = context.Players.SingleOrDefault(t => t.PlayerId == id);
+
+            return new OkObjectResult(player);
         }
 
         // POST api/player
         [HttpPost]
-        public void Post([FromBody]string value)
+        public IActionResult AddPlayer([FromBody] Players newPlayer)
         {
+            Players player = newPlayer;
+
+            context.Players.Add(player);
+            context.SaveChanges();
+            return new OkObjectResult(player);
         }
 
         // PUT api/player/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public IActionResult UpdatePlayer(int id, [FromBody] Players updatePlayer)
         {
+            var player = context.Players.Find(updatePlayer.PlayerId);
+
+            if (player == null)
+            {
+                return NotFound();
+            }
+
+            player.PlayerId = updatePlayer.PlayerId;
+
+            if (updatePlayer.TeamId != null)
+                player.TeamId = updatePlayer.TeamId;
+            if (updatePlayer.AreaId != null)
+                player.AreaId = updatePlayer.AreaId;
+            if (updatePlayer.AuthId != null)
+                player.AuthId = updatePlayer.AuthId;
+            if (updatePlayer.PlayerUsername != null)
+                player.PlayerUsername = updatePlayer.PlayerUsername;
+            if (updatePlayer.PlayerEmail != null)
+                player.PlayerEmail = updatePlayer.PlayerEmail;
+            if (updatePlayer.PlayerTitle != null)
+                player.PlayerTitle = updatePlayer.PlayerTitle;
+            if (updatePlayer.PlayerLevel != null)
+                player.PlayerLevel = updatePlayer.PlayerLevel;
+            if (updatePlayer.PlayerExp != null)
+                player.PlayerExp = updatePlayer.PlayerExp;
+            if (updatePlayer.PlayerSilverCoins != null)
+                player.PlayerSilverCoins = updatePlayer.PlayerSilverCoins;
+            if (updatePlayer.PlayerTroops != null)
+                player.PlayerTroops = updatePlayer.PlayerTroops;
+            if (updatePlayer.PlayerReserveTroops != null)
+                player.PlayerReserveTroops = updatePlayer.PlayerReserveTroops;
+       
+            context.Players.Update(player);
+            context.SaveChanges();
+            return new OkObjectResult(player);
+
         }
 
         // DELETE api/player/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult DeletePlayer(int id)
         {
+            var player = context.Players.Find(id);
+
+            if (player == null)
+            {
+                return NotFound();
+            }
+
+            context.Players.Remove(player);
+            context.SaveChanges();
+            return NoContent();
         }
     }
 }

@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Risk_REST.DataLayerClasses;
 using Risk_REST.Models;
+using Risk_REST.Services.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,40 +14,68 @@ namespace Risk_REST.Controllers
     public class AreaController : Controller
     {
 
-        IConfiguration _configuration;
+        private readonly Risk_AntwerpContext context;
 
-        public AreaController(IConfiguration configuration)
+        public AreaController(Risk_AntwerpContext context)
         {
-            _configuration = configuration;
+            this.context = context;
         }
 
 
         // GET api/area
         [HttpGet]
-        public IEnumerable<Area> Get()
+        public IActionResult GetAllAreas()
         {
-            DataLayer dataLayer = new DataLayer(_configuration);
-            return dataLayer.getArea(0);
+            //var area = context.Area.Include("Positions").ToList();
+            var area = context.Area.ToList();
+            return new OkObjectResult(area);
         }
 
         // GET api/area/5
         [HttpGet("{id}", Name = "getArea")]
-        public IEnumerable<Area> Get(int id)
+        public IActionResult GetAreaById(int id)
         {
-            DataLayer dataLayer = new DataLayer(_configuration);
-            return dataLayer.getArea(id);
+            var area = context.Area.SingleOrDefault(t => t.AreaId == id);
+
+            return new OkObjectResult(area);
         }
 
         // POST api/area
         [HttpPost]
-        public void Post([FromBody]string value)
+        public IActionResult AddArea([FromBody] Area newArea)
         {
+            Area area = newArea;
+
+            context.Area.Add(area);
+            context.SaveChanges();
+            return new OkObjectResult(area);
         }
 
         // PUT api/area/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public IActionResult Put(int id, [FromBody] Area updateArea)
         {
+            var area = context.Area.Find(updateArea.AreaId);
+
+            if (area == null)
+            {
+                return NotFound();
+            }
+
+            area.AreaId = updateArea.AreaId;
+
+            if (updateArea.AreaOccupiedBy != null)
+                area.AreaOccupiedBy = updateArea.AreaOccupiedBy;
+            if (updateArea.AreaId != null)
+                area.AreaId = updateArea.AreaId;
+            if (updateArea.AreaName != null)
+                area.AreaName = updateArea.AreaName;
+            if (updateArea.DefendingTroops != null)
+                area.DefendingTroops = updateArea.DefendingTroops;
+
+            context.Area.Update(area);
+            context.SaveChanges();
+            return new OkObjectResult(area);
         }
 
         // DELETE api/area/5

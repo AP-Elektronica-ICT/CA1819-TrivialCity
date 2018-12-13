@@ -15,6 +15,7 @@ import { BattlePhaseContPage } from '../pages/battle-phase-cont/battle-phase-con
 
 // Import Auth0Cordova
 import Auth0Cordova from '@auth0/cordova';
+import { TeamViewPage } from '../pages/teamView/teamView';
 
 
 @Component({
@@ -49,7 +50,7 @@ export class MyApp {
       { title: 'List', component: ListPage },
       { title: 'Map', component: MapPage },
       { title: 'Army', component: ArmyPage },
-      { title: 'Team', component: TeamPage },
+      { title: 'Team', component: TeamViewPage },
       { title: 'Register', component: RegisterPage },
       { title: 'Battle Phase', component: BattlePhasePage },
       { title: 'Profile', component: ProfilePage },

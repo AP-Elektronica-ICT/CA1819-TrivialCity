@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Http.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Risk_REST.Controllers
 {
+    [EnableCors("*", "*", "*")]
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {

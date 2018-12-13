@@ -32,14 +32,14 @@ export class AuthService {
   login() {
     this.loading = true;
     const options = {
-      scope: 'openid profile offline_access'
+      scope: 'openid profile read:app' // aanpassen!!!!
     };
     // Authorize login request with Auth0: open login page and get auth results
     this.Client.authorize(options, (err, authResult) => {
       if (err) {
         throw err;
       }
-      //allert zelf toegevoegd
+      //allert toegevoegd
       /*
       let alert = this.alertCtrl.create({
         message: JSON.stringify(authResult)
@@ -58,7 +58,7 @@ export class AuthService {
       // Set logged in
       this.loading = false;
       this.loggedIn = true;
-      
+
       // Fetch user's profile info
       this.Auth0.client.userInfo(this.accessToken, (err, profile) => {
         if (err) {

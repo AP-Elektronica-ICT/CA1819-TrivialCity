@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Risk_REST.DataLayerClasses;
 using Risk_REST.Models;
+using Risk_REST.Services.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,28 +14,60 @@ namespace Risk_REST.Controllers
     public class TeamController : Controller
     {
 
-        IConfiguration _configuration;
+        private readonly Risk_AntwerpContext context;
 
-        public TeamController(IConfiguration configuration)
+        public TeamController(Risk_AntwerpContext context)
         {
-            _configuration = configuration;
+            this.context = context;
         }
 
 
         // GET api/team
         [HttpGet]
-        public IEnumerable<Team> Get()
+        public IActionResult GetAllTeams()
         {
-            DataLayer dataLayer = new DataLayer(_configuration);
-            return dataLayer.getTeam(0);
+            var team = context.Teams.ToList();
+                  
+
+
+
+            if (team == null)
+            {
+                return NotFound();
+            }
+
+            return new OkObjectResult(team);
         }
 
         // GET api/team/5
         [HttpGet("{id}", Name = "getTeam")]
-        public IEnumerable<Team> Get(int id)
+        public IActionResult GetTeamById(int id)
         {
-            DataLayer dataLayer = new DataLayer(_configuration);
-            return dataLayer.getTeam(id);
+            var team = context.Teams.SingleOrDefault(t => t.TeamId == id);
+                
+            //.Include(t => t.Players).SingleOrDefault(t => t.TeamId == id);
+
+            if (team == null)
+            {
+                return NotFound();
+            }
+
+            return new OkObjectResult(team);
+        }
+
+        [HttpGet("{id}/players", Name = "getTeamPlayers")]
+        public IActionResult GetTeamPlayersById(int id)
+        {
+            var team = context.Teams
+                .Where(m => m.TeamId == id)
+                .Select(m => m.Players).Single();
+
+            if (team == null)
+            {
+                return NotFound();
+            }
+
+            return new OkObjectResult(team);
         }
 
         // POST api/team
@@ -45,8 +78,28 @@ namespace Risk_REST.Controllers
 
         // PUT api/team/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public IActionResult UpdateTeam(int id, [FromBody] Teams updateTeam )
         {
+            var team = context.Teams.Find(updateTeam.TeamId);
+
+            if (team == null)
+            {
+                return NotFound();
+            }
+
+            team.TeamId = updateTeam.TeamId;
+
+            if (updateTeam.TeamColor != null)
+                team.TeamColor = updateTeam.TeamColor;
+            if (updateTeam.TeamTotalOccupiedAreas != null)
+                team.TeamTotalOccupiedAreas = updateTeam.TeamTotalOccupiedAreas;
+            if (updateTeam.Players != null)
+                team.Players = updateTeam.Players;
+
+            context.Teams.Update(team);
+            context.SaveChanges();
+            return new OkObjectResult(team);
+
         }
 
         // DELETE api/team/5

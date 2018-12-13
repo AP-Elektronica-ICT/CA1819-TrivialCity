@@ -8,16 +8,17 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-      <ion-icon [name]="item.icon" item-start></ion-icon>
-      {{item.title}}
-      <div class="item-note" item-end>
-        {{item.note}}
-      </div>
-    </button>
-  </ion-list>
-  <div *ngIf="selectedItem" padding>
-    You navigated here from <b>{{selectedItem.title}}</b>
+
+
+  <button ion-button block color="primary" *ngIf="auth.loggedIn" (click)="Check()">Get Token</button>
+
+  <div *ngIf="PlayerData">
+
+    <h2>{{PlayerData.PlayerUsername}}</h2>
+
   </div>
+  <h2>test</h2>
+  <button ion-button block color="primary" (click)="Check2()">Get players</button>
+
+
 </ion-content>
