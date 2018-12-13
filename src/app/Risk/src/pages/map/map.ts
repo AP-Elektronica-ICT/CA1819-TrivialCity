@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, AlertController } from 'ionic-angular';
 import leaflet from 'leaflet';
 import { DeviceOrientation, DeviceOrientationCompassHeading } from '@ionic-native/device-orientation';
 import { Geolocation } from '@ionic-native/geolocation';
@@ -46,6 +46,7 @@ export class MapPage {
   polygonsLayer;
 
   battleBtnIsVisible = false;
+  supportBtnIsVisible = false;
 
   loop;
 
@@ -72,7 +73,8 @@ export class MapPage {
     private deviceOrientation: DeviceOrientation,
     private geolocation: Geolocation,
     private platform: Platform,
-    private service: ApiService) {
+    private service: ApiService,
+    private alertCtrl: AlertController) {
 
     this.service.GetInfo(this.service.GetYourId()).subscribe(data => {
       this.player = data
@@ -203,7 +205,6 @@ export class MapPage {
           playerId: `${this.player.playerId}`,
           areaId: `${this.playerAreaId}`
         }).subscribe(data => this.player = data)
-        console.log(this.player)
       })
     })
 
@@ -273,9 +274,11 @@ export class MapPage {
 
           if (this.polygons[i].options.color != this.playerTeam.teamColor) {
             this.battleBtnIsVisible = true;
+            this.supportBtnIsVisible = false;
           }
           else {
             this.battleBtnIsVisible = false;
+            this.supportBtnIsVisible = true;
           }
         }
         else {
@@ -283,5 +286,49 @@ export class MapPage {
         }
       }
     }
+  }
+
+  supportArea() {
+    let alert = this.alertCtrl.create({
+      title: 'Send Troops',
+      subTitle: `You currently have ${this.player.playerTroops} troops remaining`,
+      inputs: [
+        {
+          name: 'amount',
+          placeholder: 'Amount',
+          type: 'number',
+        }
+      ],
+      buttons: [
+        {
+          text: 'Send',
+          handler: data => {
+            data.amount = Math.floor(data.amount);
+            if (data.amount <= 0 || data.amount > this.player.playerTroops) {
+              this.errorAlert();
+            }
+            else {
+              this.player.playerTroops -= data.amount;
+              this.service.PutArea(this.areas[this.player.areaId].areaId, {
+                areaId: this.areas[this.player.areaId].areaId,
+                defendingTroops: `${this.player.playerTroops}`,
+              }).subscribe(data => {
+                this.areas[this.player.areaId] = data;
+              })
+            }
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  errorAlert() {
+    let errorAlert = this.alertCtrl.create({
+      title: 'Invalid Amount',
+      subTitle: 'Please insert a valid amount of troops.',
+      buttons: ['Dismiss']
+    });
+    errorAlert.present();
   }
 }
