@@ -38,9 +38,9 @@ export class BattlePhaseContPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad BattlePhaseContPage');
 
-    this.service.GetInfo(this.service.GetYourId()).subscribe(data => {
+    this.service.GetPlayer(this.service.GetYourId()).subscribe(data => {
       this.player = data
-      this.service.getArea(this.player.areaId).subscribe(data => {
+      this.service.GetArea(this.player.areaId).subscribe(data => {
         this.area = data
         this.getPlayerDiceResults();
         this.getBotDiceResults();

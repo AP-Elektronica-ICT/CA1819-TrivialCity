@@ -27,10 +27,12 @@
   <div class="container">
   <!--<button ion-button block color="primary" (click)="test()">Get player</button>-->
   <ion-item>
-  <ion-label color="primary">Reserve Troops</ion-label>
+  <ion-label color="primary">Reserve Troops:</ion-label>
     <ion-input [(ngModel)]="troopsSend" placeholder="0"></ion-input>
   </ion-item>
-  <button ion-button block color="primary" (click)="MoveTroops(0)">Send 2 your location</button>
+  <button ion-button block color="primary"
+  [disabled]="isenabled"
+  (click)="MoveTroops(0)">Send 2 your location</button>
 </div>
   
 </ion-content>

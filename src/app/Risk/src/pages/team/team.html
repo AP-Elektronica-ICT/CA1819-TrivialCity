@@ -6,24 +6,26 @@
 -->
 <ion-header>
   <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
     <ion-title>Team</ion-title>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content>
+ 
   <div style="margin:auto;text-align: center" padding>
     <div *ngIf="Teams">
       <div *ngIf="PlayerInfo"></div>
       <h1 style="text-align: center">Welcome, pick your team</h1>
+      <ion-item>
+        <ion-label color="primary">Your Username:</ion-label>
+          <ion-input [(ngModel)]="pUsername" placeholder="Username"></ion-input>
+        </ion-item>
       <div *ngFor="let t of Teams">
         <button ion-button [color]="light" style="width: 300px" (click)="TeamPicked(t.teamColor)">{{t.teamColor}}</button>
       </div>
-      <button ion-button [color]="light" style="width: 300px; margin-top: 20px" (click)="ConfirmedClicked()">Confirm</button>
-      <button ion-button [color]="light" style="width: 300px; margin-top: 20px" (click)="CheckPlayerInfo()">Check Info</button>
+      <button ion-button [color]="light" style="width: 300px; margin-top: 20px" (click)="ConfirmedTeam()">Confirm</button>
+      <button ion-button [color]="light" style="width: 300px; margin-top: 20px" (click)="GoPlayerInfo()">Check Info</button>
     </div>
   </div>
 </ion-content>
