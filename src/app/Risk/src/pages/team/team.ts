@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
 import { ApiService, Team, Player } from '../../services/api.service';
 import { ProfilePage } from '../profile/profile';
 import { AuthService } from '../../services/auth.service';
+import { delay } from 'rxjs/operators';
 
 /**
  * Generated class for the TeamPage page.
@@ -21,6 +22,7 @@ export class TeamPage {
   Teams: Team[] = [];
   PlayerInfo: Player;
   TeamId: number;
+  pUsername: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private service: ApiService, private alertC: AlertController, public auth: AuthService) {
   }
@@ -28,12 +30,10 @@ export class TeamPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad TeamPage');
     this.service.GetTeams().subscribe(data => this.Teams = data);
-    this.service.GetInfo(this.service.GetYourId()).subscribe(data => this.PlayerInfo = data);
+   // this.service.GetInfo(this.service.GetYourId()).subscribe(data => this.PlayerInfo = data);
   }
 
-  CheckPlayerInfo() {
-    console.log("TeamId: " + this.PlayerInfo.teamId);
-  }
+  
 
   TeamPicked(color: string) {
 
@@ -41,49 +41,58 @@ export class TeamPage {
 
     if (color == "Blue") {
       this.TeamId = 1;
-      this.service.PutPlayer(this.service.GetYourId(),
-        {
-          playerId: this.service.GetYourId(),
-          teamId: this.TeamId
-        }
-      ).subscribe(data => this.PlayerInfo = data);
     }
 
     if (color == "Red") {
       this.TeamId = 2;
-      this.service.PutPlayer(this.service.GetYourId(),
-        {
-          playerId: this.service.GetYourId(),
-          teamId: this.TeamId
-        }
-      ).subscribe(data => this.PlayerInfo = data);
     }
 
     if (color == "Green") {
       this.TeamId = 3;
-      this.service.PutPlayer(this.service.GetYourId(),
-        {
-          playerId: this.service.GetYourId(),
-          teamId: this.TeamId
-        }
-      ).subscribe(data => this.PlayerInfo = data);
     }
 
     if (color == "Yellow") {
       this.TeamId = 4;
-      this.service.PutPlayer(this.service.GetYourId(),
-        {
-          playerId: this.service.GetYourId(),
-          teamId: this.TeamId
-        }
-      ).subscribe(data => this.PlayerInfo = data);
     }
 
   }
 
-  ConfirmedClicked() {
+  ConfirmedTeam() {
+    this.PostPlayer();
+  }
+
+  GoPlayerInfo() {
+    //console.log("TeamId: " + this.PlayerInfo.teamId);
+    //console.log(this.PlayerInfo);
     this.navCtrl.setRoot(ProfilePage);
   }
+
+
+PostPlayer(){
+this.service.PostPlayer({
+  "teamId": `${this.TeamId}`,
+  "playerUsername": `${this.pUsername}`,
+  "playerEmail": "auth0email",
+  "playerTitle": "AntwerpBeginner",
+  "playerLevel": 0,
+  "playerExp": 0,
+  "playerSilverCoins": 0,
+  "playerTroops": 20,
+  "playerReserveTroops": 100,
+  "authId": "4545",
+}).subscribe(data => {this.PlayerInfo = data 
+  this.service.ChangeId(this.PlayerInfo.playerId);
+});
+}
+
+
+
+
+
+
+
+
+
 
   Alert(message: string) {
     let Alertm = this.alertC.create({
