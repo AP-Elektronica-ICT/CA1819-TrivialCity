@@ -5,14 +5,41 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>Profile</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
-<ion-content padding>
-  <div>ProfilePage</div>
+<ion-content *ngIf="PlayerInfo" padding class="profile">
+  <ion-grid>
+    <ion-row style="margin-top: 40px">
+      <ion-column>
+        <div class="name">Username: {{PlayerInfo.playerUsername}}</div>
+      </ion-column>
+      <ion-column style="margin-left: 70px">
+        <button ion-button [color]="light">Change name</button>
+      </ion-column>
+    </ion-row>
+    <ion-row style="margin-top: 5px">
+      <div class="email">Email: {{PlayerInfo.playerEmail}}</div>
+    </ion-row>
+    <ion-row style="margin-top: 5px">
+      <div class="title">Title: {{PlayerInfo.playerTitle}}</div>
+    </ion-row>
+    <ion-row style="margin-top: 5px">
+      <ion-column>
+        <div class="level">Level: {{PlayerInfo.playerLevel}}</div>
+      </ion-column>
+      <ion-column style="margin-left: 40px">
+        <div class="exp">Experience: {{PlayerInfo.playerExp}}</div>
+      </ion-column>
+    </ion-row>
+    <ion-row style="margin-top: 5px">
+      <div class="coins">Coins: {{PlayerInfo.playerSilverCoins}}</div>
+    </ion-row>
+  </ion-grid>
 </ion-content>

@@ -32,16 +32,20 @@ export class RegisterPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RegisterPage');
-    this.service.GetInfo(this.service.GetYourId()).subscribe(data => this.PlayerInfo = data);
+    this.service.GetPlayer(this.service.GetYourId()).subscribe(data => this.PlayerInfo = data);
   }
   Go2App() {
+    this.navCtrl.setRoot(TeamPage);
+    //this.navCtrl.setRoot(TeamPage);
+    /*
     if (this.PlayerInfo.teamId == null) {
       this.navCtrl.setRoot(TeamPage);
     }
 
     if (this.PlayerInfo.teamId != null) {
-      this.navCtrl.setRoot(ProfilePage)
+      this.navCtrl.setRoot(TeamPage)
     }
+    */
   }
 
 
