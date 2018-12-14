@@ -62,5 +62,40 @@ namespace Risk_REST.UserTesting
 
         }
 
+        [Fact]
+        public void  TestAllPlayers()
+        {
+           
+            var controller = new PlayerController(new Risk_AntwerpContext());
+           
+            var actionResult =  controller.GetAllPlayers();
+ 
+            actionResult.Should().BeOfType<OkObjectResult>();
+        }
+
+        [Fact]
+        public void TestAllTeams()
+        {
+
+            var controller = new TeamController(new Risk_AntwerpContext());
+
+            var actionResult = controller.GetAllTeams();
+
+            actionResult.Should().BeOfType<OkObjectResult>();
+        }
+
+        [Fact]
+        public void TestAllAreas()
+        {
+
+            var controller = new AreaController(new Risk_AntwerpContext());
+
+            var actionResult = controller.GetAllAreas();
+
+            actionResult.Should().BeOfType<OkObjectResult>();
+        }
+
+       
+
     }
 }

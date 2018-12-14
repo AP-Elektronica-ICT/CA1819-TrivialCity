@@ -82,8 +82,16 @@ namespace Risk_REST.Controllers
 
         // POST api/team
         [HttpPost]
-        public void Post([FromBody]string value)
+        public IActionResult AddTeam([FromBody] Teams newTeam)
         {
+            Teams team = new Teams();
+            team = newTeam;
+
+            context.Teams.Add(team);
+            context.SaveChanges();
+            return new OkObjectResult(team);
+
+           
         }
 
         // PUT api/team/5
