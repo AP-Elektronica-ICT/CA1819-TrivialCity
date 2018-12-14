@@ -76,7 +76,7 @@ export class MapPage {
     private service: ApiService,
     private alertCtrl: AlertController) {
 
-    this.service.GetInfo(this.service.GetYourId()).subscribe(data => {
+    this.service.GetPlayer(this.service.GetYourId()).subscribe(data => {
       this.player = data
       this.service.GetTeam(this.player.teamId).subscribe(data => this.playerTeam = data)
       this.service.GetArea(this.player.areaId)
