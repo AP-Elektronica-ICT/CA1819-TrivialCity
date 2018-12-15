@@ -14,32 +14,16 @@
 </ion-header>
 
 
-<ion-content *ngIf="PlayerInfo" padding class="profile">
-  <ion-grid>
-    <ion-row style="margin-top: 40px">
-      <ion-column>
-        <div class="name">Username: {{PlayerInfo.playerUsername}}</div>
-      </ion-column>
-      <ion-column style="margin-left: 70px">
-        <button ion-button [color]="light">Change name</button>
-      </ion-column>
-    </ion-row>
-    <ion-row style="margin-top: 5px">
-      <div class="email">Email: {{PlayerInfo.playerEmail}}</div>
-    </ion-row>
-    <ion-row style="margin-top: 5px">
-      <div class="title">Title: {{PlayerInfo.playerTitle}}</div>
-    </ion-row>
-    <ion-row style="margin-top: 5px">
-      <ion-column>
-        <div class="level">Level: {{PlayerInfo.playerLevel}}</div>
-      </ion-column>
-      <ion-column style="margin-left: 40px">
-        <div class="exp">Experience: {{PlayerInfo.playerExp}}</div>
-      </ion-column>
-    </ion-row>
-    <ion-row style="margin-top: 5px">
-      <div class="coins">Coins: {{PlayerInfo.playerSilverCoins}}</div>
-    </ion-row>
-  </ion-grid>
+<ion-content padding class="profile">
+
+    <div class="container"  *ngIf="playerInfo">  
+            <h2>Username:  {{playerInfo.playerUsername}} </h2> 
+            <h2>Email:  {{playerInfo.playerEmail}}</h2> 
+            <h2>Title:  {{playerInfo.playerTitle}} </h2>
+            <h2>Level:  {{playerInfo.playerLevel}} </h2>
+            <h2>Exp:  {{playerInfo.playerExp}}</h2>
+            <h2>SilverCoins:  {{playerInfo.playerSilverCoins}} </h2>
+    </div>
+    <button ion-button block color="primary" (click)="ChangeUsername()">Change Username</button>
+  
 </ion-content>
