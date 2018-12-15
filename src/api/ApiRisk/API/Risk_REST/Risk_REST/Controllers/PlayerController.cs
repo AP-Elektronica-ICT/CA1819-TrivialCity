@@ -28,9 +28,6 @@ namespace Risk_REST.Controllers
             this.context = context;
         }
 
-        public PlayerController()
-        {
-        }
 
 
         // GET api/player
