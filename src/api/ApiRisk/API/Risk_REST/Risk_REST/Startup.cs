@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Risk_REST.Auth;
 using Risk_REST.Services.Data;
 using Risk_REST.Services;
+using Risk_REST.Hubs;
 
 namespace Risk_REST
 {
@@ -37,6 +38,7 @@ namespace Risk_REST
                 .AllowAnyHeader();
             }));
 
+            services.AddSignalR();
             services.AddMvc();
             services.AddDbContext<Risk_AntwerpContext>(options => options.UseSqlServer(@"Server=risk-antwerp.database.windows.net,1433;Initial Catalog=Risk_Antwerp;Persist Security Info=False;User ID=Risk_Antwerp;Password=R1sk_4ntw3rp;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
 
@@ -100,8 +102,15 @@ namespace Risk_REST
                 app.UseExceptionHandler("/Home/Error");
             }
 
+
             app.UseStaticFiles();
             app.UseCors("myPolicy");
+
+
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<NotificationHub>("notification");
+            });
 
             //  app.UseCors(builder => builder.AllowAnyOrigin());
             //app.UseMvc();
