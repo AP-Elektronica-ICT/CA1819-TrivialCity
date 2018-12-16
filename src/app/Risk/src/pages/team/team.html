@@ -11,7 +11,7 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content class ="team">
  
   <div style="margin:auto;text-align: center" padding>
     <div *ngIf="Teams">
@@ -24,8 +24,8 @@
       <div *ngFor="let t of Teams">
         <button ion-button [color]="light" style="width: 300px" (click)="TeamPicked(t.teamColor)">{{t.teamColor}}</button>
       </div>
-      <button ion-button [color]="light" style="width: 300px; margin-top: 20px" (click)="ConfirmedTeam()">Confirm</button>
-      <button ion-button [color]="light" style="width: 300px; margin-top: 20px" (click)="GoPlayerInfo()">Check Info</button>
+      <button ion-button [color]="light" style="width: 300px; margin-top: 20px" (click)="ConfirmedTeam()">Confirm Team</button>
+      <button ion-button [color]="light"  [disabled]="isenabled" style="width: 300px; margin-top: 20px" (click)="GoPlayerInfo()">Go to your profile</button>
     </div>
   </div>
 </ion-content>
