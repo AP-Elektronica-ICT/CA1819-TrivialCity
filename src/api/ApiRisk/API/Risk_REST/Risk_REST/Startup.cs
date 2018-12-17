@@ -64,28 +64,10 @@ namespace Risk_REST
                 options.AddPolicy("read:app", policy => policy.Requirements.Add(new HasScopeRequirement("read:app", domain)));
             });
 
-            /* services.AddCors(options =>
-             {
-                 options.AddPolicy("CorsPolicy",
-                     builder => builder.AllowAnyOrigin()
-                     //.WithOrigins("http://localhost:8080/", "http://localhost:8100/", "http://192.168.0.177/*" )
-                     .AllowAnyMethod()
-                     .AllowAnyHeader()
-                     .AllowAnyOrigin()
-                     .AllowCredentials());
-                     //.WithHeaders("Access-Control-Allow-Methods", "*"));
-
-
-             });*/
-
+           
           
 
 
-          //  services.AddCors();
-
-
-            //services.AddCors();
-           // services.AddMvc();
             //services.AddScoped<>
 
 
@@ -109,6 +91,7 @@ namespace Risk_REST
 
 
             app.UseStaticFiles();
+
             app.UseCors("myPolicy");
 
 
@@ -117,24 +100,8 @@ namespace Risk_REST
                 routes.MapHub<NotificationHub>("/notification");
             });
 
-            //  app.UseCors(builder => builder.AllowAnyOrigin());
-            //app.UseMvc();
-            //    app.UseCors(Microsoft.AspNetCore.Cors.EnableCorsAttribute.);
-
-
-            /*  app.UseCors(builder =>
-              builder.WithOrigins("http://*")
-             .AllowAnyHeader()
-               );*/
-            /*app.UseCors(options => options.WithOrigins("http://localhost:8100/")
-                            .AllowAnyMethod()
-                            .AllowAnyHeader()
-                            .AllowCredentials()
-                           .WithMethods("GET", "POST")
-                           .WithHeaders("Access-Control-Allow-Methods", "*")
-
-                       );*/
-            // 2. Enable authentication middleware
+            
+            //  Enable authentication middleware
             app.UseAuthentication();
 
             app.UseMvc(routes =>

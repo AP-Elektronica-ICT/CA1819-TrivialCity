@@ -28,6 +28,9 @@ export class ListPage implements OnInit {
     
   }
   ionViewDidLoad() {
+  }
+  
+  ngOnInit(): void {
     this.hubConnection = new HubConnection("http://localhost:53169/notification/")//.withUrl("http://localhost:53169/api/notification/").build();//("http://localhost:53169/api/notification/");
 
  
@@ -40,23 +43,6 @@ export class ListPage implements OnInit {
       console.log(data);
     });
 
-   // this.hubConnection.onClosed();
-    
-   /*this.hubConnection.onClosed((e) => {
-    console.log('Connection closed!', e);
-  });*/
-  //  console.log(this.hubConnection.onClosed());
-
-  }
-  ngOnInit(): void {
-   /* let connection = new HubConnection("http://localhost:53169/notification");
-
-    connection.on("send",data => {
-      console.log(data);
-    });
-
-    connection.start()
-    .then(() =>  console.log("Connected"));*/
   }
 
 Check(){
@@ -66,12 +52,9 @@ Check(){
 Check2(){
   this.service.GetPlayers().subscribe(data => this.PlayerData = data);
   console.log(this.PlayerData);
-  ///this.service.testPost();
+  //this.service.testPost();
 
-  this.hubConnection.start()
-    .then(() => {console.log("Connected");}).catch(err => {console.error(err);});
-    //.then(() =>  console.log("Connected"));
-  this.hubConnection.send("Send","lala");
+  
 }
 
 
