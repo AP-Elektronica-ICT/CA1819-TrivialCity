@@ -30,15 +30,20 @@ namespace Risk_REST
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSignalR();
 
             services.AddCors(o => o.AddPolicy("myPolicy", builder =>
             {
                 builder.AllowAnyOrigin()
                 .AllowAnyMethod()
+                .AllowCredentials()
                 .AllowAnyHeader();
+                
+
             }));
 
-            services.AddSignalR();
+           
+
             services.AddMvc();
             services.AddDbContext<Risk_AntwerpContext>(options => options.UseSqlServer(@"Server=risk-antwerp.database.windows.net,1433;Initial Catalog=Risk_Antwerp;Persist Security Info=False;User ID=Risk_Antwerp;Password=R1sk_4ntw3rp;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
 
@@ -109,7 +114,7 @@ namespace Risk_REST
 
             app.UseSignalR(routes =>
             {
-                routes.MapHub<NotificationHub>("notification");
+                routes.MapHub<NotificationHub>("/notification");
             });
 
             //  app.UseCors(builder => builder.AllowAnyOrigin());

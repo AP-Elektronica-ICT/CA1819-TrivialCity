@@ -10,7 +10,7 @@ namespace Risk_REST.Hubs
     {
         public Task Send(string message)
         {
-            return Clients.All.InvokeAsync("Send", message);
+            return Clients.All.SendAsync("Send", message);//InvokeAsync("Send", message);
         }
     }
 }

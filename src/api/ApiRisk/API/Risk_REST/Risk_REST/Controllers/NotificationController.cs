@@ -38,7 +38,7 @@ namespace Risk_REST.Controllers
         [HttpPost]
         public IActionResult Post()
         {
-            _notificationHubContext.Clients.All.InvokeAsync("Send", "Under attack");
+            _notificationHubContext.Clients.All.SendAsync("Send", "Under attack");//InvokeAsync("Send", "Under attack");
             return Ok();
         }
 

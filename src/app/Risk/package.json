@@ -20,7 +20,7 @@
     "@angular/http": "5.2.11",
     "@angular/platform-browser": "5.2.11",
     "@angular/platform-browser-dynamic": "5.2.11",
-    "@aspnet/signalr-client": "1.1.0",
+    "@aspnet/signalr": "1.0.0-preview2-final",
     "@auth0/cordova": "^0.3.0",
     "@ionic-native/core": "~4.15.0",
     "@ionic-native/device-orientation": "^4.16.0",

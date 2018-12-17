@@ -4,7 +4,7 @@ import { ApiService, Player } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import {HubConnection} from '@aspnet/signalr-client';
+import {HubConnection} from '@aspnet/signalr';
 
 
 @Component({
@@ -28,16 +28,24 @@ export class ListPage implements OnInit {
     
   }
   ionViewDidLoad() {
-    this.hubConnection = new HubConnection("http://localhost:53169/notification");
+    this.hubConnection = new HubConnection("http://localhost:53169/notification/")//.withUrl("http://localhost:53169/api/notification/").build();//("http://localhost:53169/api/notification/");
 
-    this.hubConnection.on("Send",data => {
-      console.log(data);
-    });
+ 
 
     this.hubConnection.start()
     .then(() => {console.log("Connected");}).catch(err => {console.error(err);});
     //.then(() =>  console.log("Connected"));
 
+    this.hubConnection.on("Send",data => {
+      console.log(data);
+    });
+
+   // this.hubConnection.onClosed();
+    
+   /*this.hubConnection.onClosed((e) => {
+    console.log('Connection closed!', e);
+  });*/
+  //  console.log(this.hubConnection.onClosed());
 
   }
   ngOnInit(): void {
@@ -59,7 +67,11 @@ Check2(){
   this.service.GetPlayers().subscribe(data => this.PlayerData = data);
   console.log(this.PlayerData);
   ///this.service.testPost();
-  this.hubConnection.invoke("Send","lala");
+
+  this.hubConnection.start()
+    .then(() => {console.log("Connected");}).catch(err => {console.error(err);});
+    //.then(() =>  console.log("Connected"));
+  this.hubConnection.send("Send","lala");
 }
 
 
