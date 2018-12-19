@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Properties\PublishProfiles\RiskREST20181213105517 - Web Deploy.pubxml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

@@ -14,9 +14,9 @@ namespace Risk_REST.Controllers
     public class AreaController : Controller
     {
 
-        private readonly Risk_AntwerpContext context;
+        private readonly Risk_Antwerp_dbContext context;
 
-        public AreaController(Risk_AntwerpContext context)
+        public AreaController(Risk_Antwerp_dbContext context)
         {
             this.context = context;
         }
@@ -64,8 +64,8 @@ namespace Risk_REST.Controllers
 
             area.AreaId = updateArea.AreaId;
 
-            if (updateArea.AreaOccupiedBy != null)
-                area.AreaOccupiedBy = updateArea.AreaOccupiedBy;
+            if (updateArea.TeamId != null)
+                area.TeamId = updateArea.TeamId;
             if (updateArea.AreaId != null)
                 area.AreaId = updateArea.AreaId;
             if (updateArea.AreaName != null)
