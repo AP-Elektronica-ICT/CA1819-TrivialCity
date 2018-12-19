@@ -52,7 +52,9 @@ export class ApiService extends BaseService {
 
   }
 
-
+  testPost() {
+    return this.http.post(`${this.baseApi}/notification`,  this.httpHeader);
+  }
 
   GetPlayers(): Observable<Player[]> {
     return this.http.get<Player[]>(`${this.baseApi}/player`, this.httpHeader);

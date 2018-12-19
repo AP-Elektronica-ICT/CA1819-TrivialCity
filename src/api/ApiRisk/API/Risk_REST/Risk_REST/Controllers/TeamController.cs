@@ -14,9 +14,9 @@ namespace Risk_REST.Controllers
     public class TeamController : Controller
     {
 
-        private readonly Risk_AntwerpContext context;
+        private readonly Risk_Antwerp_dbContext context;
 
-        public TeamController(Risk_AntwerpContext context)
+        public TeamController(Risk_Antwerp_dbContext context)
         {
             this.context = context;
         }
