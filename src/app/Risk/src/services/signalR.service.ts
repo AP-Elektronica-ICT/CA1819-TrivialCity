@@ -11,14 +11,18 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import { HubConnection } from '@aspnet/signalr';
 import { AlertController } from 'ionic-angular';
+import { ApiService } from './api.service';
 
 
 @Injectable()
 export class SignalrService  {
   
     hubConnection: HubConnection;
-  
-    constructor(private alertC: AlertController) {
+    teamDefend : number;
+    yourTeam : number;
+
+
+    constructor(private alertC: AlertController , private service: ApiService) {
     
   }
 
@@ -32,15 +36,23 @@ export class SignalrService  {
     //.then(() =>  console.log("Connected"));
 
     this.hubConnection.on("Send",data => {
+      if(this.teamDefend == this.yourTeam){
       console.log(data);
       this.Alert(data);
+      }
     });
 
   }
 
+  SendMessage(message : string ){
+    this.hubConnection.invoke("Send", `${message}`);
+  }
 
-  SendMessage(){
-    this.hubConnection.invoke("Send", "Under Attack!");
+
+  SendMessageAttack(message : string , team : number ){
+    this.teamDefend = team;
+    this.yourTeam = Number(this.service.GetYourTeam());
+    this.hubConnection.invoke("Send", `${message}`);
   }
 
   Alert(message: string) {

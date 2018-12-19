@@ -20,6 +20,8 @@ export class ListPage implements OnInit {
 
   test: Observable<any>;
 
+  team : number;
+
   _number : string = "1";
   PlayerData: Player[] = [];
   hubConnection: HubConnection;
@@ -48,15 +50,20 @@ export class ListPage implements OnInit {
   }
 
 Check(){
-  this.service.GetToken();
+  //this.service.GetToken();
+  this.service.ChangeId(4);
 }
 
 Check2(){
-  this.service.GetPlayers().subscribe(data => this.PlayerData = data);
-  console.log(this.PlayerData);
+  //this.service.GetPlayers().subscribe(data => this.PlayerData = data);
+ // console.log(this.PlayerData);
   //this.service.testPost();
  // this.hubConnection.invoke("Send", "Under Attack!");
-  this.SingalRservice.SendMessage();
+  //this.SingalRservice.SendMessage("Under attack");
+  //this.service.GetYourTeam().subscribe(data => this.team = data);
+  this.SingalRservice.SendMessageAttack("Your Team is under attack!" , 2);
+  //console.log(this.team);
+  
 }
 
 

@@ -53,6 +53,14 @@ namespace Risk_REST.Controllers
             return new OkObjectResult(player);
         }
 
+        [HttpGet("{id}/team", Name = "getPlayerTeam")]
+        public IActionResult GetPlayerTeamById(int id)
+        {
+            var player = context.Players.SingleOrDefault(t => t.PlayerId == id);
+
+            return new OkObjectResult(player.TeamId);
+        }
+
         // POST api/player
         [HttpPost]
         public IActionResult AddPlayer([FromBody] Players newPlayer)
