@@ -5,6 +5,7 @@ import { AuthService } from '../../services/auth.service';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import {HubConnection} from '@aspnet/signalr';
+import { SignalrService } from '../../services/signalR.service';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class ListPage implements OnInit {
   PlayerData: Player[] = [];
   hubConnection: HubConnection;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams ,  private service: ApiService ,public auth: AuthService ,private alertC: AlertController ) {
+  constructor(public navCtrl: NavController, public navParams: NavParams ,  private service: ApiService ,public auth: AuthService ,private alertC: AlertController, private SingalRservice: SignalrService ) {
     // If we navigated to this page, we will have an item available as a nav param
     
   }
@@ -31,7 +32,7 @@ export class ListPage implements OnInit {
   }
   
   ngOnInit(): void {
-    this.hubConnection = new HubConnection("http://localhost:53169/notification/")//.withUrl("http://localhost:53169/api/notification/").build();//("http://localhost:53169/api/notification/");
+    /*this.hubConnection = new HubConnection("http://localhost:53169/notification/")//.withUrl("http://localhost:53169/api/notification/").build();//("http://localhost:53169/api/notification/");
 
  
 
@@ -43,7 +44,7 @@ export class ListPage implements OnInit {
       console.log(data);
       this.Alert(data);
     });
-
+*/
   }
 
 Check(){
@@ -54,8 +55,8 @@ Check2(){
   this.service.GetPlayers().subscribe(data => this.PlayerData = data);
   console.log(this.PlayerData);
   //this.service.testPost();
-  this.hubConnection.invoke("Send", "Under Attack!");
-  
+ // this.hubConnection.invoke("Send", "Under Attack!");
+  this.SingalRservice.SendMessage();
 }
 
 

@@ -12,5 +12,7 @@ namespace Risk_REST.Hubs
         {
             return Clients.All.SendAsync("Send", message);//InvokeAsync("Send", message);
         }
+
+  
     }
 }
