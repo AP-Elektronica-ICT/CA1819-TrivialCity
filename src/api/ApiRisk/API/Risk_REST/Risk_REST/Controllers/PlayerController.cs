@@ -29,6 +29,7 @@ namespace Risk_REST.Controllers
         }
 
 
+
         // GET api/player
         [HttpGet]
         public IActionResult GetAllPlayers()
@@ -56,7 +57,8 @@ namespace Risk_REST.Controllers
         [HttpPost]
         public IActionResult AddPlayer([FromBody] Players newPlayer)
         {
-            Players player = newPlayer;
+            Players player = new Players();
+            player = newPlayer;
 
             context.Players.Add(player);
             context.SaveChanges();
@@ -64,7 +66,7 @@ namespace Risk_REST.Controllers
         }
 
         // PUT api/player/5
-        [HttpPut("{id}")]
+        [HttpPut("{id}", Name = "putPlayer")]
         public IActionResult UpdatePlayer(int id, [FromBody] Players updatePlayer)
         {
             var player = context.Players.Find(updatePlayer.PlayerId);

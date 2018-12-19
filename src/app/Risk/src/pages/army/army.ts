@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { ApiService, Player } from '../../services/api.service';
 import { NgProgressService } from 'ng2-progressbar';
@@ -19,6 +19,7 @@ export class ArmyPage {
 
   public troopsSend: number;
   playerInfo: Player;//[] = [];
+  isenabled: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private service: ApiService, private alertC: AlertController, private pService: NgProgressService) {
   }
@@ -27,7 +28,7 @@ export class ArmyPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ArmyPage');
-    this.service.GetInfo(this.service.GetYourId()).subscribe(data => this.playerInfo = data);
+    this.service.GetPlayer(this.service.GetYourId()).subscribe(data => this.playerInfo = data);
 
   }
 
@@ -40,11 +41,12 @@ export class ArmyPage {
 
   MoveTroops(_troops: number) {
     _troops = Number(this.troopsSend);
+    this.isenabled = true;
     if (_troops != null && _troops != 0 && _troops > 0) {
       this.Alert("Troops are now walking 2 your location!");
       this.pService.start();
       setTimeout(() => {
-        this.service.PutInfo(this.service.GetYourId(),
+        this.service.PutPlayer(this.service.GetYourId(),
           {
             playerId: this.service.GetYourId(),
             playerTroops: `${(this.playerInfo.playerTroops) + _troops}`,
@@ -53,6 +55,7 @@ export class ArmyPage {
           .subscribe(data => this.playerInfo = data);
         this.Alert("Troops has arrived!");
         this.pService.done();
+        this.isenabled = false;
       }, 10000);
     }
     else
@@ -63,7 +66,7 @@ export class ArmyPage {
 
   Alert(message: string) {
     let Alertm = this.alertC.create({
-      message: `${message}`
+      message: `${message}`,
     });
     Alertm.present();
   }

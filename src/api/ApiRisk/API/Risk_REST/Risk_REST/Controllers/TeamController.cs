@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+    
 namespace Risk_REST.Controllers
 {
     [Route("api/team")]
@@ -70,10 +70,28 @@ namespace Risk_REST.Controllers
             return new OkObjectResult(team);
         }
 
+        [HttpGet("{id}/teamcolor", Name = "getTeamColor")]
+        public IActionResult GetTeamColor(int id)
+        {
+            var teamcolor = context.Teams
+                .Where(m => m.TeamId == id)
+                .Select(m => m.TeamColor).SingleOrDefault();
+
+            return new OkObjectResult(teamcolor);
+        }
+
         // POST api/team
         [HttpPost]
-        public void Post([FromBody]string value)
+        public IActionResult AddTeam([FromBody] Teams newTeam)
         {
+            Teams team = new Teams();
+            team = newTeam;
+
+            context.Teams.Add(team);
+            context.SaveChanges();
+            return new OkObjectResult(team);
+
+           
         }
 
         // PUT api/team/5
