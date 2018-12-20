@@ -5,6 +5,7 @@ import { BattlePhaseContPage } from '../battle-phase-cont/battle-phase-cont';
 import { ApiService, Player, Area } from '../../services/api.service';
 import { ThrowStmt } from '@angular/compiler';
 import { delay } from 'rxjs/operators';
+import { SplashScreen } from '@ionic-native/splash-screen';
 import { SignalrService } from '../../services/signalR.service';
 
 /**
@@ -29,17 +30,19 @@ export class BattlePhasePage {
 
   errormsg: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public service: ApiService , private SingalRservice: SignalrService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public service: ApiService, private splashScreen: SplashScreen ,private SingalRservice: SignalrService) {
+
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BattlePhasePage');
-
+    this.splashScreen.show();
     this.service.GetPlayer(this.service.GetYourId()).subscribe(data => {
       this.player = data;
       this.service.GetArea(this.player.areaId).subscribe(data => {
         this.area = data
         this.getBotDiceAmount();
+        this.splashScreen.hide();
       })
     })
     
