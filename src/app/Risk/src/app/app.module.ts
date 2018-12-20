@@ -27,6 +27,7 @@ import { Http, HttpModule } from '@angular/http';
 import {NgProgressModule} from "ng2-progressbar"
 import { TeamViewPage } from '../pages/teamView/teamView';
 import { TeamViewModule } from '../pages/teamView/teamView.module';
+import { SignalrService } from '../services/signalR.service';
 
 
 @NgModule({
@@ -73,6 +74,7 @@ import { TeamViewModule } from '../pages/teamView/teamView.module';
     SplashScreen,
     Geolocation,
     ApiService,
+    SignalrService,
     //HTTP,
     //Storage,
     AuthService,

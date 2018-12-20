@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -16,19 +16,24 @@ import { BattlePhaseContPage } from '../pages/battle-phase-cont/battle-phase-con
 // Import Auth0Cordova
 import Auth0Cordova from '@auth0/cordova';
 import { TeamViewPage } from '../pages/teamView/teamView';
+import { SignalrService } from '../services/signalR.service';
 
 
 @Component({
   templateUrl: 'app.html'
 })
-export class MyApp {
+export class MyApp implements OnInit{
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = RegisterPage;
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  ngOnInit(): void {
+    this.SingalRservice.RunSignalR();
+  }
+
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen , private SingalRservice: SignalrService) {
     this.initializeApp();
 
     platform.ready().then(() => {

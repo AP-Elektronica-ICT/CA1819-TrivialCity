@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { ApiService, Player } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import {HubConnection} from '@aspnet/signalr';
+import { SignalrService } from '../../services/signalR.service';
 
 
 @Component({
@@ -19,11 +20,13 @@ export class ListPage implements OnInit {
 
   test: Observable<any>;
 
+  team : number;
+
   _number : string = "1";
   PlayerData: Player[] = [];
   hubConnection: HubConnection;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams ,  private service: ApiService ,public auth: AuthService ) {
+  constructor(public navCtrl: NavController, public navParams: NavParams ,  private service: ApiService ,public auth: AuthService ,private alertC: AlertController, private SingalRservice: SignalrService ) {
     // If we navigated to this page, we will have an item available as a nav param
     
   }
@@ -31,7 +34,7 @@ export class ListPage implements OnInit {
   }
   
   ngOnInit(): void {
-    this.hubConnection = new HubConnection("http://localhost:53169/notification/")//.withUrl("http://localhost:53169/api/notification/").build();//("http://localhost:53169/api/notification/");
+    /*this.hubConnection = new HubConnection("http://localhost:53169/notification/")//.withUrl("http://localhost:53169/api/notification/").build();//("http://localhost:53169/api/notification/");
 
  
 
@@ -41,20 +44,34 @@ export class ListPage implements OnInit {
 
     this.hubConnection.on("Send",data => {
       console.log(data);
+      this.Alert(data);
     });
-
+*/
   }
 
 Check(){
-  this.service.GetToken();
+  //this.service.GetToken();
+  this.service.ChangeId(4);
 }
 
 Check2(){
-  this.service.GetPlayers().subscribe(data => this.PlayerData = data);
-  console.log(this.PlayerData);
+  //this.service.GetPlayers().subscribe(data => this.PlayerData = data);
+ // console.log(this.PlayerData);
   //this.service.testPost();
-
+ // this.hubConnection.invoke("Send", "Under Attack!");
+  //this.SingalRservice.SendMessage("Under attack");
+  //this.service.GetYourTeam().subscribe(data => this.team = data);
+  this.SingalRservice.SendMessageAttack("Your Team is under attack!" , 2);
+  //console.log(this.team);
   
+}
+
+
+Alert(message: string) {
+  let Alertm = this.alertC.create({
+    message: `${message}`,
+  });
+  Alertm.present();
 }
 
 
