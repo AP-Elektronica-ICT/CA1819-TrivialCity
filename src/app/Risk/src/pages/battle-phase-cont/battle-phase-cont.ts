@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { BattlePhasePage } from '../battle-phase/battle-phase';
 import { ApiService, Player, Area } from '../../services/api.service';
+import { MapPage } from '../map/map';
 
 /**
  * Generated class for the BattlePhaseContPage page.
@@ -163,5 +164,12 @@ export class BattlePhaseContPage {
         buttons: ['Dismiss']
       });
       errorAlert.present();
+  }
+
+  GoToMap(){
+    this.navCtrl.push(MapPage);
+  }
+  GoToBattlePhase(){
+    this.navCtrl.push(BattlePhasePage);
   }
 }

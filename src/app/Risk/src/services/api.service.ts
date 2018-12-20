@@ -112,6 +112,10 @@ export class ApiService extends BaseService {
     return this.http.get<Position[]>(`${this.baseApi}/area/${_number}/positions`, this.httpHeader);
   }
 
+  getAreaPlayers(_number: number): Observable<Player[]> {
+    return this.http.get<Player[]>(`${this.baseApi}/area/${_number}/players`, this.httpHeader);
+  }
+
   GetYourTeam(){
     return this.http.get(`${this.baseApi}/player/${this.GetYourId}/team`, this.httpHeader);
   }

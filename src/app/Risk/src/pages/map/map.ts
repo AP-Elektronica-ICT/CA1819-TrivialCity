@@ -46,6 +46,13 @@ export class MapPage {
   polygons: any[];
   polygonsLayer;
 
+  centerMarkers: any[];
+  centerMarkersLayer = leaflet.featureGroup();
+  centerMarkerOptions = leaflet.icon({
+    iconUrl: '../assets/imgs/mpbattle.png',
+    iconSize: [32, 32]
+  })
+
   battleBtnIsVisible = false;
   supportBtnIsVisible = false;
 
@@ -55,6 +62,8 @@ export class MapPage {
     iconUrl: '../assets/imgs/playericon.png',
     iconSize: [24, 24]
   })
+
+
 
   playerMarker = leaflet.marker([this.playerLocation.lat, this.playerLocation.lng],
     {
@@ -68,6 +77,12 @@ export class MapPage {
   seefhoek;
   borgerhout;
   kaai;
+  //center of every individual polygon with coordinates
+  denDamCenter;
+  eilandjeCenter;
+  seefhoekCenter;
+  borgerhoutCenter;
+  kaaiCenter;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -83,6 +98,23 @@ export class MapPage {
       this.service.GetArea(this.player.areaId)
       this.service.GetAreas().subscribe(data => this.areas = data)
       if (this.areas != undefined && this.areas.length >= 0) {
+
+        this.service.getAreaPlayers(1).subscribe(data => {
+          this.areas[0].players = data
+          this.service.getAreaPlayers(2).subscribe(data => {
+            this.areas[1].players = data
+            this.service.getAreaPlayers(3).subscribe(data => {
+              this.areas[2].players = data
+              this.service.getAreaPlayers(4).subscribe(data => {
+                this.areas[3].players = data
+                this.service.getAreaPlayers(5).subscribe(data => {
+                  this.areas[4].players = data
+                })
+              })
+            })
+          })
+        })
+
         this.service.getAreaPositions(1).subscribe(data => {
           this.areas[0].positions = data
           this.service.getAreaPositions(2).subscribe(data => {
@@ -176,7 +208,21 @@ export class MapPage {
                     [this.areas[4].positions[9].latitude, this.areas[4].positions[9].longitude],
                   ], { color: this.colorSelector(this.areas[4].teamId), title: 5 })
 
+                  this.denDamCenter = leaflet.marker([this.areas[0].positions[11].latitude, this.areas[0].positions[11].longitude], {icon: this.centerMarkerOptions});
+                  this.borgerhoutCenter = leaflet.marker([this.areas[1].positions[14].latitude, this.areas[1].positions[14].longitude], {icon: this.centerMarkerOptions});
+                  this.eilandjeCenter = leaflet.marker([this.areas[2].positions[14].latitude, this.areas[2].positions[14].longitude], {icon: this.centerMarkerOptions});
+                  this.seefhoekCenter = leaflet.marker([this.areas[3].positions[14].latitude, this.areas[3].positions[14].longitude], {icon: this.centerMarkerOptions});
+                  this.kaaiCenter = leaflet.marker([this.areas[4].positions[10].latitude, this.areas[4].positions[10].longitude], {icon: this.centerMarkerOptions});
+                  
+                  this.centerMarkers = [this.denDamCenter, this.eilandjeCenter, this.seefhoekCenter, this.borgerhoutCenter, this.kaaiCenter];
+
+                  //Polygon Array
+                  this.polygons = [this.denDam, this.eilandje, this.seefhoek, this.borgerhout, this.kaai];
+                  //Add every individual polygon to the polygon layer
+                  this.polygonsLayer = leaflet.featureGroup(this.polygons);
+
                   this.loadmap();
+
                 });
               });
             });
@@ -198,12 +244,14 @@ export class MapPage {
         .subscribe(position => {
           this.playerMarker.setLatLng([position.coords.latitude, position.coords.longitude])
           this.playerLocation.lat = position.coords.latitude,
-          this.playerLocation.lng = position.coords.longitude
+            this.playerLocation.lng = position.coords.longitude
         })
       const loop = Observable.interval(1000).subscribe((val) => {
         this.territoryChecker();
-        if(this.playerAreaIdArray && this.playerAreaId){
-          console.log(this.playerAreaIdArray[this.playerAreaId]);
+        if(this.areas){
+          this.AreaActivityChecker();
+        }
+        if (this.playerAreaIdArray && this.playerAreaId) {
           this.service.PutPlayer(this.player.playerId, {
             playerId: `${this.player.playerId}`,
             areaId: `${this.playerAreaIdArray[this.playerAreaId]}`
@@ -229,11 +277,6 @@ export class MapPage {
 
 
   loadmap() {
-
-    //Polygon Array
-    this.polygons = [this.denDam, this.eilandje, this.seefhoek, this.borgerhout, this.kaai];
-    //Add every individual polygon to the polygon layer
-    this.polygonsLayer = leaflet.featureGroup(this.polygons);
 
     // This adds the map to the screen
     this.map = leaflet.map("map").fitWorld();
@@ -261,10 +304,10 @@ export class MapPage {
     }).on('locationerror', (err) => {
       alert(err.message);
     })
-    //This adds custom district polygons to the map
-
+    //Add the area polygons layer to the map
     this.polygonsLayer.addTo(this.map);
 
+    this.centerMarkersLayer.addTo(this.map);
 
   }
 
@@ -287,8 +330,20 @@ export class MapPage {
         }
         else {
           this.playerAreaIdArray[i] = 0;
-          this.battleBtnIsVisible = false;
-          this.supportBtnIsVisible = false;
+        }
+      }
+      if (this.player.areaId == 0) {
+        this.battleBtnIsVisible = false;
+        this.supportBtnIsVisible = false;
+      }
+    }
+  }
+
+  AreaActivityChecker() {
+    if (this.areas && this.centerMarkers) {
+      for (let i = 0; i < this.centerMarkers.length; i++) {
+        if (this.areas[i].players.length > 1 /*this number decides how many players are needed to display 'multi player battle marker'*/) {
+          this.centerMarkers[i].addTo(this.centerMarkersLayer);
         }
       }
     }
