@@ -31,9 +31,11 @@ export class ListPage implements OnInit {
     
   }
   ionViewDidLoad() {
+    
   }
   
   ngOnInit(): void {
+    //this.SingalRservice.RunSignalR();
     /*this.hubConnection = new HubConnection("http://localhost:53169/notification/")//.withUrl("http://localhost:53169/api/notification/").build();//("http://localhost:53169/api/notification/");
 
  
@@ -51,7 +53,8 @@ export class ListPage implements OnInit {
 
 Check(){
   //this.service.GetToken();
-  this.service.ChangeId(4);
+  //this.service.ChangeId(1);
+  this.SingalRservice.JoinTeam("TeamBlue");
 }
 
 Check2(){
@@ -61,9 +64,21 @@ Check2(){
  // this.hubConnection.invoke("Send", "Under Attack!");
   //this.SingalRservice.SendMessage("Under attack");
   //this.service.GetYourTeam().subscribe(data => this.team = data);
-  this.SingalRservice.SendMessageAttack("Your Team is under attack!" , 2);
+ // this.SingalRservice.SendMessageAttack("Your Team is under attack!" , 2);
   //console.log(this.team);
-  
+  //this.SingalRservice.SendMessageAttack("Your Team is under attack!" , 2);
+  this.SingalRservice.JoinTeam("TeamRed");
+}
+
+Check3(){
+  //this.service.GetToken();
+  //this.service.ChangeId(4);
+  this.SingalRservice.JoinTeam("TeamYellow");
+}
+Check4(){
+  //this.service.GetToken();
+  //this.service.ChangeId(10);
+  this.SingalRservice.SendAttackMessage("under attack" , 1);
 }
 
 

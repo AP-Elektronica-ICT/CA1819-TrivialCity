@@ -5,6 +5,7 @@ import { BattlePhaseContPage } from '../battle-phase-cont/battle-phase-cont';
 import { ApiService, Player, Area } from '../../services/api.service';
 import { ThrowStmt } from '@angular/compiler';
 import { delay } from 'rxjs/operators';
+import { SignalrService } from '../../services/signalR.service';
 
 /**
  * Generated class for the BattlePhasePage page.
@@ -28,7 +29,7 @@ export class BattlePhasePage {
 
   errormsg: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public service: ApiService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public service: ApiService , private SingalRservice: SignalrService) {
   }
 
   ionViewDidLoad() {
@@ -41,6 +42,7 @@ export class BattlePhasePage {
         this.getBotDiceAmount();
       })
     })
+    
 
   }
 
@@ -68,6 +70,9 @@ export class BattlePhasePage {
   }
 
   goToBattlePhaseCont() {
+    if(this.area != undefined && this.area != null ){
+      this.SingalRservice.SendAttackMessage("Your team is under Attack" , this.area.teamId);
+      }
     this.navCtrl.push(BattlePhaseContPage, {
       data: {
         botDiceAmount: this.botDiceAmount,

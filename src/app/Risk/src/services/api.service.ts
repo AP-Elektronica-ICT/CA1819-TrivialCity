@@ -154,9 +154,8 @@ export interface Area {
   areaName: string;
   defendingTroops: number;
   teamId: number;
-  team?: any;
-  players: any[];
-  positions: any[];
+  players: Player[];
+  positions: Position[];
 }
 
 export interface Position {

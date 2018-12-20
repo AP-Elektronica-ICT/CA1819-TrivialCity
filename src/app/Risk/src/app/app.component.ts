@@ -33,6 +33,12 @@ export class MyApp implements OnInit{
   ngOnInit(): void {
     this.SingalRservice.RunSignalR();
   }
+  /*ionViewDidLoad() {
+    this.SingalRservice.RunSignalR();
+  }*/
+
+  
+
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen , private SingalRservice: SignalrService) {
     this.initializeApp();
