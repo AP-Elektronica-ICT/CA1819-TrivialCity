@@ -65,12 +65,19 @@ namespace Risk_REST.Controllers
         [HttpPost]
         public IActionResult AddPlayer([FromBody] Players newPlayer)
         {
-            Players player = new Players();
-            player = newPlayer;
+            try
+            {
+                Players player = new Players();
+                player = newPlayer;
 
-            context.Players.Add(player);
-            context.SaveChanges();
-            return new OkObjectResult(player);
+                context.Players.Add(player);
+                context.SaveChanges();
+                return new OkObjectResult(player);
+            }
+            catch(Exception exception)
+            {
+                return new OkObjectResult(new Players() { PlayerEmail = exception.InnerException.ToString() });
+            }
         }
 
         // PUT api/player/5

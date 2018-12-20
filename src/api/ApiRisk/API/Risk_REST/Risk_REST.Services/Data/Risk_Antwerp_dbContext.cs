@@ -48,8 +48,6 @@ namespace Risk_REST.Services.Data
             {
                 entity.HasKey(e => e.PlayerId);
 
-                entity.Property(e => e.PlayerId).ValueGeneratedNever();
-
                 entity.Property(e => e.AuthId)
                     .HasColumnName("Auth_Id")
                     .HasMaxLength(100);

@@ -28,6 +28,7 @@ import {NgProgressModule} from "ng2-progressbar"
 import { TeamViewPage } from '../pages/teamView/teamView';
 import { TeamViewModule } from '../pages/teamView/teamView.module';
 import { SignalrService } from '../services/signalR.service';
+import { ShopPage } from '../pages/shop/shop';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import { SignalrService } from '../services/signalR.service';
     ProfilePage,
     BattlePhaseContPage,
     TeamViewPage,
+    ShopPage
   ],
   imports: [
     BrowserModule,
@@ -64,7 +66,8 @@ import { SignalrService } from '../services/signalR.service';
     TeamViewPage,
     BattlePhasePage,
     ProfilePage,
-    BattlePhaseContPage
+    BattlePhaseContPage,
+    ShopPage
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

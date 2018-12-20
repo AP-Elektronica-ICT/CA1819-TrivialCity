@@ -17,6 +17,7 @@ import { BattlePhaseContPage } from '../pages/battle-phase-cont/battle-phase-con
 import Auth0Cordova from '@auth0/cordova';
 import { TeamViewPage } from '../pages/teamView/teamView';
 import { SignalrService } from '../services/signalR.service';
+import { ShopPage } from '../pages/shop/shop';
 
 
 @Component({
@@ -59,6 +60,7 @@ export class MyApp implements OnInit{
       { title: 'Register', component: RegisterPage },
       { title: 'Battle Phase', component: BattlePhasePage },
       { title: 'Profile', component: ProfilePage },
+      { title: 'Shop', component: ShopPage },
     ];
 
   }
