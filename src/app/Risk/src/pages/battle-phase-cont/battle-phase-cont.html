@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar hideBackButton>
     <ion-title>BattlePhase-cont</ion-title>
   </ion-navbar>
 
@@ -49,6 +49,11 @@
     </ion-row>
     <ion-row style="margin: auto" *ngIf="area.defendingTroops <= 0">
       <button ion-button [color]="danger" (click)="CaptureArea()">Capture</button>
+    </ion-row>
+    <ion-row style="margin: auto">
+      <button ion-button [color]="danger" (click)="GoToBattlePhase()">Fight Again</button>
+      <br>
+      <button ion-button [color]="danger" (click)="GoToMap()">Return to the map</button>
     </ion-row>
   </ion-grid>
 </ion-content>

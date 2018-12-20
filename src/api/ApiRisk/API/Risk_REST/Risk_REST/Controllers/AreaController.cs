@@ -55,6 +55,21 @@ namespace Risk_REST.Controllers
             return new OkObjectResult(area);
         }
 
+        [HttpGet("{id}/players", Name = "getAreaPlayers")]
+        public IActionResult GetAreaPlayersById(int id)
+        {
+            var area = context.Area
+                .Where(m => m.AreaId == id)
+                .Select(m => m.Players).Single();
+
+            if(area == null)
+            {
+                return NotFound();
+            }
+
+            return new OkObjectResult(area);
+        }
+
         // POST api/area
         [HttpPost]
         public IActionResult AddArea([FromBody] Area newArea)
