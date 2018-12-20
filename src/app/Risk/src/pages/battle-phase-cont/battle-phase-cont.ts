@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
 import { BattlePhasePage } from '../battle-phase/battle-phase';
 import { ApiService, Player, Area } from '../../services/api.service';
 import { MapPage } from '../map/map';
+import { ConsoleLogger } from '@aspnet/signalr';
+import { SplashScreen } from '@ionic-native/splash-screen';
 
 /**
  * Generated class for the BattlePhaseContPage page.
@@ -22,6 +24,8 @@ export class BattlePhaseContPage {
   playerTeamColor: any;
   area: Area;
 
+  silverCoins: number = 0;
+
   captureConfirmed: Boolean = false;
 
   lowestDiceAmount: number = 0;
@@ -33,7 +37,11 @@ export class BattlePhaseContPage {
   imgSrc_Bot: any[] = [];
   imgSrc_Player: any[] = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public service: ApiService, public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, 
+    public navParams: NavParams, 
+    public service: ApiService, 
+    public alertCtrl: AlertController,
+    private splashScreen: SplashScreen) {
     this.results = navParams.get('data');
     this.battleResults[0] = this.results.playerDiceAmount;
     this.battleResults[1] = this.results.botDiceAmount;
@@ -41,7 +49,7 @@ export class BattlePhaseContPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BattlePhaseContPage');
-
+    this.splashScreen.show();
     this.service.GetPlayer(this.service.GetYourId()).subscribe(data => {
       this.player = data
       this.service.GetTeam(this.player.teamId).subscribe(data => this.playerTeamColor = data.teamColor)
@@ -50,6 +58,7 @@ export class BattlePhaseContPage {
         this.getPlayerDiceResults();
         this.getBotDiceResults();
         this.getBattleResults();
+        this.splashScreen.hide();
       });
     });
   }
@@ -87,6 +96,8 @@ export class BattlePhaseContPage {
       else {
         if (this.playerResults[i] && this.botResults[i]) {
           if (this.playerResults[i] > this.botResults[i]) {
+            this.silverCoins += Math.floor((Math.random()*10)+1)
+            console.log(this.silverCoins);
             this.area.defendingTroops -= 1;
             this.battleResults[1] -= -1;
             if(this.area.defendingTroops < 0){
@@ -97,6 +108,10 @@ export class BattlePhaseContPage {
               defendingTroops: `${this.area.defendingTroops}`
             }).subscribe(data => {
               this.area = data;
+            })
+            this.service.PutPlayer(this.player.playerId,{
+              playerId: this.player.playerId,
+              playerSilverCoins: this.player.playerSilverCoins + this.silverCoins
             })
           }
           else {

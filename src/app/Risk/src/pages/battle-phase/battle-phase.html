@@ -9,7 +9,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Battle Phase</ion-title>
+    <ion-title>Battle Phase pt. 1</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -17,17 +17,23 @@
 <ion-content padding *ngIf="area && player" class="bg">
   <ion-grid style="text-align: center" *ngIf="player.areaId != 0">
     <ion-row>
-      <ion-column style="margin: auto">
-        <h3>Battle Phase</h3>
+      <ion-column style="margin: auto; margin-top: 48px">
+        <h3> You are currently fighting for {{area.areaName}}</h3>
         <br>
         <p>{{area.defendingTroops}} enemy troops remaining</p>
         <br>
         <p>The enemy will fight with {{botDiceAmount}} troops!</p>
-        <img src="../../assets/imgs/Teams/Red/Soldiers/mguard_s_1.png">
+        <div *ngIf="botDiceAmount == 1">
+          <img src="../../assets/imgs/Teams/Red/Soldiers/mguard_s_1.png" class="soldier-small">
+        </div>
+        <div *ngIf="botDiceAmount == 2">
+            <img src="../../assets/imgs/Teams/Red/Soldiers/mguard_s_1.png" class="soldier-small">
+            <img src="../../assets/imgs/Teams/Red/Soldiers/mguard_s_1.png" class="soldier-small">
+          </div>
       </ion-column>
     </ion-row>
     <ion-row>
-      <ion-column style="margin: auto">
+      <ion-column style="margin: auto; margin-top: 8px;">
         <h5>Select with how many dices you want to attack</h5>
         <br>
         <button class="diceBtn" ion-button [color]="light" (click)="getPlayerDiceAmount(1)">1 Die</button>
@@ -41,19 +47,32 @@
     </ion-row>
     <ion-row>
       <ion-column style="margin: auto">
-        <img src="../../assets/imgs/Teams/Red/Soldiers/mguard_s_1.png">
+        <div *ngIf="playerDiceAmount == 1">
+              <img src="../../assets/imgs/Teams/Red/Soldiers/mguard_s_1.png" class="soldier-small">
+        </div>
+        <div *ngIf="playerDiceAmount == 2">
+            <img src="../../assets/imgs/Teams/Red/Soldiers/mguard_s_1.png" class="soldier-small">
+            <img src="../../assets/imgs/Teams/Red/Soldiers/mguard_s_1.png" class="soldier-small">
+      </div>
+      <div *ngIf="playerDiceAmount == 3">
+          <img src="../../assets/imgs/Teams/Red/Soldiers/mguard_s_1.png" class="soldier-small">
+          <img src="../../assets/imgs/Teams/Red/Soldiers/mguard_s_1.png" class="soldier-small">
+          <img src="../../assets/imgs/Teams/Red/Soldiers/mguard_s_1.png" class="soldier-small">
+    </div>
         <br>
         <h6>{{player.playerTroops}} friendly troops remaining</h6>
         <br>
-        <button ion-button [color]="danger" (click)="goToBattlePhaseCont()">Fight!</button>
+        <button ion-button [color]="danger" *ngIf="playerDiceAmount != 0" (click)="goToBattlePhaseCont()">Fight!</button>
       </ion-column>
     </ion-row>
   </ion-grid>
   <ion-grid text-center style="margin-top: 50px" *ngIf="player.areaId == 0">
-    <ion-row style="margin: 0 auto;">
-      <h3>You are not in a (capturable) zone!</h3>
-      <br>
-      <p>please return to a capturable zone to in order to battle.</p>
+    <ion-row style="margin: 0 auto; text-align: center">
+      <ion-column style="margin: auto">
+          <h3>You are not in a (capturable) zone!</h3>
+          <br>
+          <p>please return to a capturable zone to in order to battle.</p>
+      </ion-column>
     </ion-row>
   </ion-grid>
 </ion-content>

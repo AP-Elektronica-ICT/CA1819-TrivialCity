@@ -2,12 +2,13 @@ page-battle-phase {
     
 }
 
-.bg{
-    background: url("../../assets/imgs/12.png") repeat;
-    color: lightgray
+.soldier-small{
+    width: 96px;
+    height: 96px; 
 }
 
 .button.diceBtn{
-    width: 256px;
+    width: 128px;
+    height: 24px;
 }
 
