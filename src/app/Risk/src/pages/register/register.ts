@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
 import { AuthService } from '../../services/auth.service';
 import { HomePage } from '../home/home';
 import { TeamPage } from '../team/team';
@@ -23,7 +23,11 @@ export class RegisterPage {
   PlayerInfo: Player;
   // user: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public auth: AuthService, private service: ApiService) {
+  constructor(public navCtrl: NavController, 
+    public navParams: NavParams, 
+    public auth: AuthService, 
+    private service: ApiService,
+    private menu: MenuController) {
   }
 
   /*ngOnInit(): void {
@@ -32,6 +36,7 @@ export class RegisterPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RegisterPage');
+    this.menu.swipeEnable(false);
     this.service.GetPlayer(this.service.GetYourId()).subscribe(data => this.PlayerInfo = data);
   }
   Go2App() {
@@ -46,6 +51,10 @@ export class RegisterPage {
       this.navCtrl.setRoot(TeamPage)
     }
     */
+  }
+
+  SwipeEnable(){
+    this.menu.swipeEnable(true);
   }
 
 
