@@ -148,10 +148,11 @@ export interface Team {
 export interface Area {
   areaId: number;
   areaName: string;
-  areaOccupiedBy: string;
   defendingTroops: number;
-  players: Player[];
-  positions: Position[];
+  teamId: number;
+  team?: any;
+  players: any[];
+  positions: any[];
 }
 
 export interface Position {
