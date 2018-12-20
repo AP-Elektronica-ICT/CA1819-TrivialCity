@@ -36,6 +36,7 @@ export class MapPage {
 
   player: Player;
   playerTeam: Team;
+  playerAreaIdArray: number[] = [];
   playerAreaId: number;
 
   areas: Area[] = [];
@@ -197,14 +198,17 @@ export class MapPage {
         .subscribe(position => {
           this.playerMarker.setLatLng([position.coords.latitude, position.coords.longitude])
           this.playerLocation.lat = position.coords.latitude,
-            this.playerLocation.lng = position.coords.longitude
+          this.playerLocation.lng = position.coords.longitude
         })
-      const loop = Observable.interval(5000).subscribe((val) => {
+      const loop = Observable.interval(1000).subscribe((val) => {
         this.territoryChecker();
-        this.service.PutPlayer(this.player.playerId, {
-          playerId: `${this.player.playerId}`,
-          areaId: `${this.playerAreaId}`
-        }).subscribe(data => this.player = data)
+        if(this.playerAreaIdArray && this.playerAreaId){
+          console.log(this.playerAreaIdArray[this.playerAreaId]);
+          this.service.PutPlayer(this.player.playerId, {
+            playerId: `${this.player.playerId}`,
+            areaId: `${this.playerAreaIdArray[this.playerAreaId]}`
+          }).subscribe(data => this.player = data)
+        }
       })
     })
 
@@ -229,7 +233,7 @@ export class MapPage {
     //Polygon Array
     this.polygons = [this.denDam, this.eilandje, this.seefhoek, this.borgerhout, this.kaai];
     //Add every individual polygon to the polygon layer
-    this.polygonsLayer = leaflet.featureGroup([this.denDam, this.eilandje, this.seefhoek, this.borgerhout, this.kaai]);
+    this.polygonsLayer = leaflet.featureGroup(this.polygons);
 
     // This adds the map to the screen
     this.map = leaflet.map("map").fitWorld();
@@ -269,8 +273,8 @@ export class MapPage {
       for (let i = 0; i < this.polygons.length; i++) {
         if (this.polygons[i].getBounds().contains(this.playerMarker.getLatLng())) {
 
-          this.playerAreaId = this.polygons[i].options.title;
-          console.log(this.playerAreaId)
+          this.playerAreaIdArray[i] = this.polygons[i].options.title;
+          this.playerAreaId = i;
 
           if (this.polygons[i].options.color != this.playerTeam.teamColor) {
             this.battleBtnIsVisible = true;
@@ -282,7 +286,9 @@ export class MapPage {
           }
         }
         else {
-          this.playerAreaId = 0;
+          this.playerAreaIdArray[i] = 0;
+          this.battleBtnIsVisible = false;
+          this.supportBtnIsVisible = false;
         }
       }
     }
@@ -332,26 +338,21 @@ export class MapPage {
     errorAlert.present();
   }
 
-  colorSelector(teamId: number) {
+  colorSelector(teamId: number): String {
 
     switch (teamId) {
       case 1: {
-        this.color = "Blue";
-        break;
+        return "Blue";
       }
       case 2: {
-        this.color = "Red";
-        break;
+        return "Red";
       }
       case 3: {
-        this.color = "Green";
-        break;
+        return "Green";
       }
       case 4: {
-        this.color = "Yellow";
-        break;
+        return "Yellow";
       }
     }
-
   }
 }
