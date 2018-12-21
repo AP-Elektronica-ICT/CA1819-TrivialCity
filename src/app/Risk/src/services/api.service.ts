@@ -64,7 +64,6 @@ export class ApiService extends BaseService {
     return this.http.post<Player>(`${this.baseApi}/player`, body, this.httpHeader);
   }
 
-
   GetPlayer(_number: number): Observable<Player> {
     return this.http.get<Player>(`${this.baseApi}/player/${_number}`, this.httpHeader);
   }
@@ -76,8 +75,6 @@ export class ApiService extends BaseService {
   GetArea(_number: number): Observable<Area> {
     return this.http.get<Area>(`${this.baseApi}/area/${_number}`, this.httpHeader);
   }
-
-  
 
   PutPlayer(_number: number, body: any): Observable<Player> {
     return this.http.put<Player>(`${this.baseApi}/player/${_number}`, body, this.httpHeader);
@@ -121,10 +118,6 @@ export class ApiService extends BaseService {
   }
 }
 
-
-
-
-
 export interface Player {
   playerId: number;
   teamId: number;
@@ -140,14 +133,12 @@ export interface Player {
   playerReserveTroops: number;
 }
 
-
 export interface Team {
   teamId: number;
   teamColor: string;
   teamTotalOccupiedAreas: number;
   players: Player[];
 }
-
 
 export interface Area {
   areaId: number;
@@ -165,8 +156,6 @@ export interface Position {
   longitude: number;
   area?: any;
 }
-
-
 
 export interface Token {
   access_token: string;

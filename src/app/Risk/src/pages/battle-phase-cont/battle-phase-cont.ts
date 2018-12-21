@@ -21,7 +21,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 export class BattlePhaseContPage {
 
   player: Player;
-  playerTeamColor: any;
   area: Area;
 
   silverCoins: number = 0;
@@ -52,7 +51,6 @@ export class BattlePhaseContPage {
     this.splashScreen.show();
     this.service.GetPlayer(this.service.GetYourId()).subscribe(data => {
       this.player = data
-      this.service.GetTeam(this.player.teamId).subscribe(data => this.playerTeamColor = data.teamColor)
       this.service.GetArea(this.player.areaId).subscribe(data => {
         this.area = data
         this.getPlayerDiceResults();
@@ -155,14 +153,18 @@ export class BattlePhaseContPage {
               }
               else{
                 this.player.playerTroops -= data.amount;
-                this.captureConfirmed = true;
                 this.service.PutArea(this.area.areaId, {
                   areaId: this.area.areaId,
-                  areaOccupiedBy: `${this.playerTeamColor}`,
-                  defendingTroops: `${this.player.playerTroops}`,
+                  teamId: `${this.player.teamId}`,
+                  defendingTroops: `${data.amount}`,
                 }).subscribe(data => {
                   this.area = data;
                 })
+                this.service.PutPlayer(this.player.playerId,{
+                  playerId: this.player.playerId,
+                  playerTroops: `${this.player.playerTroops}`
+                })
+                this.captureConfirmed = true;
               }
             }
           }
