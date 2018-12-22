@@ -50,7 +50,7 @@ export class BattlePhasePage {
   }
 
   getBotDiceAmount() {
-    if (this.area.defendingTroops > 3) {
+    if (this.area.defendingTroops > 2) {
       this.botDiceAmount = Math.floor((Math.random() * 2) + 1);
     }
     else {
