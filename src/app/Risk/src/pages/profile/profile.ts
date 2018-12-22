@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { ApiService, Player } from '../../services/api.service';
+import { AuthService } from '../../services/auth.service';
 
 
 /**
@@ -19,7 +20,7 @@ export class ProfilePage {
 
   playerInfo: Player;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private service: ApiService, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private service: ApiService, public auth: AuthService, private alertCtrl: AlertController) {
   }
 
   ionViewDidLoad() {

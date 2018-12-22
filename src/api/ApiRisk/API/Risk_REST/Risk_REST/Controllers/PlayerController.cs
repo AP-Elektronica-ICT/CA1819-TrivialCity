@@ -53,6 +53,18 @@ namespace Risk_REST.Controllers
             return new OkObjectResult(player);
         }
 
+        [HttpGet("auth0", Name = "getPlayerAuth")]
+        public List<Players> GetAuthId(string id)
+        {
+            IQueryable<Players> query = context.Players;
+
+            
+            query = query.Where(d => d.AuthId == id);
+            
+       
+            return query.ToList();   
+        }
+
         [HttpGet("{id}/team", Name = "getPlayerTeam")]
         public IActionResult GetPlayerTeamById(int id)
         {

@@ -23,7 +23,9 @@ export class TeamPage {
   PlayerInfo: Player;
   TeamId: number;
   pUsername: string;
+  pEmail: string;
   isenabled: boolean = true;
+  isenabled2: boolean = true;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private service: ApiService, private alertC: AlertController, public auth: AuthService) {
   }
@@ -31,6 +33,9 @@ export class TeamPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad TeamPage');
     this.service.GetTeams().subscribe(data => this.Teams = data);
+    
+       
+  
     // this.service.GetInfo(this.service.GetYourId()).subscribe(data => this.PlayerInfo = data);
   }
 
@@ -55,13 +60,15 @@ export class TeamPage {
     if (color == "Yellow") {
       this.TeamId = 4;
     }
+    this.isenabled2 = false;
 
   }
 
   ConfirmedTeam() {
     this.PostPlayer();
-    this.Alert("Team is Confirmed!");
+    this.Alert("Information is Confirmed!");
     this.isenabled = false;
+    this.isenabled2 = true;
 
   }
 
@@ -77,14 +84,14 @@ export class TeamPage {
     this.service.PostPlayer({
       "teamId": `${this.TeamId}`,
       "playerUsername": `${this.pUsername}`,
-      "playerEmail": "auth0email",
+      "playerEmail": `${this.pEmail}`,
       "playerTitle": "AntwerpBeginner",
       "playerLevel": 0,
       "playerExp": 0,
       "playerSilverCoins": 0,
       "playerTroops": 20,
       "playerReserveTroops": 100,
-      "authId": "4545",
+      "authId": `${this.auth.user.sub}`,
     }).subscribe(data => {
     this.PlayerInfo = data
       this.service.ChangeId(this.PlayerInfo.playerId);

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs/Rx';
-import { pluck, share, shareReplay, tap } from 'rxjs/operators';
+import { pluck, share, shareReplay, tap, delay } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import { BaseService } from './base.service';
 import { Body } from '@angular/http/src/body';
@@ -19,11 +19,13 @@ export class ApiService extends BaseService {
 
   AuhtToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5qZ3dSRVl3TkRjMk56aENOMFUwTXprek5rUTJRemxDUTBFNVJrTTRRVGsyUmpCRVF6TTRRUSJ9.eyJpc3MiOiJodHRwczovL2luaWFzLmV1LmF1dGgwLmNvbS8iLCJzdWIiOiJPSDZMdFdQdTZwMnU0VlNuU3ducDRQbmFleGJVVWd6d0BjbGllbnRzIiwiYXVkIjoiaHR0cHM6Ly9BbnR3ZXJwUmlzay9hcGkiLCJpYXQiOjE1NDM1Njg1ODYsImV4cCI6MTU0MzY1NDk4NiwiYXpwIjoiT0g2THRXUHU2cDJ1NFZTblN3bnA0UG5hZXhiVVVnenciLCJndHkiOiJjbGllbnQtY3JlZGVudGlhbHMifQ.k3d5EGEjQESqyoeWv1I4iPdp0JtVEgI-hVmgh2dE0yYwiDibTG-G-o8RvR8U2kMCF5z1tGPhgo3xd0q5LdoQQsF1_-7uUcMjrv6_sEHG1bClWc6S3iAU6tJWLvJKAVEeVX5gn1eyROYsTzu49oG7YfFq7nVp7fHJL-WeeVDX4XfgAe13yOUvizsIET7pNOAxd_o9LGVwmgj_SuaoR2Pbji_JupNDXaBDi6pXSdZ6QtqkZkUQrQrxT5RN24fc7HNKsm6d4ORDhN_mWj8P7hPEYKQH-TK8LjUadq__9riJKywW0YfIaGi3f2wsln4dq0pAIf_76wHEZ0wrvZnrf4cymg";
   PlayerID: number = 2;
+  PlayerInfo: Player;
 
 
   constructor(private http: HttpClient) {
     super();
   }
+
 
   private httpHeader = {
     headers: new HttpHeaders({
@@ -53,14 +55,14 @@ export class ApiService extends BaseService {
   }
 
   testPost() {
-    return this.http.post(`${this.baseApi}/notification`,  this.httpHeader);
+    return this.http.post(`${this.baseApi}/notification`, this.httpHeader);
   }
 
   GetPlayers(): Observable<Player[]> {
     return this.http.get<Player[]>(`${this.baseApi}/player`, this.httpHeader);
   }
 
-  PostPlayer( body: any): Observable<Player> {
+  PostPlayer(body: any): Observable<Player> {
     return this.http.post<Player>(`${this.baseApi}/player`, body, this.httpHeader);
   }
 
@@ -77,7 +79,7 @@ export class ApiService extends BaseService {
     return this.http.get<Area>(`${this.baseApi}/area/${_number}`, this.httpHeader);
   }
 
-  
+
 
   PutPlayer(_number: number, body: any): Observable<Player> {
     return this.http.put<Player>(`${this.baseApi}/player/${_number}`, body, this.httpHeader);
@@ -89,6 +91,12 @@ export class ApiService extends BaseService {
 
   GetYourId(): number {
     return this.PlayerID;
+
+  }
+
+  GetYourAuthId(authId: string): Observable<Player[]> {
+    return this.http.get<Player[]>(`${this.baseApi}/player/auth0?=${authId}`, this.httpHeader);
+
   }
 
   GetTeams(): Observable<Team[]> {
@@ -100,9 +108,9 @@ export class ApiService extends BaseService {
     return this.http.get<Team>(`${this.baseApi}/team/${_number}`, this.httpHeader);
   }
 
-  ChangeId(_id : number){
+  ChangeId(_id: number) {
     this.PlayerID = _id;
-   }
+  }
 
   GetTeamPlayers(_number: number): Observable<Player[]> {
     return this.http.get<Player[]>(`${this.baseApi}/team/${_number}/players`, this.httpHeader);
@@ -116,7 +124,7 @@ export class ApiService extends BaseService {
     return this.http.get<Player[]>(`${this.baseApi}/area/${_number}/players`, this.httpHeader);
   }
 
-  GetYourTeam(){
+  GetYourTeam() {
     return this.http.get(`${this.baseApi}/player/${this.GetYourId}/team`, this.httpHeader);
   }
 }

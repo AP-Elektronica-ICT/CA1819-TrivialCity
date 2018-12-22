@@ -12,7 +12,7 @@
 
 
 <ion-content class="bg">
- 
+  
   <div style="margin:auto;text-align: center" padding>
     <div *ngIf="Teams">
       <div *ngIf="PlayerInfo"></div>
@@ -21,10 +21,14 @@
         <ion-label color="primary">Your Username:</ion-label>
           <ion-input [(ngModel)]="pUsername" placeholder="Username"></ion-input>
         </ion-item>
+        <ion-item>
+          <ion-label color="primary">Your Email:</ion-label>
+          <ion-input [(ngModel)]="pEmail" placeholder="Email"></ion-input>
+        </ion-item>
       <div *ngFor="let t of Teams">
         <button ion-button [color]="light" style="width: 300px" (click)="TeamPicked(t.teamColor)">{{t.teamColor}}</button>
       </div>
-      <button ion-button [color]="light" style="width: 300px; margin-top: 20px" (click)="ConfirmedTeam()">Confirm Team</button>
+      <button ion-button [color]="light" [disabled]="isenabled2" style="width: 300px; margin-top: 20px" (click)="ConfirmedTeam()">Confirm </button>
       <button ion-button [color]="light"  [disabled]="isenabled" style="width: 300px; margin-top: 20px" (click)="GoPlayerInfo()">Go to your profile</button>
     </div>
   </div>
