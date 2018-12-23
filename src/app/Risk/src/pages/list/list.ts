@@ -78,7 +78,7 @@ Check3(){
 Check4(){
   //this.service.GetToken();
   //this.service.ChangeId(10);
-  this.SingalRservice.SendAttackMessage("under attack" , 1);
+  this.SingalRservice.SendAttackMessage("team is under attack" , 4);
 }
 
 

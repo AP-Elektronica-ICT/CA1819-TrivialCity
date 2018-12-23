@@ -1,11 +1,12 @@
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
 import { AuthService } from '../../services/auth.service';
 import { HomePage } from '../home/home';
 import { TeamPage } from '../team/team';
 import { ApiService, Player } from '../../services/api.service';
 import { ProfilePage } from '../profile/profile';
+import { SignalrService } from '../../services/signalR.service';
 
 /**
  * Generated class for the RegisterPage page.
@@ -20,9 +21,9 @@ import { ProfilePage } from '../profile/profile';
   templateUrl: 'register.html',
 })
 export class RegisterPage {
+  
 
-  PlayerInfo1: Player;
-  PlayerInfo2: Player[] = [];
+  PlayerInfo: Player[] = [];
 
   // user: any;
 
@@ -30,6 +31,7 @@ export class RegisterPage {
     public navParams: NavParams,
     public auth: AuthService,
     private service: ApiService,
+    private SignalRservice: SignalrService,
     private menu: MenuController) {
   }
 
@@ -38,7 +40,7 @@ export class RegisterPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad RegisterPage');
     this.menu.swipeEnable(false);
-    this.service.GetPlayer(this.service.GetYourId()).subscribe(data => this.PlayerInfo1 = data);
+
 
   }
 
@@ -48,8 +50,18 @@ export class RegisterPage {
   Go2App() {
     this.service.GetYourAuthId(this.auth.user.sub)
       .subscribe(data => {
-        this.PlayerInfo2 = data;
-        this.service.ChangeId(this.PlayerInfo2[0].playerId)
+        this.PlayerInfo = data;
+        this.service.ChangeId(this.PlayerInfo[0].playerId)
+        if (this.PlayerInfo[0].teamId == 1)
+          this.SignalRservice.JoinTeam("TeamBlue");
+        if (this.PlayerInfo[0].teamId == 2)
+          this.SignalRservice.JoinTeam("TeamRed");
+        if (this.PlayerInfo[0].teamId == 3)
+          this.SignalRservice.JoinTeam("TeamGreen");
+        if (this.PlayerInfo[0].teamId == 4)
+          this.SignalRservice.JoinTeam("TeamYellow");
+        if (this.PlayerInfo == undefined || this.PlayerInfo == null || this.PlayerInfo == [])
+          this.navCtrl.setRoot(TeamPage);
       });
 
 
