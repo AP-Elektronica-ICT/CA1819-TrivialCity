@@ -29,12 +29,62 @@ export class ProfilePage {
   }
 
   ChangeUsername() {
-    this.ChangeAlert();
+    //this.ChangeAlert();
+    this.ChangeAlert("Change Username" , "Username", "playerUsername")
+  }
+  ChangeEmail() {
+    //this.ChangeAlert();
+    this.ChangeAlert("Change Email" , "Email", "playerEmail")
   }
 
-  
+  ChangeAlert(title: string , what: string, dataPlayer: string) {
+    let alert = this.alertCtrl.create({
+      title: title,
+      inputs: [
+        {
+          name: 'username',
+          placeholder: what
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Change',
+          handler: (data) => {
+            let userName;
+            userName = data.username;
+            if(dataPlayer == "playerUsername"){
+            this.service.PutPlayer(this.service.GetYourId(),
+              {
+                playerId: this.service.GetYourId(),
+                playerUsername: userName,
+              })
+              .subscribe(data => this.playerInfo = data);
+            }
+            if(dataPlayer == "playerEmail"){
+              this.service.PutPlayer(this.service.GetYourId(),
+                {
+                  playerId: this.service.GetYourId(),
+                  playerEmail: userName,
+                })
+                .subscribe(data => this.playerInfo = data);
+              }
 
-  ChangeAlert() {
+          }
+        
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  /*ChangeAlert() {
     let alert = this.alertCtrl.create({
       title: 'Change Username',
       inputs: [
@@ -68,6 +118,9 @@ export class ProfilePage {
       ]
     });
     alert.present();
-  }
+  }*/
+
+  
+  
 
 }

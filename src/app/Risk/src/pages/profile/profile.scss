@@ -1,8 +1,10 @@
 .container{
-    margin-top: 5%;
     align-items: center;
     text-align: center;
+    h2:first-child{
+        margin-top: -20%;
+    }
     h2{
-        margin: 15%;
+        margin: 10%;
     }
 }
