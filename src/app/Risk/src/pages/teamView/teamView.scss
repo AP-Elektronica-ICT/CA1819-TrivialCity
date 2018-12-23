@@ -1,14 +1,19 @@
 .Teams{
+    
     font-size: 30px;
-    padding: 50px;    
+  
+    padding: 35px;    
     th, td {
        width: 250px;
        height:  100px;
+       padding-left: 15px;
     }  
 }
 
 .fotoTeams{
     width: 243px;
     height: 132px;
-    margin-left: 25%;
+    align-content: center;
+    margin-top: -20%;
+    margin-left: 15%;
 }
