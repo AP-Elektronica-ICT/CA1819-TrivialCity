@@ -40,7 +40,7 @@ export class RegisterPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad RegisterPage');
     this.menu.swipeEnable(false);
-
+    this.service.GetToken();
 
   }
 

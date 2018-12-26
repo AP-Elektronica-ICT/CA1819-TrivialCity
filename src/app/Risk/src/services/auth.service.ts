@@ -29,10 +29,15 @@ export class AuthService {
     });
   }
 
+  Test():any{
+    return  this.Auth0;
+  
+  }
+
   login() {
     this.loading = true;
     const options = {
-      scope: 'openid profile read:app' // aanpassen!!!!
+      scope: 'openid profile read:app' // !!!!
     };
     // Authorize login request with Auth0: open login page and get auth results
     this.Client.authorize(options, (err, authResult) => {
@@ -78,5 +83,6 @@ export class AuthService {
     this.accessToken = null;
     this.user = null;
     this.loggedIn = false;
+    
   }
 }

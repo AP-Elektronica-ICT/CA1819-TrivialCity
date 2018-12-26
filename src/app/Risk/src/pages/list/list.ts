@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
-import { ApiService, Player } from '../../services/api.service';
+import { ApiService, Player ,Token } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import {HubConnection} from '@aspnet/signalr';
 import { SignalrService } from '../../services/signalR.service';
+import { cpus } from 'os';
+
 
 
 @Component({
@@ -25,6 +27,8 @@ export class ListPage implements OnInit {
   _number : string = "1";
   PlayerData: Player[] = [];
   hubConnection: HubConnection;
+
+  token:Token;
 
   constructor(public navCtrl: NavController, public navParams: NavParams ,  private service: ApiService ,public auth: AuthService ,private alertC: AlertController, private SingalRservice: SignalrService ) {
     // If we navigated to this page, we will have an item available as a nav param
@@ -54,7 +58,8 @@ export class ListPage implements OnInit {
 Check(){
   //this.service.GetToken();
   //this.service.ChangeId(1);
-  this.SingalRservice.JoinTeam("TeamBlue");
+  //this.SingalRservice.JoinTeam("TeamBlue");
+  this.service.GetToken();
 }
 
 Check2(){
@@ -67,7 +72,14 @@ Check2(){
  // this.SingalRservice.SendMessageAttack("Your Team is under attack!" , 2);
   //console.log(this.team);
   //this.SingalRservice.SendMessageAttack("Your Team is under attack!" , 2);
-  this.SingalRservice.JoinTeam("TeamRed");
+  //this.SingalRservice.JoinTeam("TeamRed");
+ // this.service.NewGetToken().subscribe(data => this.token = data);
+ // console.log(this.token);
+  //console.log(this.token.access_token);
+  //1this.service.TokenTest();
+  //console.log(this.auth.Test());
+ // this.service.TestToken();
+ //this.service.Test();
 }
 
 Check3(){
