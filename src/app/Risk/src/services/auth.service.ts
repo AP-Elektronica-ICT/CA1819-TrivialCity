@@ -17,10 +17,8 @@ export class AuthService {
   loggedIn: boolean;
   loading = true;
 
-  constructor(
-    public zone: NgZone,
-    private storage: Storage
-  ) {
+  constructor(public zone: NgZone, private storage: Storage) 
+  {
     this.storage.get('profile').then(user => this.user = user);
     this.storage.get('access_token').then(token => this.accessToken = token);
     this.storage.get('expires_at').then(exp => {
@@ -29,31 +27,16 @@ export class AuthService {
     });
   }
 
-  Test():any{
-    return  this.Auth0;
-  
-  }
-
   login() {
     this.loading = true;
     const options = {
-      scope: 'openid profile read:app' // !!!!
+      scope: 'openid profile read:app' // aanpassen!!!!
     };
     // Authorize login request with Auth0: open login page and get auth results
     this.Client.authorize(options, (err, authResult) => {
       if (err) {
         throw err;
       }
-      //allert toegevoegd
-      /*
-      let alert = this.alertCtrl.create({
-        message: JSON.stringify(authResult)
-      });
-      alert.present();
-      let alert2 = this.alertCtrl.create({
-        message: JSON.stringify(err)
-      });
-      alert2.present();*/
       // Set Access Token
       this.storage.set('access_token', authResult.accessToken);
       this.accessToken = authResult.accessToken;
@@ -83,6 +66,5 @@ export class AuthService {
     this.accessToken = null;
     this.user = null;
     this.loggedIn = false;
-    
   }
 }

@@ -269,22 +269,15 @@ export class MapPage {
         }
       })
     })
-
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MapPage');
   }
 
-  ionViewDidEnter() {
-
-
-  }
-
   goToBattlePhase() {
     this.navCtrl.push(BattlePhasePage);
   }
-
 
   loadmap() {
 
