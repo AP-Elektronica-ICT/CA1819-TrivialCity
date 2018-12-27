@@ -7,6 +7,7 @@ import { TeamPage } from '../team/team';
 import { ApiService, Player } from '../../services/api.service';
 import { ProfilePage } from '../profile/profile';
 import { SignalrService } from '../../services/signalR.service';
+import { delay } from 'rxjs/operator/delay';
 
 /**
  * Generated class for the RegisterPage page.
@@ -21,8 +22,8 @@ import { SignalrService } from '../../services/signalR.service';
   templateUrl: 'register.html',
 })
 export class RegisterPage {
-  
 
+  testbool: boolean = false;
   PlayerInfo: Player[] = [];
 
   // user: any;
@@ -60,14 +61,14 @@ export class RegisterPage {
           this.SignalRservice.JoinTeam("TeamGreen");
         if (this.PlayerInfo[0].teamId == 4)
           this.SignalRservice.JoinTeam("TeamYellow");
-        if (this.PlayerInfo == undefined || this.PlayerInfo == null || this.PlayerInfo == [])
-          this.navCtrl.setRoot(TeamPage);
+        if (this.PlayerInfo != [] || this.PlayerInfo != undefined)
+          this.navCtrl.setRoot(HomePage);
       });
 
-
-    this.navCtrl.setRoot(HomePage);
-
+    this.navCtrl.setRoot(TeamPage);
   }
+
+
 
 
 
@@ -77,6 +78,7 @@ export class RegisterPage {
     //console.log(this.auth.user);
     //console.log(Number(this.auth.user.sub));
     this.navCtrl.setRoot(TeamPage);
+    //console.log(this.PlayerInfo);
   }
 
   SwipeEnable() {

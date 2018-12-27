@@ -34,7 +34,7 @@
       <div class="container" >
         <h2>Welcome</h2>
       <button ion-button block color="primary" *ngIf="auth.loggedIn" (click)="Go2App()">Enter Risk Antwerp</button>
-     <!-- <button  ion-button block color="primary" (click)="Test()">Teampage</button> -->
+     <!--  <button  ion-button block color="primary" *ngIf="auth.loggedIn" (click)="Test()">Test</button> -->
       <button ion-button block color="danger"  *ngIf="auth.loggedIn"(click)="auth.logout()">Log Out</button>
     </div>
     </ng-template>
