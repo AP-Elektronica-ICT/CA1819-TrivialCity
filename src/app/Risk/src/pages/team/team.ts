@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, MenuController } from 'ionic-angular';
 import { ApiService, Team, Player } from '../../services/api.service';
 import { ProfilePage } from '../profile/profile';
 import { AuthService } from '../../services/auth.service';
@@ -19,99 +19,79 @@ import { delay } from 'rxjs/operators';
 })
 export class TeamPage {
 
-  Teams: Team[] = [];
-  PlayerInfo: Player;
-  TeamId: number;
+  teams: Team[] = [];
+  player: Player;
+  teamId: number;
   pUsername: string;
   pEmail: string;
-  isenabled: boolean = true;
-  isenabled2: boolean = true;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private service: ApiService, private alertC: AlertController, public auth: AuthService) {
+  btnColor: String = "#f4f4f4"
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private service: ApiService, private alertCtrl: AlertController, private menu: MenuController, public auth: AuthService) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad TeamPage');
-    this.service.GetTeams().subscribe(data => this.Teams = data);
-    
-       
-  
-    // this.service.GetInfo(this.service.GetYourId()).subscribe(data => this.PlayerInfo = data);
+    this.service.GetTeams().subscribe(data => this.teams = data);    
   }
 
+  TeamPicker(color: String){
+    let alert = this.alertCtrl.create({
+      title: 'Confirm Team',
+      subTitle: `You currently selected team ${color}`,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {}
+        },{
+          text: 'Confirm',
+          handler: () => {
+            if (color == "Blue") {
+              this.teamId = 1;
+              this.btnColor = '#4285F4';
+            }
+        
+            if (color == "Red") {
+              this.teamId = 2;
+              this.btnColor = '#ff4444';
+            }
+        
+            if (color == "Green") {
+              this.teamId = 3;
+              this.btnColor = '#00c851';
+            }
+        
+            if (color == "Yellow") {
+              this.teamId = 4;
+              this.btnColor = '#ffeb3b';
+            }
 
+            this.service.PostPlayer({
+              "teamId": `${this.teamId}`,
+              "playerUsername": `${this.pUsername}`,
+              "playerEmail": `${this.pEmail}`,
+              "playerTitle": "AntwerpBeginner",
+              "playerLevel": 0,
+              "playerExp": 0,
+              "playerSilverCoins": 0,
+              "playerTroops": 20,
+              "playerReserveTroops": 100,
+              "authId": `${this.auth.user.sub}`,
+            }).subscribe(data => {
+            this.player = data
+              this.service.ChangeId(this.player.playerId);
+            });
 
-  TeamPicked(color: string) {
-
-    this.Alert("Team: " + color + " selected, press button 'confirm' to continue");
-
-    if (color == "Blue") {
-      this.TeamId = 1;
-    }
-
-    if (color == "Red") {
-      this.TeamId = 2;
-    }
-
-    if (color == "Green") {
-      this.TeamId = 3;
-    }
-
-    if (color == "Yellow") {
-      this.TeamId = 4;
-    }
-    this.isenabled2 = false;
-
-  }
-
-  ConfirmedTeam() {
-    this.PostPlayer();
-    this.Alert("Information is Confirmed!");
-    this.isenabled = false;
-    this.isenabled2 = true;
-
+            this.menu.swipeEnable(true);
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
   GoPlayerInfo() {
-    //console.log("TeamId: " + this.PlayerInfo.teamId);
-    //console.log(this.PlayerInfo);
     this.navCtrl.setRoot(ProfilePage);
-    this.isenabled = true;
   }
-
-
-  PostPlayer() {
-    this.service.PostPlayer({
-      "teamId": `${this.TeamId}`,
-      "playerUsername": `${this.pUsername}`,
-      "playerEmail": `${this.pEmail}`,
-      "playerTitle": "AntwerpBeginner",
-      "playerLevel": 0,
-      "playerExp": 0,
-      "playerSilverCoins": 0,
-      "playerTroops": 20,
-      "playerReserveTroops": 100,
-      "authId": `${this.auth.user.sub}`,
-    }).subscribe(data => {
-    this.PlayerInfo = data
-      this.service.ChangeId(this.PlayerInfo.playerId);
-    });
-  }
-
-
-
-
-
-
-
-
-
-
-  Alert(message: string) {
-    let Alertm = this.alertC.create({
-      message: `${message}`
-    });
-    Alertm.present();
-  }
-
 }

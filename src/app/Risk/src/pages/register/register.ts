@@ -8,6 +8,7 @@ import { ApiService, Player } from '../../services/api.service';
 import { ProfilePage } from '../profile/profile';
 import { SignalrService } from '../../services/signalR.service';
 import { delay } from 'rxjs/operator/delay';
+import { SplashScreen } from '@ionic-native/splash-screen';
 
 /**
  * Generated class for the RegisterPage page.
@@ -26,66 +27,50 @@ export class RegisterPage {
   testbool: boolean = false;
   PlayerInfo: Player[] = [];
 
-  // user: any;
-
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public auth: AuthService,
     private service: ApiService,
     private SignalRservice: SignalrService,
-    private menu: MenuController) {
+    private menu: MenuController,
+    private splashScreen: SplashScreen) {
   }
-
-
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RegisterPage');
     this.menu.swipeEnable(false);
     this.service.GetToken();
-
   }
-
-
-
 
   Go2App() {
     this.service.GetYourAuthId(this.auth.user.sub)
       .subscribe(data => {
+        this.splashScreen.show();
+
         this.PlayerInfo = data;
         this.service.ChangeId(this.PlayerInfo[0].playerId)
-        if (this.PlayerInfo[0].teamId == 1)
-          this.SignalRservice.JoinTeam("TeamBlue");
-        if (this.PlayerInfo[0].teamId == 2)
-          this.SignalRservice.JoinTeam("TeamRed");
-        if (this.PlayerInfo[0].teamId == 3)
-          this.SignalRservice.JoinTeam("TeamGreen");
-        if (this.PlayerInfo[0].teamId == 4)
-          this.SignalRservice.JoinTeam("TeamYellow");
-        if (this.PlayerInfo != [] || this.PlayerInfo != undefined)
+
+        this.service.GetTeam(this.PlayerInfo[0].teamId).subscribe(data => this.service.team = data)
+
+        if (this.PlayerInfo != [] || this.PlayerInfo != undefined) {
+          this.splashScreen.hide();
+          this.menu.swipeEnable(true);
           this.navCtrl.setRoot(HomePage);
+        }
+        else {
+          if (this.PlayerInfo[0].teamId == 1)
+            this.SignalRservice.JoinTeam("TeamBlue");
+          if (this.PlayerInfo[0].teamId == 2)
+            this.SignalRservice.JoinTeam("TeamRed");
+          if (this.PlayerInfo[0].teamId == 3)
+            this.SignalRservice.JoinTeam("TeamGreen");
+          if (this.PlayerInfo[0].teamId == 4)
+            this.SignalRservice.JoinTeam("TeamYellow");
+
+          this.splashScreen.hide();
+          this.navCtrl.setRoot(TeamPage);
+        }
       });
 
-    this.navCtrl.setRoot(TeamPage);
   }
-
-
-
-
-
-  Test() {
-    //this.service.GetYourAuthId(this.auth.user.sub).subscribe(data => this.PlayerInfo = data);
-    //console.log(this.PlayerInfo[0].playerId)
-    //console.log(this.auth.user);
-    //console.log(Number(this.auth.user.sub));
-    this.navCtrl.setRoot(TeamPage);
-    //console.log(this.PlayerInfo);
-  }
-
-  SwipeEnable() {
-    this.menu.swipeEnable(true);
-  }
-
-
-
-
 }

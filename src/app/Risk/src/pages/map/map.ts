@@ -64,8 +64,6 @@ export class MapPage {
     iconSize: [24, 24]
   })
 
-
-
   playerMarker = leaflet.marker([this.playerLocation.lat, this.playerLocation.lng],
     {
       icon: this.playericon,
@@ -113,7 +111,6 @@ export class MapPage {
                 this.areas[3].players = data
                 this.service.getAreaPlayers(5).subscribe(data => {
                   this.areas[4].players = data
-
                   this.service.getAreaPositions(1).subscribe(data => {
                     this.areas[0].positions = data
                     this.service.getAreaPositions(2).subscribe(data => {
@@ -223,8 +220,6 @@ export class MapPage {
                             this.loadmap();
 
                             this.splashScreen.hide();
-
-
                           })
                         })
                       })
@@ -255,29 +250,40 @@ export class MapPage {
             this.playerLocation.lng = position.coords.longitude
         })
       const loop = Observable.interval(1000).subscribe((val) => {
-        this.territoryChecker();
         if (this.areas) {
           this.AreaActivityChecker();
         }
-        console.log(this.playerAreaId);
+        this.territoryChecker();
         if (this.playerAreaIdArray && this.playerAreaId) {
           this.service.PutPlayer(this.player.playerId, {
             playerId: `${this.player.playerId}`,
             areaId: `${this.playerAreaIdArray[this.playerAreaId]}`
           }).subscribe(data => this.player = data)
-          console.log(this.playerAreaIdArray[this.playerAreaId]);
+        }
+        else if(this.playerAreaIdArray[this.playerAreaId] == 0){
+          this.service.PutPlayer(this.player.playerId, {
+            playerId: `${this.player.playerId}`,
+            areaId: 0
+          })
         }
       })
     })
+
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MapPage');
   }
 
+  ionViewDidEnter() {
+
+
+  }
+
   goToBattlePhase() {
     this.navCtrl.push(BattlePhasePage);
   }
+
 
   loadmap() {
 

@@ -24,7 +24,7 @@ import { AuthService } from '../services/auth.service';
 import { IonicStorageModule } from '@ionic/storage';
 import { ApiService } from '../services/api.service';
 import { Http, HttpModule } from '@angular/http';
-import {NgProgressModule} from "ng2-progressbar"
+import {NgProgressModule} from "ngx-progressbar";
 import { TeamViewPage } from '../pages/teamView/teamView';
 import { TeamViewModule } from '../pages/teamView/teamView.module';
 import { SignalrService } from '../services/signalR.service';

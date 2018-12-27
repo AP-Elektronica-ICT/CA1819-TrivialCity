@@ -19,7 +19,8 @@ export class ApiService extends BaseService {
 
   AuhtToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5qZ3dSRVl3TkRjMk56aENOMFUwTXprek5rUTJRemxDUTBFNVJrTTRRVGsyUmpCRVF6TTRRUSJ9.eyJpc3MiOiJodHRwczovL2luaWFzLmV1LmF1dGgwLmNvbS8iLCJzdWIiOiJPSDZMdFdQdTZwMnU0VlNuU3ducDRQbmFleGJVVWd6d0BjbGllbnRzIiwiYXVkIjoiaHR0cHM6Ly9BbnR3ZXJwUmlzay9hcGkiLCJpYXQiOjE1NDM1Njg1ODYsImV4cCI6MTU0MzY1NDk4NiwiYXpwIjoiT0g2THRXUHU2cDJ1NFZTblN3bnA0UG5hZXhiVVVnenciLCJndHkiOiJjbGllbnQtY3JlZGVudGlhbHMifQ.k3d5EGEjQESqyoeWv1I4iPdp0JtVEgI-hVmgh2dE0yYwiDibTG-G-o8RvR8U2kMCF5z1tGPhgo3xd0q5LdoQQsF1_-7uUcMjrv6_sEHG1bClWc6S3iAU6tJWLvJKAVEeVX5gn1eyROYsTzu49oG7YfFq7nVp7fHJL-WeeVDX4XfgAe13yOUvizsIET7pNOAxd_o9LGVwmgj_SuaoR2Pbji_JupNDXaBDi6pXSdZ6QtqkZkUQrQrxT5RN24fc7HNKsm6d4ORDhN_mWj8P7hPEYKQH-TK8LjUadq__9riJKywW0YfIaGi3f2wsln4dq0pAIf_76wHEZ0wrvZnrf4cymg";
   PlayerID: number;
-  PlayerInfo: Player;
+  public player: Player;
+  public team: Team;
 
 
   constructor(private http: HttpClient) {
@@ -120,6 +121,13 @@ export class ApiService extends BaseService {
 
   GetYourTeam() {
     return this.http.get(`${this.baseApi}/player/${this.GetYourId}/team`, this.httpHeader);
+  }
+
+  SetTheme(){
+    if(this.team.teamColor == "Blue"){ return '#4285F4' }
+    else if(this.team.teamColor =="Red"){ return '#ff4444' }
+    else if(this.team.teamColor == "Green") { return '#00c851' }
+    else if(this.team.teamColor == "Yellow") { return '#ffeb3b' }
   }
 }
 

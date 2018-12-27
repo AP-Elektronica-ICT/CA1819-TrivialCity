@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { ApiService, Player } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
-
+import { NgProgress } from 'ngx-progressbar';
 
 /**
  * Generated class for the ProfilePage page.
@@ -18,14 +18,16 @@ import { AuthService } from '../../services/auth.service';
 })
 export class ProfilePage {
 
-  playerInfo: Player;
+  player: Player;
+  isenabled: Boolean;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private service: ApiService, public auth: AuthService, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private service: ApiService, public auth: AuthService, private alertCtrl: AlertController, private ngProgress: NgProgress) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProfilePage');
-    this.service.GetPlayer(this.service.GetYourId()).subscribe(data => this.playerInfo = data);
+    this.service.GetPlayer(this.service.GetYourId()).subscribe(data => this.player = data);
+    console.log(this.service.team.teamColor);
   }
 
   ChangeUsername() {
@@ -65,7 +67,7 @@ export class ProfilePage {
                 playerId: this.service.GetYourId(),
                 playerUsername: userName,
               })
-              .subscribe(data => this.playerInfo = data);
+              .subscribe(data => this.player = data);
             }
             if(dataPlayer == "playerEmail"){
               this.service.PutPlayer(this.service.GetYourId(),
@@ -73,7 +75,7 @@ export class ProfilePage {
                   playerId: this.service.GetYourId(),
                   playerEmail: userName,
                 })
-                .subscribe(data => this.playerInfo = data);
+                .subscribe(data => this.player = data);
               }
 
           }
@@ -84,43 +86,59 @@ export class ProfilePage {
     alert.present();
   }
 
-  /*ChangeAlert() {
+  MoveTroops() {
     let alert = this.alertCtrl.create({
-      title: 'Change Username',
+      title: 'Send Troops',
+      subTitle: `You currently have ${this.player.playerReserveTroops} troops ready for deployment`,
       inputs: [
         {
-          name: 'username',
-          placeholder: 'Username'
-        },
+          name: 'amount',
+          placeholder: 'Amount',
+          type: 'number',
+        }
       ],
       buttons: [
         {
-          text: 'Cancel',
-          role: 'cancel',
+          text: 'Send',
           handler: data => {
-            console.log('Cancel clicked');
+            data.amount = Math.floor(data.amount);
+            if (data.amount <= 0 || data.amount > this.player.playerReserveTroops) {
+              this.errorAlert();
+            }
+            else{
+              this.ngProgress.start();
+              setTimeout(() => {
+                this.service.PutPlayer(this.service.GetYourId(),
+                  {
+                    playerId: this.service.GetYourId(),
+                    playerTroops: `${(this.player.playerTroops) + data.amount}`,
+                    playerReserveTroops: `${(this.player.playerReserveTroops) - data.amount}`
+                  })
+                  .subscribe(data => this.player = data);
+                this.ngProgress.done();
+                this.isenabled = false;
+              }, 10000);
+            }
           }
         },
         {
-          text: 'Change',
-          handler: (data) => {
-            let userName;
-            userName = data.username;
-            this.service.PutPlayer(this.service.GetYourId(),
-              {
-                playerId: this.service.GetYourId(),
-                playerUsername: userName,
-              })
-              .subscribe(data => this.playerInfo = data);
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
 
           }
         }
       ]
     });
     alert.present();
-  }*/
+  }
 
-  
-  
-
+  errorAlert() {
+    let errorAlert = this.alertCtrl.create({
+      title: 'Invalid Amount',
+      subTitle: 'Please insert a valid amount of troops.',
+      buttons: ['Dismiss']
+    });
+    errorAlert.present();
+  }
 }
