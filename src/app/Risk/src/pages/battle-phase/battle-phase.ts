@@ -78,6 +78,8 @@ export class BattlePhasePage {
       }
     this.navCtrl.push(BattlePhaseContPage, {
       data: {
+        player: this.player,
+        area: this.area,
         botDiceAmount: this.botDiceAmount,
         playerDiceAmount: this.playerDiceAmount
       }

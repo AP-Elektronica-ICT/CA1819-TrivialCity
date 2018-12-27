@@ -36,12 +36,14 @@ export class BattlePhaseContPage {
   imgSrc_Bot: any[] = [];
   imgSrc_Player: any[] = [];
 
-  constructor(public navCtrl: NavController, 
-    public navParams: NavParams, 
-    public service: ApiService, 
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
+    public service: ApiService,
     public alertCtrl: AlertController,
     private splashScreen: SplashScreen) {
     this.results = navParams.get('data');
+    this.player = this.results.player;
+    this.area = this.results.area;
     this.battleResults[0] = this.results.playerDiceAmount;
     this.battleResults[1] = this.results.botDiceAmount;
   }
@@ -49,16 +51,10 @@ export class BattlePhaseContPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad BattlePhaseContPage');
     this.splashScreen.show();
-    this.service.GetPlayer(this.service.GetYourId()).subscribe(data => {
-      this.player = data
-      this.service.GetArea(this.player.areaId).subscribe(data => {
-        this.area = data
-        this.getPlayerDiceResults();
-        this.getBotDiceResults();
-        this.getBattleResults();
-        this.splashScreen.hide();
-      });
-    });
+    this.getPlayerDiceResults();
+    this.getBotDiceResults();
+    this.getBattleResults();
+    this.splashScreen.hide();
   }
 
   getPlayerDiceResults() {
@@ -94,11 +90,11 @@ export class BattlePhaseContPage {
       else {
         if (this.playerResults[i] && this.botResults[i]) {
           if (this.playerResults[i] > this.botResults[i]) {
-            this.silverCoins += Math.floor((Math.random()*10)+1)
+            this.silverCoins += Math.floor((Math.random() * 10) + 1)
             console.log(this.silverCoins);
             this.area.defendingTroops -= 1;
             this.battleResults[1] -= -1;
-            if(this.area.defendingTroops < 0){
+            if (this.area.defendingTroops < 0) {
               this.area.defendingTroops = 0;
             }
             this.service.PutArea(this.area.areaId, {
@@ -107,7 +103,7 @@ export class BattlePhaseContPage {
             }).subscribe(data => {
               this.area = data;
             })
-            this.service.PutPlayer(this.player.playerId,{
+            this.service.PutPlayer(this.player.playerId, {
               playerId: this.player.playerId,
               playerSilverCoins: this.player.playerSilverCoins + this.silverCoins
             })
@@ -115,7 +111,7 @@ export class BattlePhaseContPage {
           else {
             this.player.playerTroops -= 1;
             this.battleResults[0] -= 1;
-            if(this.player.playerTroops < 0){
+            if (this.player.playerTroops < 0) {
               this.player.playerTroops = 0;
             }
             this.service.PutPlayer(this.service.GetYourId(), {
@@ -130,8 +126,8 @@ export class BattlePhaseContPage {
     }
   }
 
-  CaptureArea(){
-    if(this.captureConfirmed == false){
+  CaptureArea() {
+    if (this.captureConfirmed == false) {
       let alert = this.alertCtrl.create({
         title: 'Leave Troops',
         subTitle: `You currently have ${this.player.playerTroops} troops remaining`,
@@ -147,11 +143,11 @@ export class BattlePhaseContPage {
             text: 'Capture',
             handler: data => {
               data.amount = Math.floor(data.amount);
-              if(data.amount <= 0 || data.amount > this.player.playerTroops){
+              if (data.amount <= 0 || data.amount > this.player.playerTroops) {
                 this.captureConfirmed = false;
                 this.errorAlert();
               }
-              else{
+              else {
                 this.player.playerTroops -= data.amount;
                 this.service.PutArea(this.area.areaId, {
                   areaId: this.area.areaId,
@@ -160,7 +156,7 @@ export class BattlePhaseContPage {
                 }).subscribe(data => {
                   this.area = data;
                 })
-                this.service.PutPlayer(this.player.playerId,{
+                this.service.PutPlayer(this.player.playerId, {
                   playerId: this.player.playerId,
                   playerTroops: `${this.player.playerTroops}`
                 })
@@ -174,19 +170,19 @@ export class BattlePhaseContPage {
     }
   }
 
-  errorAlert(){
-      let errorAlert = this.alertCtrl.create({
-        title: 'Invalid Amount',
-        subTitle: 'Please insert a valid amount of troops.',
-        buttons: ['Dismiss']
-      });
-      errorAlert.present();
+  errorAlert() {
+    let errorAlert = this.alertCtrl.create({
+      title: 'Invalid Amount',
+      subTitle: 'Please insert a valid amount of troops.',
+      buttons: ['Dismiss']
+    });
+    errorAlert.present();
   }
 
-  GoToMap(){
+  GoToMap() {
     this.navCtrl.push(MapPage);
   }
-  GoToBattlePhase(){
+  GoToBattlePhase() {
     this.navCtrl.push(BattlePhasePage);
   }
 }
