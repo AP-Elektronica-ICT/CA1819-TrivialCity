@@ -134,7 +134,7 @@ export class MapPage {
                               [this.areas[0].positions[8].latitude, this.areas[0].positions[8].longitude],
                               [this.areas[0].positions[9].latitude, this.areas[0].positions[9].longitude],
                               [this.areas[0].positions[10].latitude, this.areas[0].positions[10].longitude],
-                            ], { color: this.colorSelector(this.areas[0].teamId), title: 1 })
+                            ], { color: this.colorSelector(this.areas[0].teamId), title: 0 })
 
                             this.borgerhout = leaflet.polygon([
                               //Borgerhout
@@ -152,7 +152,7 @@ export class MapPage {
                               [this.areas[1].positions[11].latitude, this.areas[1].positions[11].longitude],
                               [this.areas[1].positions[12].latitude, this.areas[1].positions[12].longitude],
                               [this.areas[1].positions[13].latitude, this.areas[1].positions[13].longitude],
-                            ], { color: this.colorSelector(this.areas[1].teamId), title: 2 })
+                            ], { color: this.colorSelector(this.areas[1].teamId), title: 1 })
 
                             this.eilandje = leaflet.polygon([
                               //Eilandje
@@ -170,7 +170,7 @@ export class MapPage {
                               [this.areas[2].positions[11].latitude, this.areas[2].positions[11].longitude],
                               [this.areas[2].positions[12].latitude, this.areas[2].positions[12].longitude],
                               [this.areas[2].positions[13].latitude, this.areas[2].positions[13].longitude],
-                            ], { color: this.colorSelector(this.areas[2].teamId), title: 3 })
+                            ], { color: this.colorSelector(this.areas[2].teamId), title: 2 })
 
                             this.seefhoek = leaflet.polygon([
                               //Seefhoek
@@ -188,7 +188,7 @@ export class MapPage {
                               [this.areas[3].positions[11].latitude, this.areas[3].positions[11].longitude],
                               [this.areas[3].positions[12].latitude, this.areas[3].positions[12].longitude],
                               [this.areas[3].positions[13].latitude, this.areas[3].positions[13].longitude],
-                            ], { color: this.colorSelector(this.areas[3].teamId), title: 4 })
+                            ], { color: this.colorSelector(this.areas[3].teamId), title: 3 })
 
                             this.kaai = leaflet.polygon([
                               //De kaai
@@ -202,7 +202,7 @@ export class MapPage {
                               [this.areas[4].positions[7].latitude, this.areas[4].positions[7].longitude],
                               [this.areas[4].positions[8].latitude, this.areas[4].positions[8].longitude],
                               [this.areas[4].positions[9].latitude, this.areas[4].positions[9].longitude],
-                            ], { color: this.colorSelector(this.areas[4].teamId), title: 5 })
+                            ], { color: this.colorSelector(this.areas[4].teamId), title: 4 })
 
                             this.denDamCenter = leaflet.marker([this.areas[0].positions[11].latitude, this.areas[0].positions[11].longitude], { icon: this.centerMarkerOptions });
                             this.borgerhoutCenter = leaflet.marker([this.areas[1].positions[14].latitude, this.areas[1].positions[14].longitude], { icon: this.centerMarkerOptions });
