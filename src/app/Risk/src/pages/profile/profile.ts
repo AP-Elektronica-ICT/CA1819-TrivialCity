@@ -20,32 +20,37 @@ export class ProfilePage {
 
   player: Player;
   isenabled: Boolean;
+  xpbar: String;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private service: ApiService, public auth: AuthService, private alertCtrl: AlertController, private ngProgress: NgProgress) {
+
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProfilePage');
-    this.service.GetPlayer(this.service.GetYourId()).subscribe(data => this.player = data);
+    this.service.GetPlayer(this.service.GetYourId()).subscribe(data => {
+      this.player = data
+      this.xpbar = String(Math.floor((this.player.playerExp / 1000) * 100)) + '%';
+    });
     console.log(this.service.team.teamColor);
   }
 
   ChangeUsername() {
     //this.ChangeAlert();
-    this.ChangeAlert("Change Username" , "Username", "playerUsername")
+    this.ChangeAlert("Change Username", "Username", "playerUsername")
   }
   ChangeEmail() {
     //this.ChangeAlert();
-    this.ChangeAlert("Change Email" , "Email", "playerEmail")
+    this.ChangeAlert("Change Email", "Email", "playerEmail")
   }
 
-  ChangeAlert(title: string , what: string, dataPlayer: string) {
+  ChangeAlert(title: string, value: string, dataPlayer: string) {
     let alert = this.alertCtrl.create({
       title: title,
       inputs: [
         {
           name: 'username',
-          placeholder: what
+          placeholder: value
         },
       ],
       buttons: [
@@ -61,25 +66,23 @@ export class ProfilePage {
           handler: (data) => {
             let userName;
             userName = data.username;
-            if(dataPlayer == "playerUsername"){
-            this.service.PutPlayer(this.service.GetYourId(),
-              {
-                playerId: this.service.GetYourId(),
-                playerUsername: userName,
-              })
-              .subscribe(data => this.player = data);
+            if (dataPlayer == "playerUsername") {
+              this.service.PutPlayer(this.service.GetYourId(),
+                {
+                  playerId: this.service.GetYourId(),
+                  playerUsername: userName,
+                })
+                .subscribe(data => this.player = data);
             }
-            if(dataPlayer == "playerEmail"){
+            if (dataPlayer == "playerEmail") {
               this.service.PutPlayer(this.service.GetYourId(),
                 {
                   playerId: this.service.GetYourId(),
                   playerEmail: userName,
                 })
                 .subscribe(data => this.player = data);
-              }
-
+            }
           }
-        
         }
       ]
     });
@@ -105,7 +108,7 @@ export class ProfilePage {
             if (data.amount <= 0 || data.amount > this.player.playerReserveTroops) {
               this.errorAlert();
             }
-            else{
+            else {
               this.ngProgress.start();
               setTimeout(() => {
                 this.service.PutPlayer(this.service.GetYourId(),

@@ -9,25 +9,36 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Profile</ion-title>
+    <ion-title style="display: inline-block">Profile</ion-title>
+    <ion-title *ngIf="player" style="float: right;"> {{player.playerUsername}}</ion-title>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding class="bg">
 
-  <div class="container" *ngIf="player">
-    <h3>Username: {{player.playerUsername}} </h3>
-    <h3>Email: {{player.playerEmail}}</h3>
-    <h3>Title: {{player.playerTitle}} </h3>
-    <h3>Level: {{player.playerLevel}} </h3>
-    <h3>Exp: {{player.playerExp}}</h3>
+  <div *ngIf="player">
+    <h3 style="text-align: center">{{player.playerTitle}}</h3>
+    <br>
+    <div>
+      <h3 style="width: 9%; display: inline-block;">{{player.playerLevel}}</h3>
+
+      <div class="xpbar">
+        <div class="xpbar-left" [ngStyle]="{'width': xpbar, 'background-color': service.SetTheme()}"></div>
+        <div class="xpbar-right" [ngStyle]="{'margin-left': xpbar}"></div>
+      </div>
+  
+      <h3 style="width: 9%; display: inline-block;">{{player.playerLevel + 1}}</h3>
+    </div>
+    <br>
     <h3>SilverCoins: {{player.playerSilverCoins}} </h3>
+    <br>
     <h3>Your Troops: {{player.playerTroops}} </h3>
+    <br>
     <h3>Your ReserveTroops: {{player.playerReserveTroops}} </h3>
   </div>
 
-  <div class="Troops" *ngIf="playerInfo">
+  <div class="Troops" *ngIf="player">
     <img class="fotoTroops" src='../../assets/imgs/YourTroops.png' alt="foto troops">
   </div>
 

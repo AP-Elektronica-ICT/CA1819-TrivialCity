@@ -23,8 +23,6 @@ export class BattlePhaseContPage {
   player: Player;
   area: Area;
 
-  silverCoins: number = 0;
-
   captureConfirmed: Boolean = false;
 
   lowestDiceAmount: number = 0;
@@ -84,43 +82,62 @@ export class BattlePhaseContPage {
     }
 
     for (let i: number = 0; i < this.lowestDiceAmount; i++) {
-      if (this.player.playerTroops == 0) {
+      if (this.playerResults[i] && this.botResults[i]) {
+        if (this.playerResults[i] > this.botResults[i]) {
 
-      }
-      else {
-        if (this.playerResults[i] && this.botResults[i]) {
-          if (this.playerResults[i] > this.botResults[i]) {
-            this.silverCoins += Math.floor((Math.random() * 10) + 1)
-            console.log(this.silverCoins);
-            this.area.defendingTroops -= 1;
-            this.battleResults[1] -= -1;
-            if (this.area.defendingTroops < 0) {
-              this.area.defendingTroops = 0;
-            }
-            this.service.PutArea(this.area.areaId, {
-              areaId: this.area.areaId,
-              defendingTroops: `${this.area.defendingTroops}`
-            }).subscribe(data => {
-              this.area = data;
-            })
-            this.service.PutPlayer(this.player.playerId, {
-              playerId: this.player.playerId,
-              playerSilverCoins: this.player.playerSilverCoins + this.silverCoins
-            })
+          this.player.playerSilverCoins += Math.floor((Math.random() * 10) + 1)
+          this.player.playerExp += Math.floor((Math.random() * 50) + 50)
+          this.area.defendingTroops -= 1;
+          this.battleResults[1] -= -1;
+
+          if (this.area.defendingTroops < 0) {
+            this.area.defendingTroops = 0;
           }
-          else {
-            this.player.playerTroops -= 1;
-            this.battleResults[0] -= 1;
-            if (this.player.playerTroops < 0) {
-              this.player.playerTroops = 0;
-            }
-            this.service.PutPlayer(this.service.GetYourId(), {
-              playerId: this.service.GetYourId(),
-              playerTroops: `${this.player.playerTroops}`
-            }).subscribe(data => {
-              this.player = data;
-            })
+
+          if (this.player.playerExp >= 1000){
+            this.player.playerExp -= 1000;
+            this.player.playerLevel++;
           }
+
+          this.service.PutArea(this.area.areaId, {
+            areaId: this.area.areaId,
+            defendingTroops: this.area.defendingTroops
+          }).subscribe(data => {
+            this.area = data;
+          })
+
+          this.service.PutPlayer(this.player.playerId, {
+            playerId: this.player.playerId,
+            playerSilverCoins: this.player.playerSilverCoins,
+            playerExp: this.player.playerExp,
+            playerLevel: this.player.playerLevel
+          })
+
+        }
+        else {
+
+          this.player.playerExp += Math.floor((Math.random() * 1) + 50)
+          this.player.playerTroops -= 1;
+          this.battleResults[0] -= 1;
+
+          if (this.player.playerTroops < 0) {
+            this.player.playerTroops = 0;
+          }
+
+          if (this.player.playerExp >= 1000){
+            this.player.playerExp -= 1000;
+            this.player.playerLevel++;
+          }
+
+          this.service.PutPlayer(this.service.GetYourId(), {
+            playerId: this.service.GetYourId(),
+            playerTroops: this.player.playerTroops,
+            playerExp: this.player.playerExp,
+            playerLevel: this.player.playerLevel
+          }).subscribe(data => {
+            this.player = data;
+          })
+
         }
       }
     }

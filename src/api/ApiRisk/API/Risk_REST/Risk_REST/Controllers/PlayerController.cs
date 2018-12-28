@@ -118,7 +118,18 @@ namespace Risk_REST.Controllers
             if (updatePlayer.PlayerTitle != null)
                 player.PlayerTitle = updatePlayer.PlayerTitle;
             if (updatePlayer.PlayerLevel != null)
-                player.PlayerLevel = updatePlayer.PlayerLevel;
+                if(updatePlayer.PlayerLevel < 5) { updatePlayer.PlayerTitle = "Private"; }
+                else if(updatePlayer.PlayerLevel >= 5) { updatePlayer.PlayerTitle = "Private First Class"; }
+                else if(updatePlayer.PlayerLevel >= 10) { updatePlayer.PlayerTitle = "Corporal"; }
+                else if (updatePlayer.PlayerLevel >= 15) { updatePlayer.PlayerTitle = "Sergeant"; }
+                else if (updatePlayer.PlayerLevel >= 20) { updatePlayer.PlayerTitle = "Staff Sergeant"; }
+                else if (updatePlayer.PlayerLevel >= 25) { updatePlayer.PlayerTitle = "Sergeant First Class"; }
+                else if (updatePlayer.PlayerLevel >= 30) { updatePlayer.PlayerTitle = "Master Sergeant"; }
+                else if (updatePlayer.PlayerLevel >= 35) { updatePlayer.PlayerTitle = "First Sergeant"; }
+                else if (updatePlayer.PlayerLevel >= 40) { updatePlayer.PlayerTitle = "Sergeant Major"; }
+                else if (updatePlayer.PlayerLevel >= 45) { updatePlayer.PlayerTitle = "Command Sergeant Major"; }
+                else if (updatePlayer.PlayerLevel >= 50) { updatePlayer.PlayerTitle = "Sergeant Major of the Army"; }
+            player.PlayerLevel = updatePlayer.PlayerLevel;
             if (updatePlayer.PlayerExp != null)
                 player.PlayerExp = updatePlayer.PlayerExp;
             if (updatePlayer.PlayerSilverCoins != null)

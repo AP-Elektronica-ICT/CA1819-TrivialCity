@@ -38,7 +38,7 @@ export class MapPage {
   player: Player;
   playerTeam: Team;
   playerAreaIdArray: number[] = [];
-  playerAreaId: number;
+  playerAreaId: number = 0;
 
   areas: Area[] = [];
 
@@ -254,7 +254,7 @@ export class MapPage {
           this.AreaActivityChecker();
         }
         this.territoryChecker();
-        if (this.playerAreaIdArray && this.playerAreaId) {
+        if (this.playerAreaIdArray && this.playerAreaId && this.playerAreaIdArray[this.playerAreaId] != 0) {
           this.service.PutPlayer(this.player.playerId, {
             playerId: `${this.player.playerId}`,
             areaId: `${this.playerAreaIdArray[this.playerAreaId]}`
@@ -264,7 +264,7 @@ export class MapPage {
           this.service.PutPlayer(this.player.playerId, {
             playerId: `${this.player.playerId}`,
             areaId: 0
-          })
+          }).subscribe(data => this.player = data)
         }
       })
     })
