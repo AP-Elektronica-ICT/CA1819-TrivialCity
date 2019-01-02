@@ -16,13 +16,13 @@ namespace Risk_REST.UserTesting
     public class PostTest1
     {
 
-        private Risk_AntwerpContext context;
+        private Risk_Antwerp_dbContext context;
 
         [Fact]
         public void TestPostPlayer()
         {
 
-            var controller = new PlayerController(new Risk_AntwerpContext());
+            var controller = new PlayerController(new Risk_Antwerp_dbContext());
             controller.ModelState.AddModelError("", "dummy error");
 
             var actionResult = controller.AddPlayer(new Players());
@@ -34,7 +34,7 @@ namespace Risk_REST.UserTesting
         public void TestPostArea()
         {
 
-            var controller = new AreaController(new Risk_AntwerpContext());
+            var controller = new AreaController(new Risk_Antwerp_dbContext());
             controller.ModelState.AddModelError("", "dummy error");
 
             var actionResult = controller.AddArea(new Area());
@@ -46,7 +46,7 @@ namespace Risk_REST.UserTesting
         public void TestPostTeam()
         {
 
-            var controller = new TeamController(new Risk_AntwerpContext());
+            var controller = new TeamController(new Risk_Antwerp_dbContext());
             controller.ModelState.AddModelError("", "dummy error");
 
             var actionResult = controller.AddTeam(new Teams());

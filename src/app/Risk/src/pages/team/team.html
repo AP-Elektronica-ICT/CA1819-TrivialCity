@@ -11,21 +11,25 @@
 </ion-header>
 
 
-<ion-content class ="team">
- 
+<ion-content class="bg" >
   <div style="margin:auto;text-align: center" padding>
-    <div *ngIf="Teams">
-      <div *ngIf="PlayerInfo"></div>
+    <div *ngIf="teams">
+      <div *ngIf="player"></div>
       <h1 style="text-align: center">Welcome, pick your team</h1>
       <ion-item>
-        <ion-label color="primary">Your Username:</ion-label>
+        <ion-label color="dark">Your Username:</ion-label>
           <ion-input [(ngModel)]="pUsername" placeholder="Username"></ion-input>
         </ion-item>
-      <div *ngFor="let t of Teams">
-        <button ion-button [color]="light" style="width: 300px" (click)="TeamPicked(t.teamColor)">{{t.teamColor}}</button>
+        <ion-item>
+          <ion-label color="dark">Your Email:</ion-label>
+          <ion-input [(ngModel)]="pEmail" placeholder="Email"></ion-input>
+        </ion-item>
+      <div *ngFor="let t of teams">
+        <button ion-button [ngStyle]="{'background-color': btnColor, 'color': '#222'}" style="width: 300px" (click)="TeamPicker(t.teamColor)">{{t.teamColor}}</button>
       </div>
-      <button ion-button [color]="light" style="width: 300px; margin-top: 20px" (click)="ConfirmedTeam()">Confirm Team</button>
-      <button ion-button [color]="light"  [disabled]="isenabled" style="width: 300px; margin-top: 20px" (click)="GoPlayerInfo()">Go to your profile</button>
+      <div *ngIf="btnColor != '#f4f4f4'">
+        <button ion-button [ngStyle]="{'background-color': btnColor, 'color': '#222'}" style="width: 300px; margin-top: 20px" (click)="GoPlayerInfo()">Go to your profile</button>
+      </div>
     </div>
   </div>
 </ion-content>

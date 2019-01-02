@@ -14,9 +14,9 @@ namespace Risk_REST.Controllers
     public class AreaController : Controller
     {
 
-        private readonly Risk_AntwerpContext context;
+        private readonly Risk_Antwerp_dbContext context;
 
-        public AreaController(Risk_AntwerpContext context)
+        public AreaController(Risk_Antwerp_dbContext context)
         {
             this.context = context;
         }
@@ -55,6 +55,33 @@ namespace Risk_REST.Controllers
             return new OkObjectResult(area);
         }
 
+        [HttpGet("{id}/players", Name = "getAreaPlayers")]
+        public IActionResult GetAreaPlayersById(int id)
+        {
+            var area = context.Area
+                .Where(m => m.AreaId == id)
+                .Select(m => m.Players).Single();
+
+            if(area == null)
+            {
+                return NotFound();
+            }
+
+            return new OkObjectResult(area);
+        }
+
+        [HttpGet("teamId", Name = "getTeamAreas")]
+        public List<Area> GetTeamAreas(int id)
+        {
+            IQueryable<Area> query = context.Area;
+
+
+            query = query.Where(d => d.TeamId == id);
+
+
+            return query.ToList();
+        }
+
         // POST api/area
         [HttpPost]
         public IActionResult AddArea([FromBody] Area newArea)
@@ -79,8 +106,8 @@ namespace Risk_REST.Controllers
 
             area.AreaId = updateArea.AreaId;
 
-            if (updateArea.AreaOccupiedBy != null)
-                area.AreaOccupiedBy = updateArea.AreaOccupiedBy;
+            if (updateArea.TeamId != null)
+                area.TeamId = updateArea.TeamId;
             if (updateArea.AreaId != null)
                 area.AreaId = updateArea.AreaId;
             if (updateArea.AreaName != null)

@@ -6,19 +6,19 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>BattlePhase-cont</ion-title>
+  <ion-navbar hideBackButton>
+    <ion-title>Battle Phase</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding style="text-align: center" *ngIf="player && area">
+<ion-content padding class="bg" style="text-align: center; margin: auto; margin-top: 48px" *ngIf="player && area">
   <ion-grid>
     <ion-row style="margin: auto">
       <h3>The enemy fought with {{results.botDiceAmount}} troops</h3>
     </ion-row>
-    <ion-row style="margin: auto; background-color:gray">
+    <ion-row style="margin: auto;">
       <ion-column>
         <img [src]="imgSrc_Bot[0]" style="width:64px;">
       </ion-column>
@@ -27,28 +27,48 @@
       </ion-column>
     </ion-row>
     <ion-row style="margin: auto">
-      <h3>You fought with {{results.playerDiceAmount}} troops</h3>
+      <ion-column>
+        <h3>You fought with {{results.playerDiceAmount}} troops</h3>
+      </ion-column>
     </ion-row>
-    <ion-row style="margin: auto; background-color:gray">
+    <ion-row style="margin: auto;">
       <ion-column>
-          <img [src]="imgSrc_Player[0]" style="width:64px;">
+        <img [src]="imgSrc_Player[0]" style="width:64px;">
       </ion-column>
       <ion-column>
-          <img [src]="imgSrc_Player[1]" *ngIf="imgSrc_Player[1]" style="width:64px;">
+        <img [src]="imgSrc_Player[1]" *ngIf="imgSrc_Player[1]" style="width:64px;">
       </ion-column>
       <ion-column>
-          <img [src]="imgSrc_Player[2]" *ngIf="imgSrc_Player[2]" style="width:64px;">
+        <img [src]="imgSrc_Player[2]" *ngIf="imgSrc_Player[2]" style="width:64px;">
       </ion-column>
     </ion-row>
     <ion-row style="margin: auto">
-      <h3>You have {{battleResults[0]}} troops remaining. The enemy has {{battleResults[1]}} troops remaining</h3>
+      <ion-column>
+        <h3>You have {{battleResults[0]}} troops remaining. The enemy has {{battleResults[1]}} troops remaining</h3>
+        <br>
+        <h3>You have {{player.playerTroops}} troops remaining.</h3>
+        <br>
+        <h3>The area you attacked has {{area.defendingTroops}} troops remaining</h3>
+      </ion-column>
     </ion-row>
-    <ion-row style="margin: auto">
-      <h3>You have {{player.playerTroops}} troops remaining.</h3>
-      <h3>The area you attacked has {{area.defendingTroops}} troops remaining</h3>
+    <ion-row style="margin: auto" *ngIf="silverCoins > 0">
+      <ion-column>
+        <h3>You earned {{silverCoins}} silver coins!</h3>
+        <br>
+        <img src="../../assets/imgs/silver-coin.png" style="width: 24px; height: 24px;">
+      </ion-column>
     </ion-row>
     <ion-row style="margin: auto" *ngIf="area.defendingTroops <= 0">
-      <button ion-button [color]="danger" (click)="CaptureArea()">Capture</button>
+      <ion-column>
+        <button ion-button [ngStyle]="{'background-color': service.SetTheme('hex') }" (click)="CaptureArea()">Capture</button>
+      </ion-column>
+    </ion-row>
+    <ion-row style="margin: auto; text-align: center">
+      <ion-column>
+        <button ion-button [ngStyle]="{'background-color': service.SetTheme('hex') }" (click)="GoToBattlePhase()">Fight Again</button>
+        <br>
+        <button ion-button [ngStyle]="{'background-color': service.SetTheme('hex') }" (click)="GoToMap()">Return to the map</button>
+      </ion-column>
     </ion-row>
   </ion-grid>
 </ion-content>

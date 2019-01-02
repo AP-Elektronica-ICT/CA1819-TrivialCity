@@ -1,9 +1,8 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { RegisterPage } from '../pages/register/register';
 import { MapPage } from '../pages/map/map';
@@ -16,19 +15,31 @@ import { BattlePhaseContPage } from '../pages/battle-phase-cont/battle-phase-con
 // Import Auth0Cordova
 import Auth0Cordova from '@auth0/cordova';
 import { TeamViewPage } from '../pages/teamView/teamView';
+import { SignalrService } from '../services/signalR.service';
+import { ShopPage } from '../pages/shop/shop';
 
 
 @Component({
   templateUrl: 'app.html'
 })
-export class MyApp {
+export class MyApp implements OnInit{
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = RegisterPage;
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  ngOnInit(): void {
+    this.SingalRservice.RunSignalR();
+  }
+  /*ionViewDidLoad() {
+    this.SingalRservice.RunSignalR();
+  }*/
+
+  
+
+
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen , private SingalRservice: SignalrService) {
     this.initializeApp();
 
     platform.ready().then(() => {
@@ -46,7 +57,6 @@ export class MyApp {
    
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Home', component: HomePage },
       { title: 'List', component: ListPage },
       { title: 'Map', component: MapPage },
       { title: 'Army', component: ArmyPage },
@@ -54,6 +64,7 @@ export class MyApp {
       { title: 'Register', component: RegisterPage },
       { title: 'Battle Phase', component: BattlePhasePage },
       { title: 'Profile', component: ProfilePage },
+      { title: 'Shop', component: ShopPage },
     ];
 
   }

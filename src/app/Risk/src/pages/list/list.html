@@ -3,14 +3,14 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>List</ion-title>
+    <ion-title>Tests</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding class="bg">
 
 
-  <button ion-button block color="primary" *ngIf="auth.loggedIn" (click)="Check()">Get Token</button>
+  <button ion-button block color="light" *ngIf="auth.loggedIn" (click)="GoTeam()">Go to TeamPage</button>
 
   <div *ngIf="PlayerData">
 
@@ -18,7 +18,12 @@
 
   </div>
   <h2>test</h2>
-  <button ion-button block color="primary" (click)="Check2()">Get players</button>
+  <button ion-button block color="blue" (click)="Check()">Change</button>
+  <button ion-button block color="red" (click)="Check2()">Change</button>
+  <button ion-button block color="green" (click)="Check3()">Change2</button>
+  <button ion-button block color="yellow" (click)="Check4()">Test</button>
+  
+
 
 
 </ion-content>

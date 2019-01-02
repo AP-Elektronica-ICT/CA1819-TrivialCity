@@ -2,6 +2,7 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, AlertController } from 'ionic-angular';
 import leaflet from 'leaflet';
 import { DeviceOrientation, DeviceOrientationCompassHeading } from '@ionic-native/device-orientation';
+import { SplashScreen } from '@ionic-native/splash-screen';
 import { Geolocation } from '@ionic-native/geolocation';
 import 'leaflet-rotatedmarker';
 import 'rxjs/add/operator/map';
@@ -36,14 +37,22 @@ export class MapPage {
 
   player: Player;
   playerTeam: Team;
+  playerAreaIdArray: number[] = [];
+  playerAreaId: number = 0;
 
   areas: Area[] = [];
 
-  playerAreaId: number;
+  color: string;
 
   polygons: any[];
-
   polygonsLayer;
+
+  centerMarkers: any[];
+  centerMarkersLayer = leaflet.featureGroup();
+  centerMarkerOptions = leaflet.icon({
+    iconUrl: '../assets/imgs/mpbattle.png',
+    iconSize: [32, 32]
+  })
 
   battleBtnIsVisible = false;
   supportBtnIsVisible = false;
@@ -67,124 +76,170 @@ export class MapPage {
   seefhoek;
   borgerhout;
   kaai;
+  //center of every individual polygon with coordinates
+  denDamCenter;
+  eilandjeCenter;
+  seefhoekCenter;
+  borgerhoutCenter;
+  kaaiCenter;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private deviceOrientation: DeviceOrientation,
     private geolocation: Geolocation,
+    private splashScreen: SplashScreen,
     private platform: Platform,
     private service: ApiService,
     private alertCtrl: AlertController) {
 
+    this.splashScreen.show();
+
     this.service.GetPlayer(this.service.GetYourId()).subscribe(data => {
       this.player = data
       this.service.GetTeam(this.player.teamId).subscribe(data => this.playerTeam = data)
-      this.service.GetArea(this.player.areaId)
-      this.service.GetAreas().subscribe(data => this.areas = data)
+      this.service.GetAreas().subscribe(data => {
+        this.areas = data;
+        console.log(data);
+      })
       if (this.areas != undefined && this.areas.length >= 0) {
-        this.service.getAreaPositions(1).subscribe(data => {
-          this.areas[0].positions = data
-          this.service.getAreaPositions(2).subscribe(data => {
-            this.areas[1].positions = data
-            this.service.getAreaPositions(3).subscribe(data => {
-              this.areas[2].positions = data
-              this.service.getAreaPositions(4).subscribe(data => {
-                this.areas[3].positions = data
-                this.service.getAreaPositions(5).subscribe(data => {
-                  this.areas[4].positions = data;
-                  this.denDam = leaflet.polygon([
-                    //Den Dam
-                    [this.areas[0].positions[0].latitude, this.areas[0].positions[0].longitude],
-                    [this.areas[0].positions[1].latitude, this.areas[0].positions[1].longitude],
-                    [this.areas[0].positions[2].latitude, this.areas[0].positions[2].longitude],
-                    [this.areas[0].positions[3].latitude, this.areas[0].positions[3].longitude],
-                    [this.areas[0].positions[4].latitude, this.areas[0].positions[4].longitude],
-                    [this.areas[0].positions[5].latitude, this.areas[0].positions[5].longitude],
-                    [this.areas[0].positions[6].latitude, this.areas[0].positions[6].longitude],
-                    [this.areas[0].positions[7].latitude, this.areas[0].positions[7].longitude],
-                    [this.areas[0].positions[8].latitude, this.areas[0].positions[8].longitude],
-                    [this.areas[0].positions[9].latitude, this.areas[0].positions[9].longitude],
-                    [this.areas[0].positions[10].latitude, this.areas[0].positions[10].longitude],
-                  ], { color: this.areas[0].areaOccupiedBy, title: 1 })
 
-                  this.borgerhout = leaflet.polygon([
-                    //Borgerhout
-                    [this.areas[1].positions[0].latitude, this.areas[1].positions[0].longitude],
-                    [this.areas[1].positions[1].latitude, this.areas[1].positions[1].longitude],
-                    [this.areas[1].positions[2].latitude, this.areas[1].positions[2].longitude],
-                    [this.areas[1].positions[3].latitude, this.areas[1].positions[3].longitude],
-                    [this.areas[1].positions[4].latitude, this.areas[1].positions[4].longitude],
-                    [this.areas[1].positions[5].latitude, this.areas[1].positions[5].longitude],
-                    [this.areas[1].positions[6].latitude, this.areas[1].positions[6].longitude],
-                    [this.areas[1].positions[7].latitude, this.areas[1].positions[7].longitude],
-                    [this.areas[1].positions[8].latitude, this.areas[1].positions[8].longitude],
-                    [this.areas[1].positions[9].latitude, this.areas[1].positions[9].longitude],
-                    [this.areas[1].positions[10].latitude, this.areas[1].positions[10].longitude],
-                    [this.areas[1].positions[11].latitude, this.areas[1].positions[11].longitude],
-                    [this.areas[1].positions[12].latitude, this.areas[1].positions[12].longitude],
-                    [this.areas[1].positions[13].latitude, this.areas[1].positions[13].longitude],
-                  ], { color: this.areas[1].areaOccupiedBy, title: 2 })
+        this.service.getAreaPlayers(1).subscribe(data => {
+          this.areas[1].players = data
+          this.service.getAreaPlayers(2).subscribe(data => {
+            this.areas[2].players = data
+            this.service.getAreaPlayers(3).subscribe(data => {
+              this.areas[3].players = data
+              this.service.getAreaPlayers(4).subscribe(data => {
+                this.areas[4].players = data
+                this.service.getAreaPlayers(5).subscribe(data => {
+                  this.areas[5].players = data
+                  this.service.getAreaPositions(1).subscribe(data => {
+                    this.areas[1].positions = data
+                    this.service.getAreaPositions(2).subscribe(data => {
+                      this.areas[2].positions = data
+                      this.service.getAreaPositions(3).subscribe(data => {
+                        this.areas[3].positions = data
+                        this.service.getAreaPositions(4).subscribe(data => {
+                          this.areas[4].positions = data
+                          this.service.getAreaPositions(5).subscribe(data => {
+                            this.areas[5].positions = data;
+                            this.denDam = leaflet.polygon([
+                              //Den Dam
+                              [this.areas[1].positions[0].latitude, this.areas[1].positions[0].longitude],
+                              [this.areas[1].positions[1].latitude, this.areas[1].positions[1].longitude],
+                              [this.areas[1].positions[2].latitude, this.areas[1].positions[2].longitude],
+                              [this.areas[1].positions[3].latitude, this.areas[1].positions[3].longitude],
+                              [this.areas[1].positions[4].latitude, this.areas[1].positions[4].longitude],
+                              [this.areas[1].positions[5].latitude, this.areas[1].positions[5].longitude],
+                              [this.areas[1].positions[6].latitude, this.areas[1].positions[6].longitude],
+                              [this.areas[1].positions[7].latitude, this.areas[1].positions[7].longitude],
+                              [this.areas[1].positions[8].latitude, this.areas[1].positions[8].longitude],
+                              [this.areas[1].positions[9].latitude, this.areas[1].positions[9].longitude],
+                              [this.areas[1].positions[10].latitude, this.areas[1].positions[10].longitude],
+                            ], { color: this.colorSelector(this.areas[1].teamId), title: 1 })
 
-                  this.eilandje = leaflet.polygon([
-                    //Eilandje
-                    [this.areas[2].positions[0].latitude, this.areas[2].positions[0].longitude],
-                    [this.areas[2].positions[1].latitude, this.areas[2].positions[1].longitude],
-                    [this.areas[2].positions[2].latitude, this.areas[2].positions[2].longitude],
-                    [this.areas[2].positions[3].latitude, this.areas[2].positions[3].longitude],
-                    [this.areas[2].positions[4].latitude, this.areas[2].positions[4].longitude],
-                    [this.areas[2].positions[5].latitude, this.areas[2].positions[5].longitude],
-                    [this.areas[2].positions[6].latitude, this.areas[2].positions[6].longitude],
-                    [this.areas[2].positions[7].latitude, this.areas[2].positions[7].longitude],
-                    [this.areas[2].positions[8].latitude, this.areas[2].positions[8].longitude],
-                    [this.areas[2].positions[9].latitude, this.areas[2].positions[9].longitude],
-                    [this.areas[2].positions[10].latitude, this.areas[2].positions[10].longitude],
-                    [this.areas[2].positions[11].latitude, this.areas[2].positions[11].longitude],
-                    [this.areas[2].positions[12].latitude, this.areas[2].positions[12].longitude],
-                    [this.areas[2].positions[13].latitude, this.areas[2].positions[13].longitude],
-                  ], { color: this.areas[2].areaOccupiedBy, title: 3 })
+                            this.borgerhout = leaflet.polygon([
+                              //Borgerhout
+                              [this.areas[2].positions[0].latitude, this.areas[2].positions[0].longitude],
+                              [this.areas[2].positions[1].latitude, this.areas[2].positions[1].longitude],
+                              [this.areas[2].positions[2].latitude, this.areas[2].positions[2].longitude],
+                              [this.areas[2].positions[3].latitude, this.areas[2].positions[3].longitude],
+                              [this.areas[2].positions[4].latitude, this.areas[2].positions[4].longitude],
+                              [this.areas[2].positions[5].latitude, this.areas[2].positions[5].longitude],
+                              [this.areas[2].positions[6].latitude, this.areas[2].positions[6].longitude],
+                              [this.areas[2].positions[7].latitude, this.areas[2].positions[7].longitude],
+                              [this.areas[2].positions[8].latitude, this.areas[2].positions[8].longitude],
+                              [this.areas[2].positions[9].latitude, this.areas[2].positions[9].longitude],
+                              [this.areas[2].positions[10].latitude, this.areas[2].positions[10].longitude],
+                              [this.areas[2].positions[11].latitude, this.areas[2].positions[11].longitude],
+                              [this.areas[2].positions[12].latitude, this.areas[2].positions[12].longitude],
+                              [this.areas[2].positions[13].latitude, this.areas[2].positions[13].longitude],
+                            ], { color: this.colorSelector(this.areas[2].teamId), title: 2 })
 
-                  this.seefhoek = leaflet.polygon([
-                    //Seefhoek
-                    [this.areas[3].positions[0].latitude, this.areas[3].positions[0].longitude],
-                    [this.areas[3].positions[1].latitude, this.areas[3].positions[1].longitude],
-                    [this.areas[3].positions[2].latitude, this.areas[3].positions[2].longitude],
-                    [this.areas[3].positions[3].latitude, this.areas[3].positions[3].longitude],
-                    [this.areas[3].positions[4].latitude, this.areas[3].positions[4].longitude],
-                    [this.areas[3].positions[5].latitude, this.areas[3].positions[5].longitude],
-                    [this.areas[3].positions[6].latitude, this.areas[3].positions[6].longitude],
-                    [this.areas[3].positions[7].latitude, this.areas[3].positions[7].longitude],
-                    [this.areas[3].positions[8].latitude, this.areas[3].positions[8].longitude],
-                    [this.areas[3].positions[9].latitude, this.areas[3].positions[9].longitude],
-                    [this.areas[3].positions[10].latitude, this.areas[3].positions[10].longitude],
-                    [this.areas[3].positions[11].latitude, this.areas[3].positions[11].longitude],
-                    [this.areas[3].positions[12].latitude, this.areas[3].positions[12].longitude],
-                    [this.areas[3].positions[13].latitude, this.areas[3].positions[13].longitude],
-                  ], { color: this.areas[3].areaOccupiedBy, title: 4 })
+                            this.eilandje = leaflet.polygon([
+                              //Eilandje
+                              [this.areas[3].positions[0].latitude, this.areas[3].positions[0].longitude],
+                              [this.areas[3].positions[1].latitude, this.areas[3].positions[1].longitude],
+                              [this.areas[3].positions[2].latitude, this.areas[3].positions[2].longitude],
+                              [this.areas[3].positions[3].latitude, this.areas[3].positions[3].longitude],
+                              [this.areas[3].positions[4].latitude, this.areas[3].positions[4].longitude],
+                              [this.areas[3].positions[5].latitude, this.areas[3].positions[5].longitude],
+                              [this.areas[3].positions[6].latitude, this.areas[3].positions[6].longitude],
+                              [this.areas[3].positions[7].latitude, this.areas[3].positions[7].longitude],
+                              [this.areas[3].positions[8].latitude, this.areas[3].positions[8].longitude],
+                              [this.areas[3].positions[9].latitude, this.areas[3].positions[9].longitude],
+                              [this.areas[3].positions[10].latitude, this.areas[3].positions[10].longitude],
+                              [this.areas[3].positions[11].latitude, this.areas[3].positions[11].longitude],
+                              [this.areas[3].positions[12].latitude, this.areas[3].positions[12].longitude],
+                              [this.areas[3].positions[13].latitude, this.areas[3].positions[13].longitude],
+                            ], { color: this.colorSelector(this.areas[3].teamId), title: 3 })
 
-                  this.kaai = leaflet.polygon([
-                    //De kaai
-                    [this.areas[4].positions[0].latitude, this.areas[4].positions[0].longitude],
-                    [this.areas[4].positions[1].latitude, this.areas[4].positions[1].longitude],
-                    [this.areas[4].positions[2].latitude, this.areas[4].positions[2].longitude],
-                    [this.areas[4].positions[3].latitude, this.areas[4].positions[3].longitude],
-                    [this.areas[4].positions[4].latitude, this.areas[4].positions[4].longitude],
-                    [this.areas[4].positions[5].latitude, this.areas[4].positions[5].longitude],
-                    [this.areas[4].positions[6].latitude, this.areas[4].positions[6].longitude],
-                    [this.areas[4].positions[7].latitude, this.areas[4].positions[7].longitude],
-                    [this.areas[4].positions[8].latitude, this.areas[4].positions[8].longitude],
-                    [this.areas[4].positions[9].latitude, this.areas[4].positions[9].longitude],
-                  ], { color: this.areas[4].areaOccupiedBy, title: 5 })
+                            this.seefhoek = leaflet.polygon([
+                              //Seefhoek
+                              [this.areas[4].positions[0].latitude, this.areas[4].positions[0].longitude],
+                              [this.areas[4].positions[1].latitude, this.areas[4].positions[1].longitude],
+                              [this.areas[4].positions[2].latitude, this.areas[4].positions[2].longitude],
+                              [this.areas[4].positions[3].latitude, this.areas[4].positions[3].longitude],
+                              [this.areas[4].positions[4].latitude, this.areas[4].positions[4].longitude],
+                              [this.areas[4].positions[5].latitude, this.areas[4].positions[5].longitude],
+                              [this.areas[4].positions[6].latitude, this.areas[4].positions[6].longitude],
+                              [this.areas[4].positions[7].latitude, this.areas[4].positions[7].longitude],
+                              [this.areas[4].positions[8].latitude, this.areas[4].positions[8].longitude],
+                              [this.areas[4].positions[9].latitude, this.areas[4].positions[9].longitude],
+                              [this.areas[4].positions[10].latitude, this.areas[4].positions[10].longitude],
+                              [this.areas[4].positions[11].latitude, this.areas[4].positions[11].longitude],
+                              [this.areas[4].positions[12].latitude, this.areas[4].positions[12].longitude],
+                              [this.areas[4].positions[13].latitude, this.areas[4].positions[13].longitude],
 
-                  this.loadmap();
-                });
-              });
-            });
-          });
-        });
+                            ], { color: this.colorSelector(this.areas[4].teamId), title: 4 })
+
+                            this.kaai = leaflet.polygon([
+                              //De kaai
+                              [this.areas[5].positions[0].latitude, this.areas[5].positions[0].longitude],
+                              [this.areas[5].positions[1].latitude, this.areas[5].positions[1].longitude],
+                              [this.areas[5].positions[2].latitude, this.areas[5].positions[2].longitude],
+                              [this.areas[5].positions[3].latitude, this.areas[5].positions[3].longitude],
+                              [this.areas[5].positions[4].latitude, this.areas[5].positions[4].longitude],
+                              [this.areas[5].positions[5].latitude, this.areas[5].positions[5].longitude],
+                              [this.areas[5].positions[6].latitude, this.areas[5].positions[6].longitude],
+                              [this.areas[5].positions[7].latitude, this.areas[5].positions[7].longitude],
+                              [this.areas[5].positions[8].latitude, this.areas[5].positions[8].longitude],
+                              [this.areas[5].positions[9].latitude, this.areas[5].positions[9].longitude],
+                              [this.areas[5].positions[10].latitude, this.areas[5].positions[10].longitude],
+
+                            ], { color: this.colorSelector(this.areas[5].teamId), title: 5 })
+
+                            this.denDamCenter = leaflet.marker([this.areas[1].positions[11].latitude, this.areas[1].positions[11].longitude], { icon: this.centerMarkerOptions });
+                            this.borgerhoutCenter = leaflet.marker([this.areas[2].positions[14].latitude, this.areas[2].positions[14].longitude], { icon: this.centerMarkerOptions });
+                            this.eilandjeCenter = leaflet.marker([this.areas[3].positions[14].latitude, this.areas[3].positions[14].longitude], { icon: this.centerMarkerOptions });
+                            this.seefhoekCenter = leaflet.marker([this.areas[4].positions[14].latitude, this.areas[4].positions[14].longitude], { icon: this.centerMarkerOptions });
+                            this.kaaiCenter = leaflet.marker([this.areas[5].positions[11].latitude, this.areas[5].positions[11].longitude], { icon: this.centerMarkerOptions });
+
+                            this.centerMarkers = [this.denDamCenter, this.eilandjeCenter, this.seefhoekCenter, this.borgerhoutCenter, this.kaaiCenter];
+
+                            //Polygon Array
+                            this.polygons = [this.denDam, this.eilandje, this.seefhoek, this.borgerhout, this.kaai];
+                            //Add every individual polygon to the polygon layer
+                            this.polygonsLayer = leaflet.featureGroup(this.polygons);
+
+                            this.splashScreen.hide();
+
+                            this.loadmap();
+                          })
+                        })
+                      })
+                    })
+                  })
+                })
+              })
+            })
+          })
+        })
       }
     });
 
     platform.ready().then(() => {
+
       //Device Orientation subscription
       const options = { frequency: 50 };
       const orientationSubscription = deviceOrientation.watchHeading(options).subscribe(
@@ -199,37 +254,41 @@ export class MapPage {
           this.playerLocation.lat = position.coords.latitude,
             this.playerLocation.lng = position.coords.longitude
         })
-      const loop = Observable.interval(5000).subscribe((val) => {
+      const loop = Observable.interval(1000).subscribe((val) => {
+        
+        if (this.areas) {
+          this.AreaActivityChecker();
+        }
+
         this.territoryChecker();
-        this.service.PutPlayer(this.player.playerId, {
-          playerId: `${this.player.playerId}`,
-          areaId: `${this.playerAreaId}`
-        }).subscribe(data => this.player = data)
+
+        if (this.playerAreaIdArray && this.playerAreaId && this.playerAreaIdArray[this.playerAreaId] != 0) {
+          this.service.PutPlayer(this.player.playerId, {
+            playerId: `${this.player.playerId}`,
+            areaId: `${this.playerAreaIdArray[this.playerAreaId]}`
+          }).subscribe(data => this.player = data)
+        }
+
+        else if(this.playerAreaIdArray[this.playerAreaId] == 0){
+          this.service.PutPlayer(this.player.playerId, {
+            playerId: `${this.player.playerId}`,
+            areaId: 0
+          }).subscribe(data => this.player = data)
+        }
+
       })
     })
-
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MapPage');
   }
 
-  ionViewDidEnter() {
-
-
-  }
-
   goToBattlePhase() {
     this.navCtrl.push(BattlePhasePage);
   }
 
-
   loadmap() {
-
-    //Polygon Array
-    this.polygons = [this.denDam, this.eilandje, this.seefhoek, this.borgerhout, this.kaai];
-    //Add every individual polygon to the polygon layer
-    this.polygonsLayer = leaflet.featureGroup([this.denDam, this.eilandje, this.seefhoek, this.borgerhout, this.kaai]);
 
     // This adds the map to the screen
     this.map = leaflet.map("map").fitWorld();
@@ -257,20 +316,20 @@ export class MapPage {
     }).on('locationerror', (err) => {
       alert(err.message);
     })
-    //This adds custom district polygons to the map
-
+    //Add the area polygons layer to the map
     this.polygonsLayer.addTo(this.map);
 
+    this.centerMarkersLayer.addTo(this.map);
 
   }
 
   territoryChecker() {
     if (this.playerLocation.lat && this.playerLocation.lng && this.polygons) {
-      for (let i = 0; i < this.polygons.length; i++) {
+      for (let i = 1; i < this.polygons.length; i++) {
         if (this.polygons[i].getBounds().contains(this.playerMarker.getLatLng())) {
 
-          this.playerAreaId = this.polygons[i].options.title;
-          console.log(this.playerAreaId)
+          this.playerAreaIdArray[i] = this.polygons[i].options.title;
+          this.playerAreaId = i;
 
           if (this.polygons[i].options.color != this.playerTeam.teamColor) {
             this.battleBtnIsVisible = true;
@@ -282,7 +341,21 @@ export class MapPage {
           }
         }
         else {
-          this.playerAreaId = 0;
+          this.playerAreaIdArray[i] = 0;
+        }
+      }
+      if (this.player.areaId == 0) {
+        this.battleBtnIsVisible = false;
+        this.supportBtnIsVisible = false;
+      }
+    }
+  }
+
+  AreaActivityChecker() {
+    if (this.areas && this.centerMarkers) {
+      for (let i = 1; i < this.centerMarkers.length; i++) {
+        if (this.areas[i].players.length > 1 /*this number decides how many players are needed to display 'multi player battle marker'*/) {
+          this.centerMarkers[i-1].addTo(this.centerMarkersLayer);
         }
       }
     }
@@ -330,5 +403,23 @@ export class MapPage {
       buttons: ['Dismiss']
     });
     errorAlert.present();
+  }
+
+  colorSelector(teamId: number): String {
+
+    switch (teamId) {
+      case 1: {
+        return "Blue";
+      }
+      case 2: {
+        return "Red";
+      }
+      case 3: {
+        return "Green";
+      }
+      case 4: {
+        return "Yellow";
+      }
+    }
   }
 }

@@ -13,9 +13,10 @@ namespace Risk_REST.Models
 
         public int AreaId { get; set; }
         public string AreaName { get; set; }
-        public string AreaOccupiedBy { get; set; }
         public int? DefendingTroops { get; set; }
+        public int? TeamId { get; set; }
 
+        public Teams Team { get; set; }
         public ICollection<Players> Players { get; set; }
         public ICollection<Positions> Positions { get; set; }
     }

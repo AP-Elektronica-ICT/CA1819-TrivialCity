@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Risk_REST.Auth;
 using Risk_REST.Services.Data;
 using Risk_REST.Services;
+using Risk_REST.Hubs;
 
 namespace Risk_REST
 {
@@ -29,16 +30,22 @@ namespace Risk_REST
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSignalR();
 
             services.AddCors(o => o.AddPolicy("myPolicy", builder =>
             {
                 builder.AllowAnyOrigin()
                 .AllowAnyMethod()
+                .AllowCredentials()
                 .AllowAnyHeader();
+                
+
             }));
 
+
+            services.AddDbContext<Risk_Antwerp_dbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("localDB")));
             services.AddMvc();
-            services.AddDbContext<Risk_AntwerpContext>(options => options.UseSqlServer(@"Server=risk-antwerp.database.windows.net,1433;Initial Catalog=Risk_Antwerp;Persist Security Info=False;User ID=Risk_Antwerp;Password=R1sk_4ntw3rp;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
+           // services.AddDbContext<Risk_Antwerp_dbContext>(options => options.UseSqlServer(@"Server=risk-antwerp.database.windows.net,1433;Initial Catalog=Risk_Antwerp_db;Persist Security Info=False;User ID=Risk_Antwerp;Password=R1sk_4ntw3rp;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
 
             // 1. Add Authentication Services
             services.AddAuthentication(options =>
@@ -57,28 +64,10 @@ namespace Risk_REST
                 options.AddPolicy("read:app", policy => policy.Requirements.Add(new HasScopeRequirement("read:app", domain)));
             });
 
-            /* services.AddCors(options =>
-             {
-                 options.AddPolicy("CorsPolicy",
-                     builder => builder.AllowAnyOrigin()
-                     //.WithOrigins("http://localhost:8080/", "http://localhost:8100/", "http://192.168.0.177/*" )
-                     .AllowAnyMethod()
-                     .AllowAnyHeader()
-                     .AllowAnyOrigin()
-                     .AllowCredentials());
-                     //.WithHeaders("Access-Control-Allow-Methods", "*"));
-
-
-             });*/
-
+           
           
 
 
-          //  services.AddCors();
-
-
-            //services.AddCors();
-           // services.AddMvc();
             //services.AddScoped<>
 
 
@@ -100,27 +89,19 @@ namespace Risk_REST
                 app.UseExceptionHandler("/Home/Error");
             }
 
+
             app.UseStaticFiles();
+
             app.UseCors("myPolicy");
 
-            //  app.UseCors(builder => builder.AllowAnyOrigin());
-            //app.UseMvc();
-            //    app.UseCors(Microsoft.AspNetCore.Cors.EnableCorsAttribute.);
 
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<NotificationHub>("/notification");
+            });
 
-            /*  app.UseCors(builder =>
-              builder.WithOrigins("http://*")
-             .AllowAnyHeader()
-               );*/
-            /*app.UseCors(options => options.WithOrigins("http://localhost:8100/")
-                            .AllowAnyMethod()
-                            .AllowAnyHeader()
-                            .AllowCredentials()
-                           .WithMethods("GET", "POST")
-                           .WithHeaders("Access-Control-Allow-Methods", "*")
-
-                       );*/
-            // 2. Enable authentication middleware
+            
+            //  Enable authentication middleware
             app.UseAuthentication();
 
             app.UseMvc(routes =>

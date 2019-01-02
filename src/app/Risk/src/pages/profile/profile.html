@@ -9,21 +9,54 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Profile</ion-title>
+    <ion-title style="display: inline-block">Profile</ion-title>
+    <ion-title *ngIf="player" style="float: right;"> {{player.playerUsername}}</ion-title>
   </ion-navbar>
 </ion-header>
 
 
-<ion-content padding class="profile">
+<ion-content padding class="bg" style="text-align: center;">
+  <div style="margin: auto">
+    <div *ngIf="player">
+      <h3>{{player.playerTitle}}</h3>
+      <img [src]="src" style="width: 64px; height: 64px;">
+      <br>
+      <div>
+        <h3 style="width: 9%; display: inline-block;">{{player.playerLevel}}</h3>
 
-    <div class="container"  *ngIf="playerInfo">  
-            <h2>Username:  {{playerInfo.playerUsername}} </h2> 
-            <h2>Email:  {{playerInfo.playerEmail}}</h2> 
-            <h2>Title:  {{playerInfo.playerTitle}} </h2>
-            <h2>Level:  {{playerInfo.playerLevel}} </h2>
-            <h2>Exp:  {{playerInfo.playerExp}}</h2>
-            <h2>SilverCoins:  {{playerInfo.playerSilverCoins}} </h2>
+        <div class="xpbar">
+          <div class="xpbar-left" [ngStyle]="{'width': xpbar, 'background-color': service.SetTheme('hex')}"></div>
+          <div class="xpbar-right" [ngStyle]="{'margin-left': xpbar}"></div>
+        </div>
+
+        <h3 style="width: 9%; display: inline-block;">{{player.playerLevel + 1}}</h3>
+      </div>
+      <br>
+      <h3>SilverCoins: {{player.playerSilverCoins}} </h3>
+      <br>
+      <h3>Your Troops: {{player.playerTroops}} </h3>
+      <br>
+      <h3>Your ReserveTroops: {{player.playerReserveTroops}} </h3>
     </div>
-    <button ion-button block color="primary" (click)="ChangeUsername()">Change Username</button>
-  
+
+    <div class="Troops" *ngIf="player">
+      <img class="fotoTroops" style="text-align: center" src='../../assets/imgs/YourTroops.png' alt="foto troops">
+    </div>
+
+    <div *ngIf="player">
+      <button ion-button block [ngStyle]="{'background-color': service.SetTheme('hex') }" (click)="MoveTroops()" [disabled]="isenabled" >Send
+        troops
+        to
+        your location</button>
+      <ng-progress [positionUsing]="'marginRight'" [minimum]="0.15" [maximum]="1" [speed]="200" [direction]="'leftToRightIncreased'"
+        [color]="service.SetTheme('string')" [trickleSpeed]="250" [ease]="'linear'"></ng-progress>
+    </div>
+
+    <div *ngIf="player">
+      <button ion-button block [ngStyle]="{'background-color': service.SetTheme('hex') }" (click)="ChangeUsername()">Change
+        Username</button>
+      <button ion-button block [ngStyle]="{'background-color': service.SetTheme('hex') }" (click)="ChangeEmail()">Change
+        Email</button>
+    </div>
+  </div>
 </ion-content>

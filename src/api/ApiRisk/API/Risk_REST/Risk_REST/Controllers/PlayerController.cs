@@ -21,9 +21,9 @@ namespace Risk_REST.Controllers
     public class PlayerController : Controller
     {
 
-        private readonly Risk_AntwerpContext context;
+        private readonly Risk_Antwerp_dbContext context;
 
-        public PlayerController(Risk_AntwerpContext context)
+        public PlayerController(Risk_Antwerp_dbContext context)
         {
             this.context = context;
         }
@@ -50,19 +50,75 @@ namespace Risk_REST.Controllers
         {
             var player = context.Players.SingleOrDefault(t => t.PlayerId == id);
 
+            StatsChecker(player);
+
             return new OkObjectResult(player);
+        }
+        private void StatsChecker(Players player)
+        {
+            if (player.PlayerLevel < 5) { player.PlayerTitle = "Private"; }
+            else if (player.PlayerLevel >= 50) { player.PlayerTitle = "Sergeant Major of the Army"; }
+            else if (player.PlayerLevel >= 45) { player.PlayerTitle = "Command Sergeant Major"; }
+            else if (player.PlayerLevel >= 40) { player.PlayerTitle = "Sergeant Major"; }
+            else if (player.PlayerLevel >= 35) { player.PlayerTitle = "First Sergeant"; }
+            else if (player.PlayerLevel >= 30) { player.PlayerTitle = "Master Sergeant"; }
+            else if (player.PlayerLevel >= 25) { player.PlayerTitle = "Sergeant First Class"; }
+            else if (player.PlayerLevel >= 20) { player.PlayerTitle = "Staff Sergeant"; }
+            else if (player.PlayerLevel >= 15) { player.PlayerTitle = "Sergeant"; }
+            else if (player.PlayerLevel >= 10) { player.PlayerTitle = "Corporal"; }
+            else if (player.PlayerLevel >= 5) { player.PlayerTitle = "Private First Class"; }
+
+
+            if (player.PlayerExp >= 1000)
+            {
+                player.PlayerLevel++;
+                player.PlayerExp -= 1000;
+            }
+
+            if (player.PlayerTroops > 25)
+            {
+                player.PlayerReserveTroops += player.PlayerTroops - 25;
+                player.PlayerTroops = 25;
+            }
+        }
+
+        [HttpGet("auth0", Name = "getPlayerAuth")]
+        public List<Players> GetAuthId(string id)
+        {
+            IQueryable<Players> query = context.Players;
+
+            
+            query = query.Where(d => d.AuthId == id);
+            
+       
+            return query.ToList();   
+        }
+
+        [HttpGet("{id}/team", Name = "getPlayerTeam")]
+        public IActionResult GetPlayerTeamById(int id)
+        {
+            var player = context.Players.SingleOrDefault(t => t.PlayerId == id);
+
+            return new OkObjectResult(player.TeamId);
         }
 
         // POST api/player
         [HttpPost]
         public IActionResult AddPlayer([FromBody] Players newPlayer)
         {
-            Players player = new Players();
-            player = newPlayer;
+            try
+            {
+                Players player = new Players();
+                player = newPlayer;
 
-            context.Players.Add(player);
-            context.SaveChanges();
-            return new OkObjectResult(player);
+                context.Players.Add(player);
+                context.SaveChanges();
+                return new OkObjectResult(player);
+            }
+            catch(Exception exception)
+            {
+                return new OkObjectResult(new Players() { PlayerEmail = exception.InnerException.ToString() });
+            }
         }
 
         // PUT api/player/5
