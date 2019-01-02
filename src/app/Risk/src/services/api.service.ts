@@ -91,12 +91,15 @@ export class ApiService extends BaseService {
 
   GetYourAuthId(authId: string): Observable<Player[]> {
     return this.http.get<Player[]>(`${this.baseApi}/player/auth0?=${authId}`, this.httpHeader);
-
   }
 
   GetTeams(): Observable<Team[]> {
     return this.http.get<Team[]>(`${this.baseApi}/team`, this.httpHeader);
 
+  }
+
+  GetTeamAreas(teamId: number): Observable<Area[]> {
+    return this.http.get<Area[]>(`${this.baseApi}/area/teamId?=${teamId}`, this.httpHeader);
   }
 
   GetTeam(_number: number): Observable<Team> {

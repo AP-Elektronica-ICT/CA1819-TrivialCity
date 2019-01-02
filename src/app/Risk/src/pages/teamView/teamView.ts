@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { ApiService, Team, Player } from '../../services/api.service';
+import { ApiService, Team, Player, Area } from '../../services/api.service';
 
 /**
  * Generated class for the TeamPage page.
@@ -18,7 +18,9 @@ export class TeamViewPage {
 
   mode: Boolean = true;
   teamsInfo: Team[] = [];
+  team: Team;
   player: Player;
+  teamAreas: Area[] = [];
   constructor(public navCtrl: NavController, public navParams: NavParams, private service: ApiService) {
 
   }
@@ -31,7 +33,13 @@ export class TeamViewPage {
       this.service.GetTeamPlayers(2).subscribe(data => this.teamsInfo[1].players = data);
       this.service.GetTeamPlayers(3).subscribe(data => this.teamsInfo[2].players = data);
       this.service.GetTeamPlayers(4).subscribe(data => this.teamsInfo[3].players = data);
-      this.service.GetPlayer(this.service.GetYourId()).subscribe(data => this.player = data);
+      this.service.GetPlayer(this.service.GetYourId()).subscribe(data => {
+        this.player = data
+        this.service.GetTeam(this.player.teamId).subscribe(data => {
+          this.team = data;
+          this.service.GetTeamAreas(this.player.teamId).subscribe(data => this.teamAreas = data)
+        })
+      });
     }
   }
 

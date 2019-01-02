@@ -17,8 +17,8 @@
             outline>Your Team</button>
     </div>
     <!-- information overview of every team -->
-    <div *ngIf="mode == true">
-        <div class="Teams" *ngIf="teamsInfo">
+    <div *ngIf="mode == true" style="text-align: center">
+        <div class="Teams" style="margin:auto;" *ngIf="teamsInfo">
             <table>
                 <tr *ngFor="let data of teamsInfo">
                     <td>
@@ -33,22 +33,20 @@
                 </tr>
             </table>
         </div>
-        <img style="text-align: center" src='../../assets/imgs/teams.png' alt="foto troops">
+        <img style="margin: auto;" src='../../assets/imgs/teams.png' alt="foto troops">
     </div>
 
     <!-- Information on the players specific team -->
-    <div *ngIf="mode == false">
-        <div class="Teams">
+    <div *ngIf="mode == false" style="text-align: center">
+        <div class="Teams" style="margin:auto;">
+            <h1>Team Controlled Areas</h1>
             <table>
-                <tr *ngFor="let data of teamsInfo">
+                <tr *ngFor="let data of teamAreas">
                     <td>
-                        <h2>Team </h2> {{data.teamColor}}
+                        {{data.areaName}}
                     </td>
                     <td>
-                        <h2>Areas</h2> {{data.teamTotalOccupiedAreas}}
-                    </td>
-                    <td>
-                        <h2>Players</h2>{{data.players.length}}
+                        <h2>Troops</h2> {{data.defendingTroops}}
                     </td>
                 </tr>
             </table>
