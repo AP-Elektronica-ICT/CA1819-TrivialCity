@@ -16,6 +16,7 @@ import { ApiService, Team, Player } from '../../services/api.service';
 })
 export class TeamViewPage {
 
+  mode: Boolean = true;
   teamsInfo: Team[] = [];
   player: Player;
   constructor(public navCtrl: NavController, public navParams: NavParams, private service: ApiService) {
@@ -34,14 +35,19 @@ export class TeamViewPage {
     }
   }
 
-
+  SetMode(mode: number) {
+    if(mode == 1){
+      this.mode = true;
+    }
+    else if(mode == 2){
+      this.mode = false;
+    }
+  }
 
   Check() {
-
     // this.playerCount = this.team1Players.length;
     console.log(this.teamsInfo);
     //console.log(this.TeamsInfo[0]);
   }
-
 
 }

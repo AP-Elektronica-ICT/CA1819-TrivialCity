@@ -94,11 +94,6 @@ export class BattlePhaseContPage {
             this.area.defendingTroops = 0;
           }
 
-          if (this.player.playerExp >= 1000){
-            this.player.playerExp -= 1000;
-            this.player.playerLevel++;
-          }
-
           this.service.PutArea(this.area.areaId, {
             areaId: this.area.areaId,
             defendingTroops: this.area.defendingTroops
@@ -109,8 +104,6 @@ export class BattlePhaseContPage {
           this.service.PutPlayer(this.player.playerId, {
             playerId: this.player.playerId,
             playerSilverCoins: this.player.playerSilverCoins,
-            playerExp: this.player.playerExp,
-            playerLevel: this.player.playerLevel
           })
 
         }
@@ -124,16 +117,9 @@ export class BattlePhaseContPage {
             this.player.playerTroops = 0;
           }
 
-          if (this.player.playerExp >= 1000){
-            this.player.playerExp -= 1000;
-            this.player.playerLevel++;
-          }
-
           this.service.PutPlayer(this.service.GetYourId(), {
             playerId: this.service.GetYourId(),
             playerTroops: this.player.playerTroops,
-            playerExp: this.player.playerExp,
-            playerLevel: this.player.playerLevel
           }).subscribe(data => {
             this.player = data;
           })
@@ -197,9 +183,9 @@ export class BattlePhaseContPage {
   }
 
   GoToMap() {
-    this.navCtrl.push(MapPage);
+    this.navCtrl.setRoot(MapPage);
   }
   GoToBattlePhase() {
-    this.navCtrl.push(BattlePhasePage);
+    this.navCtrl.setRoot(BattlePhasePage);
   }
 }

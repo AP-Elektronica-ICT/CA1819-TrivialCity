@@ -71,7 +71,7 @@ export class TeamPage {
               "teamId": `${this.teamId}`,
               "playerUsername": `${this.pUsername}`,
               "playerEmail": `${this.pEmail}`,
-              "playerTitle": "AntwerpBeginner",
+              "playerTitle": "Private",
               "playerLevel": 0,
               "playerExp": 0,
               "playerSilverCoins": 0,

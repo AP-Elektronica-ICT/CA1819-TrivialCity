@@ -15,43 +15,48 @@
 </ion-header>
 
 
-<ion-content padding class="bg">
+<ion-content padding class="bg" style="text-align: center;">
+  <div style="margin: auto">
+    <div *ngIf="player">
+      <h3>{{player.playerTitle}}</h3>
+      <img [src]="src" style="width: 64px; height: 64px;">
+      <br>
+      <div>
+        <h3 style="width: 9%; display: inline-block;">{{player.playerLevel}}</h3>
 
-  <div *ngIf="player">
-    <h3 style="text-align: center">{{player.playerTitle}}</h3>
-    <br>
-    <div>
-      <h3 style="width: 9%; display: inline-block;">{{player.playerLevel}}</h3>
+        <div class="xpbar">
+          <div class="xpbar-left" [ngStyle]="{'width': xpbar, 'background-color': service.SetTheme('hex')}"></div>
+          <div class="xpbar-right" [ngStyle]="{'margin-left': xpbar}"></div>
+        </div>
 
-      <div class="xpbar">
-        <div class="xpbar-left" [ngStyle]="{'width': xpbar, 'background-color': service.SetTheme()}"></div>
-        <div class="xpbar-right" [ngStyle]="{'margin-left': xpbar}"></div>
+        <h3 style="width: 9%; display: inline-block;">{{player.playerLevel + 1}}</h3>
       </div>
-  
-      <h3 style="width: 9%; display: inline-block;">{{player.playerLevel + 1}}</h3>
+      <br>
+      <h3>SilverCoins: {{player.playerSilverCoins}} </h3>
+      <br>
+      <h3>Your Troops: {{player.playerTroops}} </h3>
+      <br>
+      <h3>Your ReserveTroops: {{player.playerReserveTroops}} </h3>
     </div>
-    <br>
-    <h3>SilverCoins: {{player.playerSilverCoins}} </h3>
-    <br>
-    <h3>Your Troops: {{player.playerTroops}} </h3>
-    <br>
-    <h3>Your ReserveTroops: {{player.playerReserveTroops}} </h3>
+
+    <div class="Troops" *ngIf="player">
+      <img class="fotoTroops" style="text-align: center" src='../../assets/imgs/YourTroops.png' alt="foto troops">
+    </div>
+
+    <div *ngIf="player">
+      <button ion-button block [ngStyle]="{'background-color': service.SetTheme('hex') }" (click)="MoveTroops()">Send
+        troops
+        to
+        your location</button>
+      <ng-progress [positionUsing]="'marginRight'" [minimum]="0.15" [maximum]="1" [speed]="200" [direction]="'leftToRightIncreased'"
+        [color]="service.SetTheme('string')" [trickleSpeed]="250" [ease]="'linear'"></ng-progress>
+    </div>
+
+    <div *ngIf="player">
+      <button ion-button block [ngStyle]="{'background-color': service.SetTheme('hex') }" (click)="ChangeUsername()">Change
+        Username</button>
+      <button ion-button block [ngStyle]="{'background-color': service.SetTheme('hex') }" (click)="ChangeEmail()">Change
+        Email</button>
+    </div>
   </div>
-
-  <div class="Troops" *ngIf="player">
-    <img class="fotoTroops" src='../../assets/imgs/YourTroops.png' alt="foto troops">
-  </div>
-
-  <div>
-    <button ion-button block [ngStyle]="{'background-color': service.SetTheme() }" (click)="MoveTroops()">Send troops
-      to
-      your location</button>
-    <ng-progress [positionUsing]="'marginRight'" [minimum]="0.15" [maximum]="1" [speed]="200" [showSpinner]="false"
-      [direction]="'leftToRightIncreased'" [color]="'red'" [trickleSpeed]="250" [thick]="false" [ease]="'linear'"></ng-progress>
-  </div>
-
-  <button ion-button block [ngStyle]="{'background-color': service.SetTheme() }" (click)="ChangeUsername()">Change
-    Username</button>
-  <button ion-button block [ngStyle]="{'background-color': service.SetTheme() }" (click)="ChangeEmail()">Change Email</button>
-
 </ion-content>

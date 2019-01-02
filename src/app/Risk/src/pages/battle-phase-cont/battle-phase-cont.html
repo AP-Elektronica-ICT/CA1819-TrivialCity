@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar hideBackButton>
-    <ion-title>Battle Phase pt. 2</ion-title>
+    <ion-title>Battle Phase</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -60,14 +60,14 @@
     </ion-row>
     <ion-row style="margin: auto" *ngIf="area.defendingTroops <= 0">
       <ion-column>
-        <button ion-button [ngStyle]="{'background-color': service.SetTheme() }" (click)="CaptureArea()">Capture</button>
+        <button ion-button [ngStyle]="{'background-color': service.SetTheme('hex') }" (click)="CaptureArea()">Capture</button>
       </ion-column>
     </ion-row>
     <ion-row style="margin: auto; text-align: center">
       <ion-column>
-        <button ion-button [ngStyle]="{'background-color': service.SetTheme() }" (click)="GoToBattlePhase()">Fight Again</button>
+        <button ion-button [ngStyle]="{'background-color': service.SetTheme('hex') }" (click)="GoToBattlePhase()">Fight Again</button>
         <br>
-        <button ion-button [ngStyle]="{'background-color': service.SetTheme() }" (click)="GoToMap()">Return to the map</button>
+        <button ion-button [ngStyle]="{'background-color': service.SetTheme('hex') }" (click)="GoToMap()">Return to the map</button>
       </ion-column>
     </ion-row>
   </ion-grid>

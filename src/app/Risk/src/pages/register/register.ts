@@ -2,7 +2,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
 import { AuthService } from '../../services/auth.service';
-import { HomePage } from '../home/home';
 import { TeamPage } from '../team/team';
 import { ApiService, Player } from '../../services/api.service';
 import { ProfilePage } from '../profile/profile';
@@ -25,7 +24,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 export class RegisterPage {
 
   testbool: boolean = false;
-  PlayerInfo: Player[] = [];
+  player: Player[] = [];
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -47,30 +46,29 @@ export class RegisterPage {
       .subscribe(data => {
         this.splashScreen.show();
 
-        this.PlayerInfo = data;
-        this.service.ChangeId(this.PlayerInfo[0].playerId)
+        this.player = data;
+        this.service.ChangeId(this.player[0].playerId)
 
-        this.service.GetTeam(this.PlayerInfo[0].teamId).subscribe(data => this.service.team = data)
+        this.service.GetTeam(this.player[0].teamId).subscribe(data => this.service.team = data)
 
-        if (this.PlayerInfo != [] || this.PlayerInfo != undefined) {
-          this.splashScreen.hide();
+        if (this.player != [] || this.player != undefined) {
           this.menu.swipeEnable(true);
-          this.navCtrl.setRoot(HomePage);
+          this.splashScreen.hide();
+          this.navCtrl.setRoot(ProfilePage);
         }
         else {
-          if (this.PlayerInfo[0].teamId == 1)
+          if (this.player[0].teamId == 1)
             this.SignalRservice.JoinTeam("TeamBlue");
-          if (this.PlayerInfo[0].teamId == 2)
+          if (this.player[0].teamId == 2)
             this.SignalRservice.JoinTeam("TeamRed");
-          if (this.PlayerInfo[0].teamId == 3)
+          if (this.player[0].teamId == 3)
             this.SignalRservice.JoinTeam("TeamGreen");
-          if (this.PlayerInfo[0].teamId == 4)
+          if (this.player[0].teamId == 4)
             this.SignalRservice.JoinTeam("TeamYellow");
 
           this.splashScreen.hide();
           this.navCtrl.setRoot(TeamPage);
         }
       });
-
   }
 }

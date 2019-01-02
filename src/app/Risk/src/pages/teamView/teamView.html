@@ -9,24 +9,49 @@
 
 
 <ion-content class="bg">
+
     <div style="text-align: center">
-        <button ion-button style="width: 45%; display: inline-block;" outline>Overview</button>
-        <button ion-button style="width: 45%; display: inline-block;" outline>Your Team</button>
+        <button ion-button [color]="service.SetTheme('string')" style="width: 45%; display: inline-block;" (click)="SetMode(1)"
+            outline>Overview</button>
+        <button ion-button [color]="service.SetTheme('string')" style="width: 45%; display: inline-block;" (click)="SetMode(2)"
+            outline>Your Team</button>
     </div>
-    <div class="Teams" *ngIf="teamsInfo">
-        <table>
-            <tr *ngFor="let data of teamsInfo">
-                <td>
-                    <h2>Team </h2> {{data.teamColor}}
-                </td>
-                <td>
-                    <h2>Areas</h2> {{data.teamTotalOccupiedAreas}}
-                </td>
-                <td>
-                    <h2>Players</h2>{{data.players.length}}
-                </td>
-            </tr>
-        </table>
+    <!-- information overview of every team -->
+    <div *ngIf="mode == true">
+        <div class="Teams" *ngIf="teamsInfo">
+            <table>
+                <tr *ngFor="let data of teamsInfo">
+                    <td>
+                        <h2>Team </h2> {{data.teamColor}}
+                    </td>
+                    <td>
+                        <h2>Areas</h2> {{data.teamTotalOccupiedAreas}}
+                    </td>
+                    <td>
+                        <h2>Players</h2>{{data.players.length}}
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <img style="text-align: center" src='../../assets/imgs/teams.png' alt="foto troops">
     </div>
-    <img class="fotoTeams" src='../../assets/imgs/teams.png' alt="foto troops">
+
+    <!-- Information on the players specific team -->
+    <div *ngIf="mode == false">
+        <div class="Teams">
+            <table>
+                <tr *ngFor="let data of teamsInfo">
+                    <td>
+                        <h2>Team </h2> {{data.teamColor}}
+                    </td>
+                    <td>
+                        <h2>Areas</h2> {{data.teamTotalOccupiedAreas}}
+                    </td>
+                    <td>
+                        <h2>Players</h2>{{data.players.length}}
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
 </ion-content>

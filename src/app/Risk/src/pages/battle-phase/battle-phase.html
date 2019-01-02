@@ -9,13 +9,13 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Battle Phase pt. 1</ion-title>
+    <ion-title>Battle Phase</ion-title>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding *ngIf="area && player" class="bg">
-  <ion-grid style="text-align: center"  *ngIf="player.areaId != 0"> 
+  <ion-grid style="text-align: center"  *ngIf="player.teamId != area.teamId && player.areaId != 0"> 
     <ion-row>
       <ion-column style="margin: auto; margin-top: 48px">
         <h3> You are currently fighting for {{area.areaName}}</h3>
@@ -36,11 +36,11 @@
       <ion-column style="margin: auto; margin-top: 8px;">
         <h5>Select with how many dices you want to attack</h5>
         <br>
-        <button class="diceBtn" ion-button [ngStyle]="{'background-color': service.SetTheme() }" (click)="getPlayerDiceAmount(1)">1 Die</button>
+        <button class="diceBtn" ion-button [ngStyle]="{'background-color': service.SetTheme('hex') }" (click)="getPlayerDiceAmount(1)">1 Die</button>
         <br>
-        <button class="diceBtn" ion-button [ngStyle]="{'background-color': service.SetTheme() }" (click)="getPlayerDiceAmount(2)">2 Dice</button>
+        <button class="diceBtn" ion-button [ngStyle]="{'background-color': service.SetTheme('hex') }" (click)="getPlayerDiceAmount(2)">2 Dice</button>
         <br>
-        <button class="diceBtn" ion-button [ngStyle]="{'background-color': service.SetTheme() }" (click)="getPlayerDiceAmount(3)">3 Dice</button>
+        <button class="diceBtn" ion-button [ngStyle]="{'background-color': service.SetTheme('hex') }" (click)="getPlayerDiceAmount(3)">3 Dice</button>
         <br>
         <p *ngIf="playerDiceAmount != 0">You decided to fight with {{playerDiceAmount}} soldiers.</p>
       </ion-column>
@@ -62,17 +62,24 @@
         <br>
         <h6>{{player.playerTroops}} friendly troops remaining</h6>
         <br>
-        <button ion-button [ngStyle]="{'background-color': service.SetTheme() }" *ngIf="playerDiceAmount != 0" (click)="goToBattlePhaseCont()">Fight!</button>
+        <button ion-button [ngStyle]="{'background-color': service.SetTheme('hex') }" *ngIf="playerDiceAmount != 0" (click)="goToBattlePhaseCont()">Fight!</button>
       </ion-column>
     </ion-row>
   </ion-grid>
-  <ion-grid text-center style="margin-top: 50px" *ngIf="player.areaId == 0">
+
+  <ion-grid text-center style="margin-top: 50px">
     <ion-row style="margin: 0 auto; text-align: center">
-      <ion-column style="margin: auto">
-          <h3>You are not in a (capturable) zone!</h3>
+      <ion-column  *ngIf="player.areaId == 0" style="margin: auto">
+          <h3>You are not in a (capturable) area!</h3>
           <br>
-          <p>please return to a capturable zone to in order to battle.</p>
+          <p>please return to a capturable area to in order to battle.</p>
       </ion-column>
+      <ion-column *ngIf="player.teamId == area.teamId" style="margin: auto">
+        <h3>Your team already owns this area!</h3>
+        <br>
+        <p>please return to a capturable area to in order to battle.</p>
+    </ion-column>
     </ion-row>
   </ion-grid>
+
 </ion-content>

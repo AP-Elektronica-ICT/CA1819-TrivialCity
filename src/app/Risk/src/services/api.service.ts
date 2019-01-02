@@ -123,11 +123,19 @@ export class ApiService extends BaseService {
     return this.http.get(`${this.baseApi}/player/${this.GetYourId}/team`, this.httpHeader);
   }
 
-  SetTheme(){
-    if(this.team.teamColor == "Blue"){ return '#4285F4' }
-    else if(this.team.teamColor =="Red"){ return '#ff4444' }
-    else if(this.team.teamColor == "Green") { return '#00c851' }
-    else if(this.team.teamColor == "Yellow") { return '#ffeb3b' }
+  SetTheme(mode: String){
+    if(mode == "hex"){
+      if(this.team.teamColor == "Blue"){ return '#4285F4' }
+      else if(this.team.teamColor =="Red"){ return '#ff4444' }
+      else if(this.team.teamColor == "Green") { return '#00c851' }
+      else if(this.team.teamColor == "Yellow") { return '#ffeb3b' }
+    }
+    else if(mode == "string"){
+      if(this.team.teamColor == "Blue"){ return 'blue' }
+      else if(this.team.teamColor =="Red"){ return 'red' }
+      else if(this.team.teamColor == "Green") { return 'green' }
+      else if(this.team.teamColor == "Yellow") { return 'yellow' }
+    }
   }
 }
 

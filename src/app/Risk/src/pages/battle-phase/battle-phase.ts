@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { BrowserTransferStateModule } from '@angular/platform-browser';
 import { BattlePhaseContPage } from '../battle-phase-cont/battle-phase-cont';
 import { ApiService, Player, Area } from '../../services/api.service';
@@ -25,16 +25,17 @@ export class BattlePhasePage {
   player: Player;
   area: Area;
 
-  playerDiceAmount: number = 0;
-  botDiceAmount: number = 0;
+  playerDiceAmount: number;
+  botDiceAmount: number;
 
   errormsg: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public service: ApiService, private splashScreen: SplashScreen ,private SingalRservice: SignalrService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public service: ApiService, private splashScreen: SplashScreen, private SingalRservice: SignalrService, private alertCtrl: AlertController) {
 
   }
 
   ionViewDidLoad() {
+    this.playerDiceAmount, this.botDiceAmount = 0;
     console.log('ionViewDidLoad BattlePhasePage');
     this.splashScreen.show();
     this.service.GetPlayer(this.service.GetYourId()).subscribe(data => {
@@ -45,7 +46,7 @@ export class BattlePhasePage {
         this.splashScreen.hide();
       })
     })
-    
+
 
   }
 
@@ -61,21 +62,22 @@ export class BattlePhasePage {
   getPlayerDiceAmount(amount: any) {
     if (this.playerDiceAmount == 0 && amount == 0) {
       this.errormsg = 'please select an amount of dice';
+      this.ErrorHandler();
+    }
+    else if (this.player.playerTroops < amount) {
+      this.errormsg = 'You do not have that amount of troops left!'
+      this.ErrorHandler();
     }
     else {
-      if ((this.player.playerTroops > 3 && amount <= 3) || (this.player.playerTroops < 3 && amount < 3)) {
-        this.playerDiceAmount = amount;
-      }
-      else if (this.player.playerTroops < 3 && amount == 3) {
-        this.errormsg = 'You don´t have that amount of troops left!'
-      }
+      this.playerDiceAmount = amount;
     }
+
   }
 
   goToBattlePhaseCont() {
-    if(this.area != undefined && this.area != null ){
-      this.SingalRservice.SendAttackMessage("Your team is under Attack" , this.area.teamId);
-      }
+    if (this.area != undefined && this.area != null) {
+      this.SingalRservice.SendAttackMessage("Your team is under Attack", this.area.teamId);
+    }
     this.navCtrl.push(BattlePhaseContPage, {
       data: {
         player: this.player,
@@ -84,5 +86,13 @@ export class BattlePhasePage {
         playerDiceAmount: this.playerDiceAmount
       }
     })
+  }
+
+  ErrorHandler() {
+    let alert = this.alertCtrl.create({
+      title: 'Error',
+      subTitle: this.errormsg
+    });
+    alert.present();
   }
 }

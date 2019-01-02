@@ -50,7 +50,36 @@ namespace Risk_REST.Controllers
         {
             var player = context.Players.SingleOrDefault(t => t.PlayerId == id);
 
+            StatsChecker(player);
+
             return new OkObjectResult(player);
+        }
+        private void StatsChecker(Players player)
+        {
+            if (player.PlayerLevel < 5) { player.PlayerTitle = "Private"; }
+            else if (player.PlayerLevel >= 50) { player.PlayerTitle = "Sergeant Major of the Army"; }
+            else if (player.PlayerLevel >= 45) { player.PlayerTitle = "Command Sergeant Major"; }
+            else if (player.PlayerLevel >= 40) { player.PlayerTitle = "Sergeant Major"; }
+            else if (player.PlayerLevel >= 35) { player.PlayerTitle = "First Sergeant"; }
+            else if (player.PlayerLevel >= 30) { player.PlayerTitle = "Master Sergeant"; }
+            else if (player.PlayerLevel >= 25) { player.PlayerTitle = "Sergeant First Class"; }
+            else if (player.PlayerLevel >= 20) { player.PlayerTitle = "Staff Sergeant"; }
+            else if (player.PlayerLevel >= 15) { player.PlayerTitle = "Sergeant"; }
+            else if (player.PlayerLevel >= 10) { player.PlayerTitle = "Corporal"; }
+            else if (player.PlayerLevel >= 5) { player.PlayerTitle = "Private First Class"; }
+
+
+            if (player.PlayerExp >= 1000)
+            {
+                player.PlayerLevel++;
+                player.PlayerExp -= 1000;
+            }
+
+            if (player.PlayerTroops > 25)
+            {
+                player.PlayerReserveTroops += player.PlayerTroops - 25;
+                player.PlayerTroops = 25;
+            }
         }
 
         [HttpGet("auth0", Name = "getPlayerAuth")]
@@ -118,18 +147,7 @@ namespace Risk_REST.Controllers
             if (updatePlayer.PlayerTitle != null)
                 player.PlayerTitle = updatePlayer.PlayerTitle;
             if (updatePlayer.PlayerLevel != null)
-                if(updatePlayer.PlayerLevel < 5) { updatePlayer.PlayerTitle = "Private"; }
-                else if(updatePlayer.PlayerLevel >= 5) { updatePlayer.PlayerTitle = "Private First Class"; }
-                else if(updatePlayer.PlayerLevel >= 10) { updatePlayer.PlayerTitle = "Corporal"; }
-                else if (updatePlayer.PlayerLevel >= 15) { updatePlayer.PlayerTitle = "Sergeant"; }
-                else if (updatePlayer.PlayerLevel >= 20) { updatePlayer.PlayerTitle = "Staff Sergeant"; }
-                else if (updatePlayer.PlayerLevel >= 25) { updatePlayer.PlayerTitle = "Sergeant First Class"; }
-                else if (updatePlayer.PlayerLevel >= 30) { updatePlayer.PlayerTitle = "Master Sergeant"; }
-                else if (updatePlayer.PlayerLevel >= 35) { updatePlayer.PlayerTitle = "First Sergeant"; }
-                else if (updatePlayer.PlayerLevel >= 40) { updatePlayer.PlayerTitle = "Sergeant Major"; }
-                else if (updatePlayer.PlayerLevel >= 45) { updatePlayer.PlayerTitle = "Command Sergeant Major"; }
-                else if (updatePlayer.PlayerLevel >= 50) { updatePlayer.PlayerTitle = "Sergeant Major of the Army"; }
-            player.PlayerLevel = updatePlayer.PlayerLevel;
+                player.PlayerLevel = updatePlayer.PlayerLevel;
             if (updatePlayer.PlayerExp != null)
                 player.PlayerExp = updatePlayer.PlayerExp;
             if (updatePlayer.PlayerSilverCoins != null)

@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
 import { ApiService, Player } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
 import { NgProgress } from 'ngx-progressbar';
+import { SplashScreen } from '@ionic-native/splash-screen';
 
 /**
  * Generated class for the ProfilePage page.
@@ -20,19 +21,37 @@ export class ProfilePage {
 
   player: Player;
   isenabled: Boolean;
+  src;
   xpbar: String;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private service: ApiService, public auth: AuthService, private alertCtrl: AlertController, private ngProgress: NgProgress) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private service: ApiService, public auth: AuthService, private alertCtrl: AlertController, private ngProgress: NgProgress, private splashScreen: SplashScreen) {
 
   }
 
   ionViewDidLoad() {
+    this.splashScreen.show();
     console.log('ionViewDidLoad ProfilePage');
     this.service.GetPlayer(this.service.GetYourId()).subscribe(data => {
       this.player = data
+      this.RankChecker();
+      console.log(this.src);
       this.xpbar = String(Math.floor((this.player.playerExp / 1000) * 100)) + '%';
+      this.splashScreen.hide();
     });
-    console.log(this.service.team.teamColor);
+  }
+
+  RankChecker() {
+    if (this.player.playerLevel < 5) { this.src = '../../assets/imgs/ranks/private.png'; }
+    else if (this.player.playerLevel >= 50) { this.src = '../../assets/imgs/ranks/sergeant_major_of_the_army.png'; }
+    else if (this.player.playerLevel >= 45) { this.src = '../../assets/imgs/ranks/command_sergeant_major.png'; }
+    else if (this.player.playerLevel >= 40) { this.src = '../../assets/imgs/ranks/sergeant_major.png'; }
+    else if (this.player.playerLevel >= 35) { this.src = '../../assets/imgs/ranks/first_sergeant.png'; }
+    else if (this.player.playerLevel >= 30) { this.src = '../../assets/imgs/ranks/master_sergeant.png'; }
+    else if (this.player.playerLevel >= 25) { this.src = '../../assets/imgs/ranks/sergeant_first_class.png'; }
+    else if (this.player.playerLevel >= 20) { this.src = '../../assets/imgs/ranks/staff_sergeant.png'; }
+    else if (this.player.playerLevel >= 15) { this.src = '../../assets/imgs/ranks/sergeant.png'; }
+    else if (this.player.playerLevel >= 10) { this.src = '../../assets/imgs/ranks/corporal.png';}
+    else if (this.player.playerLevel >= 5) { this.src = '../../assets/imgs/ranks/private_first_class.png'; }
   }
 
   ChangeUsername() {
@@ -92,7 +111,7 @@ export class ProfilePage {
   MoveTroops() {
     let alert = this.alertCtrl.create({
       title: 'Send Troops',
-      subTitle: `You currently have ${this.player.playerReserveTroops} troops ready for deployment`,
+      subTitle: `You have ${25 - this.player.playerTroops} free slots in your army. You currently have ${this.player.playerReserveTroops} troops ready for deployment.`,
       inputs: [
         {
           name: 'amount',
@@ -105,7 +124,7 @@ export class ProfilePage {
           text: 'Send',
           handler: data => {
             data.amount = Math.floor(data.amount);
-            if (data.amount <= 0 || data.amount > this.player.playerReserveTroops) {
+            if (data.amount <= 0 || data.amount > this.player.playerReserveTroops || data.amount > (25 - this.player.playerTroops)) {
               this.errorAlert();
             }
             else {
@@ -114,8 +133,8 @@ export class ProfilePage {
                 this.service.PutPlayer(this.service.GetYourId(),
                   {
                     playerId: this.service.GetYourId(),
-                    playerTroops: `${(this.player.playerTroops) + data.amount}`,
-                    playerReserveTroops: `${(this.player.playerReserveTroops) - data.amount}`
+                    playerTroops: `${this.player.playerTroops + data.amount}`,
+                    playerReserveTroops: `${this.player.playerReserveTroops - data.amount}`
                   })
                   .subscribe(data => this.player = data);
                 this.ngProgress.done();
