@@ -4,6 +4,8 @@ import { ApiService, Team, Player } from '../../services/api.service';
 import { ProfilePage } from '../profile/profile';
 import { AuthService } from '../../services/auth.service';
 import { delay } from 'rxjs/operators';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { SignalrService } from '../../services/signalR.service';
 
 /**
  * Generated class for the TeamPage page.
@@ -27,15 +29,26 @@ export class TeamPage {
 
   btnColor: String = "#f4f4f4"
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private service: ApiService, private alertCtrl: AlertController, private menu: MenuController, public auth: AuthService) {
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams, 
+    private service: ApiService, 
+    private alertCtrl: AlertController, 
+    private menu: MenuController, 
+    public auth: AuthService, 
+    private splashScreen: SplashScreen, 
+    private SignalRservice: SignalrService, ) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad TeamPage');
-    this.service.GetTeams().subscribe(data => this.teams = data);    
+    this.service.GetTeams().subscribe(data => {
+      this.teams = data;
+      if (this.teams != [])
+        this.splashScreen.hide();
+    });
   }
 
-  TeamPicker(color: String){
+  TeamPicker(color: String) {
     let alert = this.alertCtrl.create({
       title: 'Confirm Team',
       subTitle: `You currently selected team ${color}`,
@@ -43,25 +56,25 @@ export class TeamPage {
         {
           text: 'Cancel',
           role: 'cancel',
-          handler: () => {}
-        },{
+          handler: () => { }
+        }, {
           text: 'Confirm',
           handler: () => {
             if (color == "Blue") {
               this.teamId = 1;
               this.btnColor = '#4285F4';
             }
-        
+
             if (color == "Red") {
               this.teamId = 2;
               this.btnColor = '#ff4444';
             }
-        
+
             if (color == "Green") {
               this.teamId = 3;
               this.btnColor = '#00c851';
             }
-        
+
             if (color == "Yellow") {
               this.teamId = 4;
               this.btnColor = '#ffeb3b';
@@ -79,8 +92,17 @@ export class TeamPage {
               "playerReserveTroops": 100,
               "authId": `${this.auth.user.sub}`,
             }).subscribe(data => {
-            this.player = data
+              this.player = data
               this.service.ChangeId(this.player.playerId);
+              this.service.GetTeam(this.player.teamId).subscribe(data => this.service.team = data)
+              if (this.player.teamId == 1)
+                this.SignalRservice.JoinTeam("TeamBlue");
+              if (this.player.teamId == 2)
+                this.SignalRservice.JoinTeam("TeamRed");
+              if (this.player.teamId == 3)
+                this.SignalRservice.JoinTeam("TeamGreen");
+              if (this.player.teamId == 4)
+                this.SignalRservice.JoinTeam("TeamYellow");
             });
 
             this.menu.swipeEnable(true);
