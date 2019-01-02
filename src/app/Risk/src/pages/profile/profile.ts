@@ -24,7 +24,14 @@ export class ProfilePage {
   src;
   xpbar: String;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private service: ApiService, public auth: AuthService, private alertCtrl: AlertController, private ngProgress: NgProgress, private splashScreen: SplashScreen) {
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
+    private service: ApiService,
+    public auth: AuthService,
+    private alertCtrl: AlertController,
+    private ngProgress: NgProgress,
+    private splashScreen: SplashScreen,
+  ) {
 
   }
 
@@ -36,7 +43,8 @@ export class ProfilePage {
       this.RankChecker();
       console.log(this.src);
       this.xpbar = String(Math.floor((this.player.playerExp / 1000) * 100)) + '%';
-      this.splashScreen.hide();
+      if (this.player != undefined)
+        this.splashScreen.hide();
     });
   }
 
@@ -50,7 +58,7 @@ export class ProfilePage {
     else if (this.player.playerLevel >= 25) { this.src = '../../assets/imgs/ranks/sergeant_first_class.png'; }
     else if (this.player.playerLevel >= 20) { this.src = '../../assets/imgs/ranks/staff_sergeant.png'; }
     else if (this.player.playerLevel >= 15) { this.src = '../../assets/imgs/ranks/sergeant.png'; }
-    else if (this.player.playerLevel >= 10) { this.src = '../../assets/imgs/ranks/corporal.png';}
+    else if (this.player.playerLevel >= 10) { this.src = '../../assets/imgs/ranks/corporal.png'; }
     else if (this.player.playerLevel >= 5) { this.src = '../../assets/imgs/ranks/private_first_class.png'; }
   }
 
@@ -129,6 +137,8 @@ export class ProfilePage {
             }
             else {
               this.ngProgress.start();
+              this.isenabled = true;
+              this.Alert("Your troops are now walking!");
               setTimeout(() => {
                 this.service.PutPlayer(this.service.GetYourId(),
                   {
@@ -139,6 +149,7 @@ export class ProfilePage {
                   .subscribe(data => this.player = data);
                 this.ngProgress.done();
                 this.isenabled = false;
+                this.Alert("Your troops has arrived!");
               }, 10000);
             }
           }
@@ -162,5 +173,12 @@ export class ProfilePage {
       buttons: ['Dismiss']
     });
     errorAlert.present();
+  }
+
+  Alert(message: string) {
+    let Alertm = this.alertCtrl.create({
+      message: `${message}`,
+    });
+    Alertm.present();
   }
 }

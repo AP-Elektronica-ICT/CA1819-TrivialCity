@@ -42,7 +42,6 @@ export class RegisterPage {
   }
 
   Go2App() {
-
     this.splashScreen.show();
     this.service.GetYourAuthId(this.auth.user.sub)
       .subscribe(data => {
@@ -57,7 +56,8 @@ export class RegisterPage {
           this.SignalRservice.JoinTeam("TeamGreen");
         if (this.player[0].teamId == 4)
           this.SignalRservice.JoinTeam("TeamYellow");
-        if (this.player != [] || this.player != undefined) {
+        if (this.player != []) {
+          this.splashScreen.show();
           this.menu.swipeEnable(true);
           this.navCtrl.setRoot(ProfilePage);
           this.splashScreen.hide();

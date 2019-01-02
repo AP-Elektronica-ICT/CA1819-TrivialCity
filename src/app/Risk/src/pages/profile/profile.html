@@ -44,7 +44,7 @@
     </div>
 
     <div *ngIf="player">
-      <button ion-button block [ngStyle]="{'background-color': service.SetTheme('hex') }" (click)="MoveTroops()">Send
+      <button ion-button block [ngStyle]="{'background-color': service.SetTheme('hex') }" (click)="MoveTroops()" [disabled]="isenabled" >Send
         troops
         to
         your location</button>
