@@ -21,7 +21,7 @@ export class ApiService extends BaseService {
   PlayerID: number;
   public player: Player;
   public team: Team;
-
+  authToken: Token = {'access_token' : " ", 'expires_in' : 2000 , 'token_type' : "Bearer"};
 
   constructor(private http: HttpClient) {
     super();
@@ -31,26 +31,25 @@ export class ApiService extends BaseService {
   private httpHeader = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.AuhtToken}`
+      'Authorization': `Bearer ${this.authToken.access_token}`
     })
   }
 
-  GetToken() {
-    var request = require("request");
-
-    var options = {
-      method: 'POST',
-      url: 'https://inias.eu.auth0.com/oauth/token',
-      headers: { 'content-type': 'application/json' },
-      body: '{"client_id":"OH6LtWPu6p2u4VSnSwnp4PnaexbUUgzw","client_secret":"tRpfMy--Vv3b2rlNFNLwMqVey2YAVj4W0dy3C33VaJrfaPdzGOInqbXbDtijinn0","audience":"https://AntwerpRisk/api","grant_type":"client_credentials"}'
-    };
-
-    request(options, function (error, response, body) {
-      if (error) throw new Error(error);
-      console.log(body);
-    });
-
+  private httpHeader2 = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+    })
   }
+
+
+  GetToken() {
+    this.http.post<Token>(`https://inias.eu.auth0.com/oauth/token`, {"client_id":"OH6LtWPu6p2u4VSnSwnp4PnaexbUUgzw","client_secret":"tRpfMy--Vv3b2rlNFNLwMqVey2YAVj4W0dy3C33VaJrfaPdzGOInqbXbDtijinn0","audience":"https://AntwerpRisk/api","grant_type":"client_credentials"}, this.httpHeader2)
+    .subscribe(data => 
+      {
+        this.authToken = data;
+      });
+  }
+
 
   testPost() {
     return this.http.post(`${this.baseApi}/notification`, this.httpHeader);
