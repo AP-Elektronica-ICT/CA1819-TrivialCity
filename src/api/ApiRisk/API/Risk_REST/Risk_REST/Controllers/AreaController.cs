@@ -70,6 +70,18 @@ namespace Risk_REST.Controllers
             return new OkObjectResult(area);
         }
 
+        [HttpGet("teamId", Name = "getTeamAreas")]
+        public List<Area> GetTeamAreas(int id)
+        {
+            IQueryable<Area> query = context.Area;
+
+
+            query = query.Where(d => d.TeamId == id);
+
+
+            return query.ToList();
+        }
+
         // POST api/area
         [HttpPost]
         public IActionResult AddArea([FromBody] Area newArea)

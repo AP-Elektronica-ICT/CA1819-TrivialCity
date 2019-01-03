@@ -8,15 +8,48 @@
 </ion-header>
 
 
-<ion-content padding class="teamView">
-  <!-- <button ion-button block color="primary" (click)="Check()">Get Teams</button>  --> 
+<ion-content class="bg">
 
-    <div class="Teams" *ngIf="teamsInfo"> 
-        <tr *ngFor="let data of teamsInfo"> 
-            <td> <h2>Team </h2> {{data.teamColor}}</td>
-            <td><h2>Areas</h2> {{data.teamTotalOccupiedAreas}}</td>
-            <td><h2>Players</h2>{{data.players.length}} </td>
-        </tr>
+    <div style="text-align: center">
+        <button ion-button [color]="service.SetTheme('string')" style="width: 45%; display: inline-block;" (click)="SetMode(1)"
+            outline>Overview</button>
+        <button ion-button [color]="service.SetTheme('string')" style="width: 45%; display: inline-block;" (click)="SetMode(2)"
+            outline>Your Team</button>
     </div>
-    <img class="fotoTeams"  src='../../assets/imgs/teams.png' alt="foto troops">
+    <!-- information overview of every team -->
+    <div *ngIf="mode == true" style="text-align: center">
+        <div class="Teams" style="margin:auto;" *ngIf="teamsInfo">
+            <table>
+                <tr *ngFor="let data of teamsInfo">
+                    <td>
+                        <h2>Team </h2> {{data.teamColor}}
+                    </td>
+                    <td>
+                        <h2>Areas</h2> {{data.teamTotalOccupiedAreas}}
+                    </td>
+                    <td>
+                        <h2>Players</h2>{{data.players.length}}
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <img style="margin: auto;" src='../../assets/imgs/teams.png' alt="foto troops">
+    </div>
+
+    <!-- Information on the players specific team -->
+    <div *ngIf="mode == false" style="text-align: center">
+        <div class="Teams" style="margin:auto;">
+            <h1>Team Controlled Areas</h1>
+            <table>
+                <tr *ngFor="let data of teamAreas">
+                    <td>
+                        {{data.areaName}}
+                    </td>
+                    <td>
+                        <h2>Troops</h2> {{data.defendingTroops}}
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
 </ion-content>

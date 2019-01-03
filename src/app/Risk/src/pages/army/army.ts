@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { ApiService, Player } from '../../services/api.service';
-import { NgProgressService } from 'ng2-progressbar';
+import { NgProgressModule } from 'ngx-progressbar';
 
 /**
  * Generated class for the ArmyPage page.
@@ -21,7 +21,7 @@ export class ArmyPage {
   playerInfo: Player;//[] = [];
   isenabled: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private service: ApiService, private alertC: AlertController, private pService: NgProgressService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private service: ApiService, private alertC: AlertController, private ngProgress: NgProgressModule) {
   }
 
 
@@ -44,7 +44,7 @@ export class ArmyPage {
     this.isenabled = true;
     if (_troops != null && _troops != 0 && _troops > 0) {
       this.Alert("Troops are now walking 2 your location!");
-      this.pService.start();
+      //this.ngProgress.start()
       setTimeout(() => {
         this.service.PutPlayer(this.service.GetYourId(),
           {
@@ -54,7 +54,7 @@ export class ArmyPage {
           })
           .subscribe(data => this.playerInfo = data);
         this.Alert("Troops has arrived!");
-        this.pService.done();
+        //this.ngProgress.done();
         this.isenabled = false;
       }, 10000);
     }

@@ -17,10 +17,8 @@ export class AuthService {
   loggedIn: boolean;
   loading = true;
 
-  constructor(
-    public zone: NgZone,
-    private storage: Storage
-  ) {
+  constructor(public zone: NgZone, private storage: Storage) 
+  {
     this.storage.get('profile').then(user => this.user = user);
     this.storage.get('access_token').then(token => this.accessToken = token);
     this.storage.get('expires_at').then(exp => {
@@ -39,16 +37,6 @@ export class AuthService {
       if (err) {
         throw err;
       }
-      //allert toegevoegd
-      /*
-      let alert = this.alertCtrl.create({
-        message: JSON.stringify(authResult)
-      });
-      alert.present();
-      let alert2 = this.alertCtrl.create({
-        message: JSON.stringify(err)
-      });
-      alert2.present();*/
       // Set Access Token
       this.storage.set('access_token', authResult.accessToken);
       this.accessToken = authResult.accessToken;

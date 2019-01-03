@@ -12,6 +12,7 @@ import 'rxjs/add/operator/map';
 import { HubConnection } from '@aspnet/signalr';
 import { AlertController } from 'ionic-angular';
 import { ApiService } from './api.service';
+import { delay } from 'rxjs/operator/delay';
 
 
 @Injectable()
@@ -27,32 +28,28 @@ export class SignalrService  {
   }
 
   RunSignalR(){
-    this.hubConnection = new HubConnection("http://localhost:53169/notification/")//.withUrl("http://localhost:53169/api/notification/").build();//("http://localhost:53169/api/notification/");
+    this.hubConnection = new HubConnection("https://riskantwerp.azurewebsites.net/notification")//.withUrl("http://localhost:53169/api/notification/").build();//("http://localhost:53169/api/notification/");
 
  
 
     this.hubConnection.start()
     .then(() => {console.log("Connected");}).catch(err => {console.error(err);});
-    //.then(() =>  console.log("Connected"));
+   
 
-    this.hubConnection.on("Send",data => {
-      if(this.teamDefend == this.yourTeam){
-      console.log(data);
+    this.hubConnection.on("Send",data => {  
+      //console.log(data);
       this.Alert(data);
-      }
     });
 
   }
 
-  SendMessage(message : string ){
-    this.hubConnection.invoke("Send", `${message}`);
+
+  SendAttackMessage(message : string , team : number ){ // team = team that get attacked
+    this.hubConnection.invoke("Send", `${message}`, `${team}`);
   }
 
-
-  SendMessageAttack(message : string , team : number ){
-    this.teamDefend = team;
-    this.yourTeam = Number(this.service.GetYourTeam());
-    this.hubConnection.invoke("Send", `${message}`);
+  JoinTeam(team: string){
+    this.hubConnection.invoke("JoinTeam", `${team}`);
   }
 
   Alert(message: string) {

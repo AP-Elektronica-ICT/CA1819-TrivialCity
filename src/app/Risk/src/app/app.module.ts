@@ -3,7 +3,6 @@ import { ErrorHandler, NgModule , CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -24,7 +23,7 @@ import { AuthService } from '../services/auth.service';
 import { IonicStorageModule } from '@ionic/storage';
 import { ApiService } from '../services/api.service';
 import { Http, HttpModule } from '@angular/http';
-import {NgProgressModule} from "ng2-progressbar"
+import {NgProgressModule} from "ngx-progressbar";
 import { TeamViewPage } from '../pages/teamView/teamView';
 import { TeamViewModule } from '../pages/teamView/teamView.module';
 import { SignalrService } from '../services/signalR.service';
@@ -34,7 +33,6 @@ import { ShopPage } from '../pages/shop/shop';
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
     ListPage,
     RegisterPage,
     MapPage,
@@ -57,7 +55,6 @@ import { ShopPage } from '../pages/shop/shop';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
     ListPage,
     MapPage,
     RegisterPage,

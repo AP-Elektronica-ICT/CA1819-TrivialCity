@@ -1,13 +1,49 @@
-.profile{
-    background: url("../../assets/imgs/12.png") repeat;
-    color: lightgray;
-}
-
 .container{
-    margin-top: 20%;
     align-items: center;
     text-align: center;
-    h2{
-        margin: 15%;
-    }
+}
+
+.army{
+    background: url("../../assets/imgs/12.png") repeat;
+    color: lightgray;
+    text-align: center;
+}
+
+.fotoTroops{
+    height: 130px;
+    width: 150px;
+    margin-top: -50px;
+    margin-left: 5%;
+}
+
+.Troops{
+    margin-top: 15%;
+}
+
+.Row{
+    display: table;
+}
+.Column{
+    display: table-cell;
+}
+
+.xpbar{
+    width:80%;
+    height: 5px;
+    margin: auto;
+    padding: 10px;
+    display: inline-block;
+}
+.xpbar-left{
+    height: 5px;
+    float: left;
+    background-color: red;
+}
+.xpbar-right{
+    height: 5px;
+    background-color: black;
+}
+
+.ng-progress{
+    margin-top: 0%;
 }
