@@ -3,26 +3,11 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Tests</ion-title>
+    <ion-title>Leaderboards</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding class="bg">
-
-
-  <button ion-button block color="light" *ngIf="auth.loggedIn" (click)="GoTeam()">Go to TeamPage</button>
-
-  <div *ngIf="PlayerData">
-
-    <h2>{{PlayerData.PlayerUsername}}</h2>
-
-  </div>
-  <h2>test</h2>
-  <button ion-button block color="blue" (click)="Check()">Change</button>
-  <button ion-button block color="red" (click)="Check2()">Change</button>
-  <button ion-button block color="green" (click)="Check3()">Change2</button>
-  <button ion-button block color="yellow" (click)="Check4()">Test</button>
-  
 
 
 

@@ -4,10 +4,11 @@ import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angul
 import { AuthService } from '../../services/auth.service';
 import { TeamPage } from '../team/team';
 import { ApiService, Player } from '../../services/api.service';
-import { ProfilePage } from '../profile/profile';
+import { MapPage } from '../map/map';
 import { SignalrService } from '../../services/signalR.service';
 import { delay } from 'rxjs/operator/delay';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { ProfilePage } from '../profile/profile';
 
 /**
  * Generated class for the RegisterPage page.
@@ -47,7 +48,7 @@ export class RegisterPage {
       .subscribe(data => {
         this.player = data;
         this.service.ChangeId(this.player[0].playerId);
-        this.service.GetTeam(this.player[0].teamId).subscribe(data => this.service.team = data)
+        this.service.GetPlayer(this.player[0].playerId).subscribe(data => this.service.player = data)
         if (this.player[0].teamId == 1)
           this.SignalRservice.JoinTeam("TeamBlue");
         if (this.player[0].teamId == 2)
@@ -63,7 +64,7 @@ export class RegisterPage {
           this.splashScreen.hide();
         }
       });
- 
+
     this.navCtrl.setRoot(TeamPage);
     /*
       this.service.GetYourAuthId(this.auth.user.sub)
