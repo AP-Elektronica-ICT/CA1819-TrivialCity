@@ -16,8 +16,8 @@
 <ion-content>
   <div id="map" style="width:100%;height:100%;position: relative;" *ngIf="areas">
     <div style="z-index: 9999; position: absolute; bottom: 0; right: 0;">
-      <button ion-button class="button-action" *ngIf="battleBtnIsVisible" (click)="goToBattlePhase()">Battle!</button>
-      <button ion-button class="button-action" *ngIf="supportBtnIsVisible" (click)="supportArea()">Support Area</button>
+      <button ion-button [ngStyle]="{'background-color': service.SetTheme('hex') }" *ngIf="battleBtnIsVisible" (click)="goToBattlePhase()">Battle!</button>
+      <button ion-button [ngStyle]="{'background-color': service.SetTheme('hex') }" *ngIf="supportBtnIsVisible" (click)="supportArea()">Support Area</button>
     </div>
   </div>
 

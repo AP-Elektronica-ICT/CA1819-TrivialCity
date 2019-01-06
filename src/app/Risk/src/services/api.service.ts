@@ -127,16 +127,16 @@ export class ApiService extends BaseService {
 
   SetTheme(mode: String){
     if(mode == "hex"){
-      if(this.team.teamColor == "Blue"){ return '#4285F4' }
-      else if(this.team.teamColor =="Red"){ return '#ff4444' }
-      else if(this.team.teamColor == "Green") { return '#00c851' }
-      else if(this.team.teamColor == "Yellow") { return '#ffeb3b' }
+      if(this.player.teamId == 1){ return '#4285F4' }
+      else if(this.player.teamId == 2){ return '#ff4444' }
+      else if(this.player.teamId == 3) { return '#00c851' }
+      else if(this.player.teamId == 4) { return '#ffeb3b' }
     }
     else if(mode == "string"){
-      if(this.team.teamColor == "Blue"){ return 'blue' }
-      else if(this.team.teamColor =="Red"){ return 'red' }
-      else if(this.team.teamColor == "Green") { return 'green' }
-      else if(this.team.teamColor == "Yellow") { return 'yellow' }
+      if(this.player.teamId == 1){ return 'blue' }
+      else if(this.player.teamId == 2){ return 'red' }
+      else if(this.player.teamId == 3) { return 'green' }
+      else if(this.player.teamId == 4) { return 'yellow' }
     }
   }
 }

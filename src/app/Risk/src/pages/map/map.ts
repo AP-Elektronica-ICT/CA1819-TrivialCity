@@ -222,8 +222,6 @@ export class MapPage {
                             //Add every individual polygon to the polygon layer
                             this.polygonsLayer = leaflet.featureGroup(this.polygons);
 
-                            this.splashScreen.hide();
-
                             this.loadmap();
                           })
                         })
@@ -269,7 +267,7 @@ export class MapPage {
           }).subscribe(data => this.player = data)
         }
 
-        else if(this.playerAreaIdArray[this.playerAreaId] == 0){
+        else if(this.playerAreaIdArray[this.playerAreaId] == 0 || this.playerAreaIdArray[this.playerAreaId] == undefined || this.playerAreaIdArray[this.playerAreaId] == null){
           this.service.PutPlayer(this.player.playerId, {
             playerId: `${this.player.playerId}`,
             areaId: 0
@@ -316,6 +314,8 @@ export class MapPage {
     }).on('locationerror', (err) => {
       alert(err.message);
     })
+    this.splashScreen.hide();
+
     //Add the area polygons layer to the map
     this.polygonsLayer.addTo(this.map);
 
@@ -325,7 +325,7 @@ export class MapPage {
 
   territoryChecker() {
     if (this.playerLocation.lat && this.playerLocation.lng && this.polygons) {
-      for (let i = 1; i < this.polygons.length; i++) {
+      for (let i = 1; i <= this.polygons.length; i++) {
         if (this.polygons[i].getBounds().contains(this.playerMarker.getLatLng())) {
 
           this.playerAreaIdArray[i] = this.polygons[i].options.title;
