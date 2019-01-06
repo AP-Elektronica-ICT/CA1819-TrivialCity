@@ -23,7 +23,7 @@ export class SignalrService  {
     yourTeam : number;
 
 
-    constructor(private alertC: AlertController , private service: ApiService) {
+    constructor(private alertC: AlertController) {
     
   }
 
@@ -40,6 +40,7 @@ export class SignalrService  {
       //console.log(data);
       this.Alert(data);
     });
+    
 
   }
 

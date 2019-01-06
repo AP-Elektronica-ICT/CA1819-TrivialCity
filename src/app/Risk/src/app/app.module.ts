@@ -27,6 +27,7 @@ import { TeamViewPage } from '../pages/teamView/teamView';
 import { TeamViewModule } from '../pages/teamView/teamView.module';
 import { SignalrService } from '../services/signalR.service';
 import { ShopPage } from '../pages/shop/shop';
+import { DebugPage } from '../pages/debug/debug';
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import { ShopPage } from '../pages/shop/shop';
     BattlePhaseContPage,
     TeamViewPage,
     ShopPage,
+    DebugPage,
   ],
   imports: [
     BrowserModule,
@@ -62,6 +64,7 @@ import { ShopPage } from '../pages/shop/shop';
     ProfilePage,
     BattlePhaseContPage,
     ShopPage,
+    DebugPage,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

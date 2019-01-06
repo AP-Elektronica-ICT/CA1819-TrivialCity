@@ -16,6 +16,7 @@ import Auth0Cordova from '@auth0/cordova';
 import { TeamViewPage } from '../pages/teamView/teamView';
 import { SignalrService } from '../services/signalR.service';
 import { ShopPage } from '../pages/shop/shop';
+import { DebugPage } from '../pages/debug/debug';
 
 
 @Component({
@@ -62,6 +63,7 @@ export class MyApp implements OnInit{
       { title: 'Leaderboards', component: ListPage },
       { title: 'Shop', component: ShopPage },
       { title: 'Register', component: RegisterPage },
+      { title: 'Debug', component: DebugPage },
     ];
 
   }
