@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Debug</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="bg" *ngIf="player" style="margin-top: 60px">
+
+
+  <button ion-button block color="light" (click)="GoTeam()">Go to TeamPage</button>
+
+  <h2>test</h2>
+
+  <button ion-button block color="blue" (click)="ChangeTeam(1)">Team Blue</button>
+  <button ion-button block color="red" (click)="ChangeTeam(2)">Team Red</button>
+  <button ion-button block color="green" (click)="ChangeTeam(3)">Team Green</button>
+  <button ion-button block color="yellow" (click)="ChangeTeam(4)">Team Yellow</button>
+  <br>
+  <h3 style="margin: auto; text-align: center;">{{player.teamId}}</h3>
+
+  <br>
+  <button ion-button block [ngStyle]="{'background-color': service.SetTheme('hex') }" (click)="SetAreaId(0)">AreaId = 0</button>
+  <button ion-button block [ngStyle]="{'background-color': service.SetTheme('hex') }" (click)="SetAreaId(1)">AreaId = 1</button>
+  <button ion-button block [ngStyle]="{'background-color': service.SetTheme('hex') }" (click)="SetAreaId(2)">AreaId = 2</button>
+  <button ion-button block [ngStyle]="{'background-color': service.SetTheme('hex') }" (click)="SetAreaId(3)">AreaId = 3</button>
+  <button ion-button block [ngStyle]="{'background-color': service.SetTheme('hex') }" (click)="SetAreaId(4)">AreaId = 4</button>
+  <button ion-button block [ngStyle]="{'background-color': service.SetTheme('hex') }" (click)="SetAreaId(5)">AreaId = 5</button>
+  <br>
+  <h3 style="margin: auto; text-align: center;">{{player.areaId}}</h3>
+
+  <br>
+  <button ion-button block [ngStyle]="{'background-color': service.SetTheme('hex') }" (click)="GoToBattlePhase()">Go To BattlePhase</button>
+
+
+
+</ion-content>
