@@ -104,6 +104,10 @@ export class BattlePhaseContPage {
           this.service.PutPlayer(this.player.playerId, {
             playerId: this.player.playerId,
             playerSilverCoins: this.player.playerSilverCoins,
+            playerExp: this.player.playerExp
+          }).subscribe(data => {
+            this.player = data;
+            console.log(data);
           })
 
         }
@@ -120,6 +124,7 @@ export class BattlePhaseContPage {
           this.service.PutPlayer(this.service.GetYourId(), {
             playerId: this.service.GetYourId(),
             playerTroops: this.player.playerTroops,
+            playerExp: this.player.playerExp
           }).subscribe(data => {
             this.player = data;
           })
@@ -161,7 +166,8 @@ export class BattlePhaseContPage {
                 })
                 this.service.PutPlayer(this.player.playerId, {
                   playerId: this.player.playerId,
-                  playerTroops: `${this.player.playerTroops}`
+                  playerTroops: `${this.player.playerTroops}`,
+                  playerSilverCoins : this
                 })
                 this.captureConfirmed = true;
               }

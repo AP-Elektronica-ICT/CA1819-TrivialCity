@@ -73,6 +73,8 @@ namespace Risk_REST.Controllers
             {
                 player.PlayerLevel++;
                 player.PlayerExp -= 1000;
+                context.Players.Update(player);
+                context.SaveChanges();
             }
 
             if (player.PlayerTroops > 25)
