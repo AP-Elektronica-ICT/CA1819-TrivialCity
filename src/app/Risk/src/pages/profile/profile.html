@@ -22,14 +22,14 @@
       <img [src]="src" style="width: 64px; height: 64px;">
       <br>
       <div>
-        <h3 style="width: 9%; display: inline-block;">{{player.playerLevel}}</h3>
+        <h3 style="width: 7%; display: inline-block;">{{player.playerLevel}}</h3>
 
         <div class="xpbar">
           <div class="xpbar-left" [ngStyle]="{'width': xpbar, 'background-color': service.SetTheme('hex')}"></div>
           <div class="xpbar-right" [ngStyle]="{'margin-left': xpbar}"></div>
         </div>
 
-        <h3 style="width: 9%; display: inline-block;">{{player.playerLevel + 1}}</h3>
+        <h3 style="width: 7%; display: inline-block;">{{player.playerLevel + 1}}</h3>
       </div>
       <br>
       <h3>SilverCoins: {{player.playerSilverCoins}} </h3>

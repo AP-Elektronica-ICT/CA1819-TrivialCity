@@ -37,8 +37,9 @@ export class MapPage {
 
   player: Player;
   playerTeam: Team;
-  playerAreaIdArray: number[] = [];
-  playerAreaId: number = 0;
+  AreaArray: number[] = [];
+  //playerAreaIdArray: number[] = [];
+  //playerAreaId: number = 0;
 
   areas: Area[] = [];
 
@@ -253,27 +254,17 @@ export class MapPage {
             this.playerLocation.lng = position.coords.longitude
         })
       const loop = Observable.interval(1000).subscribe((val) => {
-        
+
+        //Checks whether multiple people are in an area
         if (this.areas) {
           this.AreaActivityChecker();
         }
 
-        this.territoryChecker();
+        if (this.playerLocation.lat && this.playerLocation.lng && this.polygons) {
 
-        if (this.playerAreaIdArray && this.playerAreaId && this.playerAreaIdArray[this.playerAreaId] != 0) {
-          this.service.PutPlayer(this.player.playerId, {
-            playerId: `${this.player.playerId}`,
-            areaId: `${this.playerAreaIdArray[this.playerAreaId]}`
-          }).subscribe(data => this.player = data)
+          //Checks in which area the player is
+          this.territoryChecker();
         }
-
-        else if(this.playerAreaIdArray[this.playerAreaId] == 0 || this.playerAreaIdArray[this.playerAreaId] == undefined || this.playerAreaIdArray[this.playerAreaId] == null){
-          this.service.PutPlayer(this.player.playerId, {
-            playerId: `${this.player.playerId}`,
-            areaId: 0
-          }).subscribe(data => this.player = data)
-        }
-
       })
     })
   }
@@ -321,32 +312,54 @@ export class MapPage {
 
     this.centerMarkersLayer.addTo(this.map);
 
+    this.SetPopupDefendTroops();
+
   }
 
+  SetPopupDefendTroops(){
+    this.denDam.bindPopup(`<b><h3>${this.areas[1].areaName}</h3></b> Defending Troops: ${this.areas[1].defendingTroops}`);
+    this.borgerhout.bindPopup(`<b><h3>${this.areas[2].areaName}</h3></b> Defending Troops: ${this.areas[2].defendingTroops}`);
+    this.eilandje.bindPopup(`<b><h3>${this.areas[3].areaName}</h3></b> Defending Troops: ${this.areas[3].defendingTroops}`);
+    this.seefhoek.bindPopup(`<b><h3>${this.areas[4].areaName}</h3></b> Defending Troops: ${this.areas[4].defendingTroops}`);
+    this.kaai.bindPopup(`<b><h3>${this.areas[5].areaName}</h3></b> Defending Troops: ${this.areas[5].defendingTroops}`);
+  }
+
+  //Checks in which area the player is
   territoryChecker() {
-    if (this.playerLocation.lat && this.playerLocation.lng && this.polygons) {
-      for (let i = 1; i <= this.polygons.length; i++) {
-        if (this.polygons[i].getBounds().contains(this.playerMarker.getLatLng())) {
+    for (let i = 0; i <= this.polygons.length - 1; i++) {
+      if (this.polygons[i].getBounds().contains(this.playerMarker.getLatLng())) {
+        this.AreaArray[i + 1] = i + 1;
 
-          this.playerAreaIdArray[i] = this.polygons[i].options.title;
-          this.playerAreaId = i;
-
-          if (this.polygons[i].options.color != this.playerTeam.teamColor) {
-            this.battleBtnIsVisible = true;
-            this.supportBtnIsVisible = false;
-          }
-          else {
-            this.battleBtnIsVisible = false;
-            this.supportBtnIsVisible = true;
-          }
-        }
-        else {
-          this.playerAreaIdArray[i] = 0;
-        }
+        //this.playerAreaIdArray[i+1] = this.polygons[i].options.title;
+        //this.playerAreaId = this.polygons[i].options.title
       }
-      if (this.player.areaId == 0) {
+      else {
+        this.AreaArray[i + 1] = 0
+      }
+
+      if (this.AreaArray != []) {
+        this.service.PutPlayer(this.player.playerId, {
+          playerId: `${this.player.playerId}`,
+          areaId: `${this.polygons[i].options.title}`
+        }).subscribe(data => this.player = data)
+      }
+      else {
+        this.service.PutPlayer(this.player.playerId, {
+          playerId: `${this.player.playerId}`,
+          areaId: 0
+        }).subscribe(data => this.player = data)
+
         this.battleBtnIsVisible = false;
         this.supportBtnIsVisible = false;
+      }
+
+      if (this.polygons[i].options.color != this.playerTeam.teamColor) {
+        this.battleBtnIsVisible = true;
+        this.supportBtnIsVisible = false;
+      }
+      else {
+        this.battleBtnIsVisible = false;
+        this.supportBtnIsVisible = true;
       }
     }
   }
@@ -355,7 +368,7 @@ export class MapPage {
     if (this.areas && this.centerMarkers) {
       for (let i = 1; i < this.centerMarkers.length; i++) {
         if (this.areas[i].players.length > 1 /*this number decides how many players are needed to display 'multi player battle marker'*/) {
-          this.centerMarkers[i-1].addTo(this.centerMarkersLayer);
+          this.centerMarkers[i - 1].addTo(this.centerMarkersLayer);
         }
       }
     }
@@ -381,10 +394,16 @@ export class MapPage {
               this.errorAlert();
             }
             else {
-              this.player.playerTroops -= data.amount;
+              //this.player.playerTroops -= data.amount;
+              this.service.PutPlayer(this.service.GetYourId(),
+                {
+                  playerId: this.service.GetYourId(),
+                  playerTroops: this.player.playerTroops - data.amount,
+                })
+                .subscribe(data => this.player = data);
               this.service.PutArea(this.areas[this.player.areaId].areaId, {
                 areaId: this.areas[this.player.areaId].areaId,
-                defendingTroops: `${this.player.playerTroops}`,
+                defendingTroops: this.areas[this.player.areaId].defendingTroops + data.amount,
               }).subscribe(data => {
                 this.areas[this.player.areaId] = data;
               })
@@ -394,6 +413,7 @@ export class MapPage {
       ]
     });
     alert.present();
+   // this.SetPopupDefendTroops();
   }
 
   errorAlert() {
