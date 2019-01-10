@@ -253,7 +253,7 @@ export class MapPage {
             this.playerLocation.lng = position.coords.longitude
         })
       const loop = Observable.interval(1000).subscribe((val) => {
-        
+
         if (this.areas) {
           this.AreaActivityChecker();
         }
@@ -267,12 +267,12 @@ export class MapPage {
           }).subscribe(data => this.player = data)
         }
 
-        else if(this.playerAreaIdArray[this.playerAreaId] == 0 || this.playerAreaIdArray[this.playerAreaId] == undefined || this.playerAreaIdArray[this.playerAreaId] == null){
-          this.service.PutPlayer(this.player.playerId, {
-            playerId: `${this.player.playerId}`,
-            areaId: 0
-          }).subscribe(data => this.player = data)
-        }
+          else if(this.playerAreaIdArray[this.playerAreaId] == 0 || this.playerAreaIdArray[this.playerAreaId] == undefined || this.playerAreaIdArray[this.playerAreaId] == null){
+            this.service.PutPlayer(this.player.playerId, {
+              playerId: `${this.player.playerId}`,
+              areaId: 0
+            }).subscribe(data => this.player = data)
+          }
 
       })
     })
@@ -355,7 +355,7 @@ export class MapPage {
     if (this.areas && this.centerMarkers) {
       for (let i = 1; i < this.centerMarkers.length; i++) {
         if (this.areas[i].players.length > 1 /*this number decides how many players are needed to display 'multi player battle marker'*/) {
-          this.centerMarkers[i-1].addTo(this.centerMarkersLayer);
+          this.centerMarkers[i - 1].addTo(this.centerMarkersLayer);
         }
       }
     }
@@ -381,10 +381,16 @@ export class MapPage {
               this.errorAlert();
             }
             else {
-              this.player.playerTroops -= data.amount;
+              //this.player.playerTroops -= data.amount;
+              this.service.PutPlayer(this.service.GetYourId(),
+                {
+                  playerId: this.service.GetYourId(),
+                  playerTroops: this.player.playerTroops - data.amount,
+                })
+                .subscribe(data => this.player = data);
               this.service.PutArea(this.areas[this.player.areaId].areaId, {
                 areaId: this.areas[this.player.areaId].areaId,
-                defendingTroops: `${this.player.playerTroops}`,
+                defendingTroops: this.areas[this.player.areaId].defendingTroops   + data.amount,
               }).subscribe(data => {
                 this.areas[this.player.areaId] = data;
               })
