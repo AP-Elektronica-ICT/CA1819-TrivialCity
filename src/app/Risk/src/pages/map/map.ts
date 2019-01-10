@@ -321,6 +321,16 @@ export class MapPage {
 
     this.centerMarkersLayer.addTo(this.map);
 
+    this.SetPopupDefendTroops();
+
+  }
+
+  SetPopupDefendTroops(){
+    this.denDam.bindPopup(`<b><h3>${this.areas[1].areaName}</h3></b> Defending Troops: ${this.areas[1].defendingTroops}`);
+    this.borgerhout.bindPopup(`<b><h3>${this.areas[2].areaName}</h3></b> Defending Troops: ${this.areas[2].defendingTroops}`);
+    this.eilandje.bindPopup(`<b><h3>${this.areas[3].areaName}</h3></b> Defending Troops: ${this.areas[3].defendingTroops}`);
+    this.seefhoek.bindPopup(`<b><h3>${this.areas[4].areaName}</h3></b> Defending Troops: ${this.areas[4].defendingTroops}`);
+    this.kaai.bindPopup(`<b><h3>${this.areas[5].areaName}</h3></b> Defending Troops: ${this.areas[5].defendingTroops}`);
   }
 
   territoryChecker() {
@@ -400,6 +410,7 @@ export class MapPage {
       ]
     });
     alert.present();
+   // this.SetPopupDefendTroops();
   }
 
   errorAlert() {
