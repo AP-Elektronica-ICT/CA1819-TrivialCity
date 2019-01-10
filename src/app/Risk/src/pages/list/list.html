@@ -10,5 +10,21 @@
 <ion-content padding class="bg">
 
 
+  <div *ngIf="players" style="text-align:center">
+
+    <div style="display:inline-block; width: 32%">PlayerUsername</div>
+    <div style="display:inline-block; width: 32%">PlayerLevel</div>
+    <div style="display:inline-block; width: 32%">PlayerRank</div>
+
+    <div *ngFor="let playerRank of players; let i = index">
+
+      <div style="width:32%; display: inline-block;">{{playerRank.playerUsername}}</div>
+      <div style="width:32%; display: inline-block;">{{playerRank.playerLevel}}</div>
+      <div style="width:27%; display: inline-block">
+        <img [src]="src[i]" style="width: 64px; height: 64px;">
+      </div>
+      <HR>
+    </div>
+  </div>
 
 </ion-content>
