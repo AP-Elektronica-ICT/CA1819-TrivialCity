@@ -327,7 +327,7 @@ export class MapPage {
         this.AreaArray[i + 1] = 0
       }
 
-      if (this.AreaArray != []){
+      if (this.AreaArray != []) {
         this.service.PutPlayer(this.player.playerId, {
           playerId: `${this.player.playerId}`,
           areaId: `${this.polygons[i].options.title}`
@@ -354,15 +354,15 @@ export class MapPage {
     }
   }
 
-AreaActivityChecker() {
-  if (this.areas && this.centerMarkers) {
-    for (let i = 1; i < this.centerMarkers.length; i++) {
-      if (this.areas[i].players.length > 1 /*this number decides how many players are needed to display 'multi player battle marker'*/) {
-        this.centerMarkers[i - 1].addTo(this.centerMarkersLayer);
+  AreaActivityChecker() {
+    if (this.areas && this.centerMarkers) {
+      for (let i = 1; i < this.centerMarkers.length; i++) {
+        if (this.areas[i].players.length > 1 /*this number decides how many players are needed to display 'multi player battle marker'*/) {
+          this.centerMarkers[i - 1].addTo(this.centerMarkersLayer);
+        }
       }
     }
   }
-}
 
   supportArea() {
     let alert = this.alertCtrl.create({
@@ -393,52 +393,42 @@ AreaActivityChecker() {
                 .subscribe(data => this.player = data);
               this.service.PutArea(this.areas[this.player.areaId].areaId, {
                 areaId: this.areas[this.player.areaId].areaId,
-                defendingTroops: this.areas[this.player.areaId].defendingTroops   + data.amount,
+                defendingTroops: this.areas[this.player.areaId].defendingTroops + data.amount,
               }).subscribe(data => {
                 this.areas[this.player.areaId] = data;
               })
             }
           }
-          else {
-            this.player.playerTroops -= data.amount;
-            this.service.PutArea(this.areas[this.player.areaId].areaId, {
-              areaId: this.areas[this.player.areaId].areaId,
-              defendingTroops: `${this.player.playerTroops}`,
-            }).subscribe(data => {
-              this.areas[this.player.areaId] = data;
-            })
-          }
         }
+      ]
+    });
+    alert.present();
+  }
+
+  errorAlert() {
+    let errorAlert = this.alertCtrl.create({
+      title: 'Invalid Amount',
+      subTitle: 'Please insert a valid amount of troops.',
+      buttons: ['Dismiss']
+    });
+    errorAlert.present();
+  }
+
+  colorSelector(teamId: number): String {
+
+    switch (teamId) {
+      case 1: {
+        return "Blue";
       }
-    ]
-  });
-  alert.present();
-}
-
-errorAlert() {
-  let errorAlert = this.alertCtrl.create({
-    title: 'Invalid Amount',
-    subTitle: 'Please insert a valid amount of troops.',
-    buttons: ['Dismiss']
-  });
-  errorAlert.present();
-}
-
-colorSelector(teamId: number): String {
-
-  switch (teamId) {
-    case 1: {
-      return "Blue";
-    }
-    case 2: {
-      return "Red";
-    }
-    case 3: {
-      return "Green";
-    }
-    case 4: {
-      return "Yellow";
+      case 2: {
+        return "Red";
+      }
+      case 3: {
+        return "Green";
+      }
+      case 4: {
+        return "Yellow";
+      }
     }
   }
-}
 }
