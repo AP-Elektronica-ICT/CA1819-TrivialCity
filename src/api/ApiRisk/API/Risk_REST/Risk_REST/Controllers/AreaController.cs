@@ -14,9 +14,9 @@ namespace Risk_REST.Controllers
     public class AreaController : Controller
     {
 
-        private readonly Risk_Antwerp_dbContext context;
+        private readonly RiskAntwerpRest_dbContext context;
 
-        public AreaController(Risk_Antwerp_dbContext context)
+        public AreaController(RiskAntwerpRest_dbContext context)
         {
             this.context = context;
         }
