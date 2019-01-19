@@ -13,6 +13,7 @@ import { HubConnection } from '@aspnet/signalr';
 import { AlertController } from 'ionic-angular';
 import { ApiService } from './api.service';
 import { delay } from 'rxjs/operator/delay';
+import { ToastController } from 'ionic-angular';
 
 
 @Injectable()
@@ -23,7 +24,7 @@ export class SignalrService  {
     yourTeam : number;
 
 
-    constructor(private alertC: AlertController) {
+    constructor(private toastCtrl: ToastController /*private alertC: AlertController,*/) {
     
   }
 
@@ -38,7 +39,8 @@ export class SignalrService  {
 
     this.hubConnection.on("Send",data => {  
       //console.log(data);
-      this.Alert(data);
+      //this.Alert(data);
+      this.Toast(data);
     });
     
 
@@ -53,11 +55,25 @@ export class SignalrService  {
     this.hubConnection.invoke("JoinTeam", `${team}`);
   }
 
-  Alert(message: string) {
+  /*Alert(message: string) {
     let Alertm = this.alertC.create({
       message: `${message}`,
     });
     Alertm.present();
+  }*/
+
+  Toast(message: string) {
+    let toast = this.toastCtrl.create({
+      message:  `${message}`,
+      duration: 3000,
+      position: 'top'
+    });
+
+    toast.onDidDismiss(() => {
+      //console.log('Dismissed toast');
+    });
+
+    toast.present();
   }
 
 }

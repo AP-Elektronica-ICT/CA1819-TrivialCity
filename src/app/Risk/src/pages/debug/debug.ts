@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Player, ApiService } from '../../services/api.service';
 import { BattlePhasePage } from '../battle-phase/battle-phase';
 import { TeamPage } from '../team/team';
+import { SignalrService } from '../../services/signalR.service';
 
 /**
  * Generated class for the DebugPage page.
@@ -20,7 +21,7 @@ export class DebugPage {
 
   player: Player;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public service: ApiService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public service: ApiService, private SingalRservice: SignalrService) {
     this.service.GetPlayer(this.service.GetYourId()).subscribe(data => this.player = data)
   }
 
@@ -51,6 +52,10 @@ export class DebugPage {
 
   GoTeam(){
     this.navCtrl.setRoot(TeamPage);
+ 
   }
 
+  Attack(){
+    this.SingalRservice.SendAttackMessage("Your team is under Attack", 4 );
+  }
 }
