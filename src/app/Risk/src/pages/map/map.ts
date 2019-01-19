@@ -34,9 +34,21 @@ export class MapPage {
     lng: '0',
     orientation: 0,
   }
-  testI: number = 1;
+  testArray: any[] = [
+    [50, 20],
+    [30, 40]
+  ];
   player: Player;
 
+  areaPlayersLoaded: boolean = false;
+  areaPositionsloaded: boolean = false;
+
+  isLoaded: Boolean = false;
+
+  //Total amount of areas in the game
+  areaTotal: number = 3;
+
+  //Essential variables for determining in which area the player is
   areaArray: number[] = [0, 0, 0, 0, 0, 0];
   areaCounter: number = 0;
 
@@ -45,7 +57,7 @@ export class MapPage {
 
   color: string;
 
-  polygonsPositions: any[] = [];
+  polygonsPositions: any[] = [[],[],[]];
   polygons: any[] = [];
   polygonsLayer;
 
@@ -89,7 +101,14 @@ export class MapPage {
       this.service.GetAreas().subscribe(data => {
         this.areas = data;
       })
-      this.service.getAreaPlayers(1).subscribe(data => {
+
+      for (let i = 1; i <= this.areaTotal; i++) {
+        this.service.getAreaPlayers(i).subscribe(data => {this.areas[i].players = data; if(this.areas[this.areaTotal].players != undefined){this.areaPlayersLoaded = true;}});
+        this.service.getAreaPositions(i).subscribe(data => {this.areas[i].positions = data; if(this.areas[this.areaTotal].positions != undefined){this.areaPositionsloaded = true;}});
+      }
+
+
+      /*this.service.getAreaPlayers(1).subscribe(data => {
         this.areas[1].players = data
         this.service.getAreaPlayers(2).subscribe(data => {
           this.areas[2].players = data
@@ -218,10 +237,11 @@ export class MapPage {
             })
           })
         })
-      })
+      })*/
     });
 
     platform.ready().then(() => {
+
 
       //Device Orientation subscription
       const options = { frequency: 50 };
@@ -239,30 +259,33 @@ export class MapPage {
         })
       const loop = Observable.interval(1000).subscribe((val) => {
 
-        if (this.polygons) {
+        if(this.areas && this.areas[3].positions != undefined && this.areas[2].positions != undefined && this.areas[1].positions != undefined && this.areaPlayersLoaded == true && this.areaPositionsloaded == true && this.isLoaded == false){
+          this.LoadAreaPositions();
+          this.polygonsLayer = leaflet.featureGroup(this.polygons);
+          this.loadmap();
+          this.isLoaded = true;
+        }
+
+        if (this.playerLocation && this.areas[3].positions && this.player && this.polygons && this.centerMarkers && this.areas) {
+
           //keeps updating the polygoncolors
           this.service.GetAreas().subscribe(data => {
-            if(this.service.areas != data){
-              for(let i = 0; i < this.polygons.length; i++){
-                this.polygons[i].setStyle({ color: this.colorSelector(this.service.areas[i+1].teamId)})
+            if (this.service.areas != data) {
+              for (let i = 0; i < this.polygons.length; i++) {
+                this.polygons[i].setStyle({ color: this.colorSelector(this.service.areas[i + 1].teamId) })
                 console.log(this.polygons[i].options.title);
               }
             }
             this.service.areas = data;
           })
           //
-        }
-
-
-        //Checks whether multiple people are in an area
-        if (this.areas && this.centerMarkers) {
+          //Checks whether multiple people are in an area
           this.AreaActivityChecker();
-        }
 
-        if (this.playerLocation.lat && this.playerLocation.lng && this.polygons && this.areas) {
           //Checks in which area the player is
           this.territoryChecker();
         }
+
       })
     })
   }
@@ -306,11 +329,17 @@ export class MapPage {
     this.splashScreen.hide();
 
     //Add the area polygons layer to the map
-    this.polygonsLayer.addTo(this.map);
+    if (this.polygonsLayer != undefined) {
+      this.polygonsLayer.addTo(this.map);
+    }
 
-    this.centerMarkersLayer.addTo(this.map);
+    if (this.centerMarkersLayer != undefined) {
+      this.centerMarkersLayer.addTo(this.map);
+    }
 
-    this.SetPopupDefendTroops();
+    if (this.polygons) {
+      this.SetPopupDefendTroops();
+    }
 
   }
 
@@ -357,11 +386,9 @@ export class MapPage {
   }
 
   AreaActivityChecker() {
-    if (this.areas && this.centerMarkers) {
-      for (let i = 0; i < this.centerMarkers.length; i++) {
-        if (this.areas[i + 1].players.length > 1 /*this number decides how many players are needed to display 'multi player battle marker'*/) {
-          this.centerMarkers[i].addTo(this.centerMarkersLayer);
-        }
+    for (let i = 0; i < this.centerMarkers.length; i++) {
+      if (this.areas[i + 1].players.length > 1 /*this number decides how many players are needed to display 'multi player battle marker'*/) {
+        this.centerMarkers[i].addTo(this.centerMarkersLayer);
       }
     }
   }
@@ -431,6 +458,17 @@ export class MapPage {
       case 4: {
         return "yellow";
       }
+    }
+  }
+
+  LoadAreaPositions() {
+    for (let i = 1; i <= this.areaTotal; i++) {
+      for (let j = 0; j < this.areas[i].positions.length-1; j++) {
+        this.polygonsPositions[i].push([[this.areas[i].positions[j].latitude, this.areas[i].positions[j].longitude]])
+        console.log(this.polygonsPositions[i]);
+      }
+      this.polygons[i] = leaflet.polygon(this.polygonsPositions[i], { color: this.colorSelector(this.areas[i].teamId), title: i })
+      this.centerMarkers[i] = leaflet.marker([this.areas[i].positions[this.areas[i].positions.length-1].latitude, this.areas[i].positions[this.areas[i].positions.length-1].longitude], { icon: this.centerMarkerOptions });
     }
   }
 }
