@@ -12,8 +12,8 @@ namespace Risk_REST.Controllers
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
-        private readonly Risk_Antwerp_dbContext context;
-        public ValuesController(Risk_Antwerp_dbContext _context)
+        private readonly RiskAntwerpRest_dbContext context;
+        public ValuesController(RiskAntwerpRest_dbContext _context)
         {
             context = _context;
         }

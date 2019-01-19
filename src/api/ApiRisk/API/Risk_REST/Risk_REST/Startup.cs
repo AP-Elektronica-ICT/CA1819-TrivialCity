@@ -43,7 +43,7 @@ namespace Risk_REST
             }));
 
 
-            services.AddDbContext<Risk_Antwerp_dbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("localDB")));
+            services.AddDbContext<RiskAntwerpRest_dbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("localDB")));
             services.AddMvc();
            // services.AddDbContext<Risk_Antwerp_dbContext>(options => options.UseSqlServer(@"Server=risk-antwerp.database.windows.net,1433;Initial Catalog=Risk_Antwerp_db;Persist Security Info=False;User ID=Risk_Antwerp;Password=R1sk_4ntw3rp;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
 
