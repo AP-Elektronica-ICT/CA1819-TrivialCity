@@ -34,7 +34,7 @@ export class MapPage {
     lng: '0',
     orientation: 0,
   }
-
+  testI: number = 1;
   player: Player;
 
   areaArray: number[] = [0, 0, 0, 0, 0, 0];
@@ -229,7 +229,7 @@ export class MapPage {
         (data3: DeviceOrientationCompassHeading) => { this.playerMarker.setRotationAngle(data3.magneticHeading), this.playerLocation.orientation = data3.magneticHeading }
         , (error: any) => console.log(error + " - error message"));
 
-      //Geolocation subscription
+      //Geolocation subscription - Keeps updating playermarker location
       const positionSubscription = geolocation.watchPosition()
         .filter((p) => p.coords !== undefined) //filter out errors
         .subscribe(position => {
@@ -238,6 +238,21 @@ export class MapPage {
           this.playerLocation.lng = position.coords.longitude;
         })
       const loop = Observable.interval(1000).subscribe((val) => {
+
+        if (this.polygons) {
+          //keeps updating the polygoncolors
+          this.service.GetAreas().subscribe(data => {
+            if(this.service.areas != data){
+              for(let i = 0; i < this.polygons.length; i++){
+                this.polygons[i].setStyle({ color: this.colorSelector(this.service.areas[i+1].teamId)})
+                console.log(this.polygons[i].options.title);
+              }
+            }
+            this.service.areas = data;
+          })
+          //
+        }
+
 
         //Checks whether multiple people are in an area
         if (this.areas && this.centerMarkers) {
@@ -308,7 +323,7 @@ export class MapPage {
   //Checks in which area the player is
   territoryChecker() {
     for (let i = 0; i < this.polygons.length; i++) {
-      if (inside([this.playerLocation.lat, this.playerLocation.lng], this.polygonsPositions[i+1])) {
+      if (inside([this.playerLocation.lat, this.playerLocation.lng], this.polygonsPositions[i + 1])) {
         this.areaArray[i + 1] = i + 1;
         this.areaCounter = i + 1;
       }
@@ -403,19 +418,18 @@ export class MapPage {
   }
 
   colorSelector(teamId: number): String {
-
     switch (teamId) {
       case 1: {
-        return "Blue";
+        return "blue";
       }
       case 2: {
-        return "Red";
+        return "red";
       }
       case 3: {
-        return "Green";
+        return "green";
       }
       case 4: {
-        return "Yellow";
+        return "yellow";
       }
     }
   }

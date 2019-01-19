@@ -66,6 +66,8 @@ export class RegisterPage {
       });
 
     this.navCtrl.setRoot(TeamPage);
+    this.splashScreen.hide();
+
     /*
       this.service.GetYourAuthId(this.auth.user.sub)
         .subscribe(data => {
