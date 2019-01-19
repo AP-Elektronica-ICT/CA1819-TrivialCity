@@ -251,7 +251,7 @@ export class MapPage {
     else {
       this.service.PutPlayer(this.player.playerId, {
         playerId: this.player.playerId,
-        areaId: 0
+        areaId: 5
       }).subscribe(data => this.player = data)
 
       this.battleBtnIsVisible = false;
