@@ -12,10 +12,13 @@
 
 
 <ion-content class="bg" >
+
+    
+    
   <div style="margin:auto;text-align: center" padding>
     <div *ngIf="teams">
       <div *ngIf="player"></div>
-      <h1 style="text-align: center">Welcome, pick your team</h1>
+      <h1 *ngIf="teams" style="text-align: center">Welcome, pick your team</h1>
       <ion-item>
         <ion-label color="dark">Your Username:</ion-label>
           <ion-input [(ngModel)]="pUsername" placeholder="Username"></ion-input>
@@ -32,4 +35,5 @@
       </div>
     </div>
   </div>
+
 </ion-content>

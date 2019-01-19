@@ -63,10 +63,8 @@ export class RegisterPage {
           this.navCtrl.setRoot(ProfilePage);
           this.splashScreen.hide();
         }
-        else {
-          this.navCtrl.setRoot(TeamPage);
-          this.splashScreen.hide();
-        }
       });
+    this.navCtrl.setRoot(TeamPage);
+    this.splashScreen.hide();
   }
 }
