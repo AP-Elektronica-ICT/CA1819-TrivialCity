@@ -76,7 +76,7 @@ export class BattlePhasePage {
 
   goToBattlePhaseCont() {
     if (this.area != undefined && this.area != null) {
-      this.SingalRservice.SendAttackMessage("Your team is under Attack", this.area.teamId);
+      this.SingalRservice.SendAttackMessage("Your team is under Attack!!", this.area.teamId);
     }
     this.navCtrl.push(BattlePhaseContPage, {
       data: {

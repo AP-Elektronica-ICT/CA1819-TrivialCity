@@ -12,7 +12,6 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { RegisterPage } from '../pages/register/register';
 import { MapPage } from '../pages/map/map';
 import { BattlePhasePage } from '../pages/battle-phase/battle-phase';
-import { ArmyPage } from '../pages/army/army';
 import { TeamPage } from '../pages/team/team';
 import { ProfilePage } from '../pages/profile/profile';
 import { BattlePhaseContPage } from '../pages/battle-phase-cont/battle-phase-cont';
@@ -28,6 +27,7 @@ import { TeamViewPage } from '../pages/teamView/teamView';
 import { TeamViewModule } from '../pages/teamView/teamView.module';
 import { SignalrService } from '../services/signalR.service';
 import { ShopPage } from '../pages/shop/shop';
+import { DebugPage } from '../pages/debug/debug';
 
 
 @NgModule({
@@ -37,12 +37,12 @@ import { ShopPage } from '../pages/shop/shop';
     RegisterPage,
     MapPage,
     BattlePhasePage,
-    ArmyPage,
     TeamPage,
     ProfilePage,
     BattlePhaseContPage,
     TeamViewPage,
-    ShopPage
+    ShopPage,
+    DebugPage,
   ],
   imports: [
     BrowserModule,
@@ -58,13 +58,13 @@ import { ShopPage } from '../pages/shop/shop';
     ListPage,
     MapPage,
     RegisterPage,
-    ArmyPage,
     TeamPage,
     TeamViewPage,
     BattlePhasePage,
     ProfilePage,
     BattlePhaseContPage,
-    ShopPage
+    ShopPage,
+    DebugPage,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

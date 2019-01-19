@@ -21,9 +21,9 @@ namespace Risk_REST.Controllers
     public class PlayerController : Controller
     {
 
-        private readonly Risk_Antwerp_dbContext context;
+        private readonly RiskAntwerpRest_dbContext context;
 
-        public PlayerController(Risk_Antwerp_dbContext context)
+        public PlayerController(RiskAntwerpRest_dbContext context)
         {
             this.context = context;
         }
@@ -73,6 +73,8 @@ namespace Risk_REST.Controllers
             {
                 player.PlayerLevel++;
                 player.PlayerExp -= 1000;
+                context.Players.Update(player);
+                context.SaveChanges();
             }
 
             if (player.PlayerTroops > 25)
