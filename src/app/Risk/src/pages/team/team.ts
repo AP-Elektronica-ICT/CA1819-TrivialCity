@@ -82,7 +82,6 @@ export class TeamPage {
 
             this.service.PostPlayer({
               "teamId": `${this.teamId}`,
-              "areaId": 0,
               "playerUsername": `${this.pUsername}`,
               "playerEmail": `${this.pEmail}`,
               "playerTitle": "Private",
