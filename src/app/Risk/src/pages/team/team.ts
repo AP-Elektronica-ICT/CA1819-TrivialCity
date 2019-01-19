@@ -117,4 +117,12 @@ export class TeamPage {
   GoPlayerInfo() {
     this.navCtrl.setRoot(ProfilePage);
   }
+
+
+  getMyStyles() {
+    let myStyles = {
+       'visibility': this.teams.length > 1 ? 'visible' : 'hidden',
+    };
+    return myStyles;
+}  
 }

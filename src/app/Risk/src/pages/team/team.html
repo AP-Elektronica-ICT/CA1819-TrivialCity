@@ -16,7 +16,7 @@
     
     
   <div style="margin:auto;text-align: center" padding>
-    <div *ngIf="teams">
+    <div class="all" *ngIf="teams"  [ngStyle]="getMyStyles()">
       <div *ngIf="player"></div>
       <h1 *ngIf="teams" style="text-align: center">Welcome, pick your team</h1>
       <ion-item>
