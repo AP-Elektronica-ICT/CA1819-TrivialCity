@@ -30,12 +30,12 @@ export class TeamPage {
   btnColor: String = "#f4f4f4"
 
   constructor(public navCtrl: NavController,
-    public navParams: NavParams, 
-    private service: ApiService, 
-    private alertCtrl: AlertController, 
-    private menu: MenuController, 
-    public auth: AuthService, 
-    private splashScreen: SplashScreen, 
+    public navParams: NavParams,
+    private service: ApiService,
+    private alertCtrl: AlertController,
+    private menu: MenuController,
+    public auth: AuthService,
+    private splashScreen: SplashScreen,
     private SignalRservice: SignalrService, ) {
   }
 
@@ -82,6 +82,7 @@ export class TeamPage {
 
             this.service.PostPlayer({
               "teamId": `${this.teamId}`,
+              "areaId": 0,
               "playerUsername": `${this.pUsername}`,
               "playerEmail": `${this.pEmail}`,
               "playerTitle": "Private",
@@ -104,7 +105,6 @@ export class TeamPage {
               if (this.player.teamId == 4)
                 this.SignalRservice.JoinTeam("TeamYellow");
             });
-
             this.menu.swipeEnable(true);
           }
         }
@@ -117,11 +117,10 @@ export class TeamPage {
     this.navCtrl.setRoot(ProfilePage);
   }
 
-
   getMyStyles() {
     let myStyles = {
-       'visibility': this.teams.length > 1 ? 'visible' : 'hidden',
+      'visibility': this.teams.length > 1 ? 'visible' : 'hidden',
     };
     return myStyles;
-}  
+  }
 }
