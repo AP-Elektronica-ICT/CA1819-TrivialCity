@@ -82,7 +82,6 @@ export class TeamPage {
 
             this.service.PostPlayer({
               "teamId": `${this.teamId}`,
-              "areaId": 0,
               "playerUsername": `${this.pUsername}`,
               "playerEmail": `${this.pEmail}`,
               "playerTitle": "Private",
@@ -95,7 +94,8 @@ export class TeamPage {
             }).subscribe(data => {
               this.player = data
               this.service.ChangeId(this.player.playerId);
-              this.service.GetTeam(this.player.teamId).subscribe(data => this.service.team = data)
+              this.service.GetPlayer(this.player.playerId).subscribe(data => this.service.player = data);
+              this.service.GetTeam(this.player.teamId).subscribe(data => this.service.team = data);
               if (this.player.teamId == 1)
                 this.SignalRservice.JoinTeam("TeamBlue");
               if (this.player.teamId == 2)
