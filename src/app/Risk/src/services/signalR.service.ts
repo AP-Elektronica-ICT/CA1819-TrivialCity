@@ -34,7 +34,7 @@ export class SignalrService  {
  
 
     this.hubConnection.start()
-    .then(() => {console.log("Connected");}).catch(err => {console.error(err);});
+    .then(() => {console.log("Connected"); this.Toast("Connected!");}).catch(err => {console.error(err);});
    
 
     this.hubConnection.on("Send",data => {  
