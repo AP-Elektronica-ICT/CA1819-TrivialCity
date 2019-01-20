@@ -44,7 +44,7 @@ export class MapPage {
   areaPositionsloaded: boolean = false;
 
   isLoaded: Boolean = false;
-
+  undefiendCheck: Boolean = false;
   //Total amount of areas in the game
   areaTotal: number = 3;
 
@@ -103,17 +103,17 @@ export class MapPage {
         this.areas = data;
         console.log(data);
         for (let i = 0; i < this.areaTotal; i++) {
-          this.service.getAreaPlayers(i + 1).subscribe(data => { 
-            this.areas[i].players = data; 
-            if (this.areas[this.areaTotal-1].players != undefined && this.areas[this.areaTotal-1].players != []) { 
-              this.areaPlayersLoaded = true; 
-            } 
+          this.service.getAreaPlayers(i + 1).subscribe(data => {
+            this.areas[i].players = data;
+            if (this.areas[this.areaTotal - 1].players != undefined && this.areas[this.areaTotal - 1].players != []) {
+              this.areaPlayersLoaded = true;
+            }
           });
-          this.service.getAreaPositions(i + 1).subscribe(data => { 
-            this.areas[i].positions = data; 
-            if (this.areas[this.areaTotal-1].positions != undefined && this.areas[this.areaTotal-1].players != []) { 
-              this.areaPositionsloaded = true; 
-            } 
+          this.service.getAreaPositions(i + 1).subscribe(data => {
+            this.areas[i].positions = data;
+            if (this.areas[this.areaTotal - 1].positions != undefined && this.areas[this.areaTotal - 1].players != []) {
+              this.areaPositionsloaded = true;
+            }
           });
         }
       })
@@ -180,13 +180,13 @@ export class MapPage {
             for (let i = 0; i < this.areaTotal; i++) {
               this.service.getAreaPlayers(i + 1).subscribe(data => {
                 this.areas[i].players = data;
-                if (this.areas[this.areaTotal-1].players != undefined) {
+                if (this.areas[this.areaTotal - 1].players != undefined) {
                   this.areaPlayersLoaded = true;
                 }
               });
               this.service.getAreaPositions(i + 1).subscribe(data => {
                 this.areas[i].positions = data;
-                if (this.areas[this.areaTotal-1].positions != undefined) {
+                if (this.areas[this.areaTotal - 1].positions != undefined) {
                   this.areaPositionsloaded = true;
                 }
               });
@@ -285,7 +285,7 @@ export class MapPage {
       this.battleBtnIsVisible = false;
       this.supportBtnIsVisible = false;
     }
-    if(this.player.areaId != 5){
+    if (this.player.areaId != 5) {
       if (this.areas[this.areaCounter].teamId != this.player.teamId) {
         this.battleBtnIsVisible = true;
         this.supportBtnIsVisible = false;
@@ -382,7 +382,14 @@ export class MapPage {
         console.log(i + ":  " + this.polygonsPositions[i]);
       }
       this.polygons[i] = leaflet.polygon(this.polygonsPositions[i], { color: this.colorSelector(this.areas[i].teamId), title: i })
+  
+      while(this.areas[i].positions[this.areas[i].positions.length - 1] == undefined && null && [] ){ // && (this.areas[1].positions[this.areas[1].positions.length - 1] == undefined && null && []) && (this.areas[2].positions[this.areas[2].positions.length - 1] == undefined && null && [])) && this.test == false ){
       this.centerMarkers[i] = leaflet.marker([this.areas[i].positions[this.areas[i].positions.length - 1].latitude, this.areas[i].positions[this.areas[i].positions.length - 1].longitude], { icon: this.centerMarkerOptions });
+      if (this.areas[i].positions[this.areas[i].positions.length - 1] != undefined && null && []) {
+        this.undefiendCheck== true;
+     }
+      }
+      this.undefiendCheck = false;
     }
   }
 }
