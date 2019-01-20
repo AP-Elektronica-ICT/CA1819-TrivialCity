@@ -382,10 +382,10 @@ export class MapPage {
         console.log(i + ":  " + this.polygonsPositions[i]);
       }
       this.polygons[i] = leaflet.polygon(this.polygonsPositions[i], { color: this.colorSelector(this.areas[i].teamId), title: i })
-  
-      while(this.areas[i].positions[this.areas[i].positions.length - 1] == undefined && null && [] ){ // && (this.areas[1].positions[this.areas[1].positions.length - 1] == undefined && null && []) && (this.areas[2].positions[this.areas[2].positions.length - 1] == undefined && null && [])) && this.test == false ){
+      this.undefiendCheck = false;
+      while((this.areas[i].positions[this.areas[i].positions.length - 1] == undefined && this.areas[i].positions[this.areas[i].positions.length - 1] == null && this.areas[i].positions == []) && this.undefiendCheck == false ){ // && (this.areas[1].positions[this.areas[1].positions.length - 1] == undefined && null && []) && (this.areas[2].positions[this.areas[2].positions.length - 1] == undefined && null && [])) && this.test == false ){
       this.centerMarkers[i] = leaflet.marker([this.areas[i].positions[this.areas[i].positions.length - 1].latitude, this.areas[i].positions[this.areas[i].positions.length - 1].longitude], { icon: this.centerMarkerOptions });
-      if (this.areas[i].positions[this.areas[i].positions.length - 1] != undefined && null && []) {
+      if (this.areas[i].positions[this.areas[i].positions.length - 1] != undefined && this.areas[i].positions[this.areas[i].positions.length - 1] != null && this.areas[i].positions != []) {
         this.undefiendCheck== true;
      }
       }
