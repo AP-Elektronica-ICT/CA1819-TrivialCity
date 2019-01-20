@@ -103,8 +103,18 @@ export class MapPage {
         this.areas = data;
         console.log(data);
         for (let i = 0; i < this.areaTotal; i++) {
-          this.service.getAreaPlayers(i + 1).subscribe(data => { this.areas[i].players = data; if (this.areas[this.areaTotal-1].players != undefined) { this.areaPlayersLoaded = true; } });
-          this.service.getAreaPositions(i + 1).subscribe(data => { this.areas[i].positions = data; if (this.areas[this.areaTotal-1].positions != undefined) { this.areaPositionsloaded = true; } });
+          this.service.getAreaPlayers(i + 1).subscribe(data => { 
+            this.areas[i].players = data; 
+            if (this.areas[this.areaTotal-1].players != undefined && this.areas[this.areaTotal-1].players != []) { 
+              this.areaPlayersLoaded = true; 
+            } 
+          });
+          this.service.getAreaPositions(i + 1).subscribe(data => { 
+            this.areas[i].positions = data; 
+            if (this.areas[this.areaTotal-1].positions != undefined && this.areas[this.areaTotal-1].players != []) { 
+              this.areaPositionsloaded = true; 
+            } 
+          });
         }
       })
     });
@@ -134,13 +144,6 @@ export class MapPage {
         if (this.areaPlayersLoaded == true && this.areaPositionsloaded == true && typeof this.areas != "undefined") {
           console.log("2: " + this.areaPlayersLoaded + "  " + this.areaPositionsloaded);
 
-
-          for (let i = 0; i < this.areaTotal; i++) {
-            if (this.areas == undefined || this.areas == null || this.areas == []) {
-              this.service.getAreaPositions(i + 1).subscribe(data => { this.areas[i].positions = data })
-              this.service.getAreaPlayers(i + 1).subscribe(data => { this.areas[i].players = data })
-            }
-          }
           if (this.areas != null && this.areas != undefined && this.areas != []) {
             if (this.areaPlayersLoaded == true && this.areaPositionsloaded == true && this.isLoaded == false) {
               this.LoadAreaPositions();
