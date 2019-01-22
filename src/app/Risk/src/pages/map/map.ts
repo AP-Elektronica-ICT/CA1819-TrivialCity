@@ -108,7 +108,7 @@ export class MapPage {
 
     platform.ready().then(() => {
       console.log("1: " + this.areaPlayersLoaded + "  " + this.areaPositionsloaded);
-
+      
       //Device Orientation subscription
       const options = { frequency: 50 };
       const orientationSubscription = deviceOrientation.watchHeading(options).subscribe(
@@ -125,6 +125,9 @@ export class MapPage {
         })
 
       const loop = Observable.interval(1000).subscribe((val) => {
+        console.log(this.areas[0].players);
+        console.log(this.areas[1].players);
+        console.log(this.areas[2].players);
         if (this.areaPlayersLoaded == true && this.areaPositionsloaded == true && typeof this.areas != "undefined") {
           console.log("2: " + this.areaPlayersLoaded + "  " + this.areaPositionsloaded);
 
@@ -241,7 +244,6 @@ export class MapPage {
         this.areaArray[i] = 0;
       }
     }
-    console.log(this.areaArray)
     if (this.areaArray[this.areaCounter] != 0) {
       this.service.PutPlayer(this.player.playerId, {
         playerId: this.player.playerId,
@@ -272,8 +274,7 @@ export class MapPage {
 
   AreaActivityChecker() {
     for (let i = 0; i < this.areaTotal; i++) {
-      if (this.areas[i + 1].players.length > 1 /*this number decides how many players are needed to display 'multi player battle marker'*/) {
-        console.log()
+      if (this.areas[i].players.length > 1 /*this number decides how many players are needed to display 'multi player battle marker'*/) {
         this.centerMarkers[i].addTo(this.centerMarkersLayer);
       }
     }
@@ -404,8 +405,10 @@ export class MapPage {
     }
     else if (this.areas.length != 0 && this.centerMarkers.length == 0) {
       for (let i = 0; i < this.areaTotal; i++) {
-        this.centerMarkers[i] = leaflet.marker([this.areas[i].positions[this.areas[i].positions.length - 1].latitude, this.areas[i].positions[this.areas[i].positions.length - 1].longitude], { icon: this.centerMarkerOptions });
-        this.centerMarkers[i].addTo(this.centerMarkersLayer);
+        if(this.areas[i].positions.length != 0){
+          this.centerMarkers[i] = leaflet.marker([this.areas[i].positions[this.areas[i].positions.length - 1].latitude, this.areas[i].positions[this.areas[i].positions.length - 1].longitude], { icon: this.centerMarkerOptions });
+          this.centerMarkers[i].addTo(this.centerMarkersLayer);
+        }
       }
     }
   }
