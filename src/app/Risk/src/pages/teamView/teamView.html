@@ -10,7 +10,7 @@
 
 <ion-content class="bg">
 
-    <div style="text-align: center">
+    <div style="text-align: center; margin-top: 10px">
         <button ion-button [color]="service.SetTheme('string')" style="width: 45%; display: inline-block;" (click)="SetMode(1)"
             outline>Overview</button>
         <button ion-button [color]="service.SetTheme('string')" style="width: 45%; display: inline-block;" (click)="SetMode(2)"
@@ -18,38 +18,40 @@
     </div>
     <!-- information overview of every team -->
     <div *ngIf="mode == true" style="text-align: center">
-        <div class="Teams" style="margin:auto;" *ngIf="teamsInfo">
-            <table>
-                <tr *ngFor="let data of teamsInfo">
-                    <td>
-                        <h2>Team </h2> {{data.teamColor}}
-                    </td>
-                    <td>
-                        <h2>Areas</h2> {{data.teamTotalOccupiedAreas}}
-                    </td>
-                    <td>
-                        <h2>Players</h2>{{data.players.length}}
-                    </td>
-                </tr>
-            </table>
+        <div *ngIf="teamsInfo">
+
+            <div style="margin-bottom: 15px; font-size: 28px; margin-top: 10px">
+                <div style="display:inline-block; width: 28%">Team</div>
+                <div style="display:inline-block; width: 28%">Areas</div>
+                <div style="display:inline-block; width: 28%">Players</div>
+            </div>
+            
+
+            <div *ngFor="let team of teamsInfo" style="font-size:20px">
+                <div style="width:28%; display: inline-block; margin-bottom: 25px">{{team.teamColor}}</div>
+                <div style="width:28%; display: inline-block;">{{team.teamTotalOccupiedAreas}}</div>
+                <div style="width:28%; display: inline-block;">{{team.players.length}}</div>
+            </div>
+
         </div>
-        <img style="margin: auto;" src='../../assets/imgs/teams.png' alt="foto troops">
+        <img style="margin: auto;" src='../../assets/imgs/teams.png' alt="foto troops" width="400px" height="150px">
     </div>
 
     <!-- Information on the players specific team -->
     <div *ngIf="mode == false" style="text-align: center">
-        <div class="Teams" style="margin:auto;">
-            <h1>Team Controlled Areas</h1>
-            <table>
-                <tr *ngFor="let data of teamAreas">
-                    <td>
-                        {{data.areaName}}
-                    </td>
-                    <td>
-                        <h2>Troops</h2> {{data.defendingTroops}}
-                    </td>
-                </tr>
-            </table>
+
+        <h1 style="margin-bottom:30px">Team Controlled Areas</h1>
+
+        <div style="font-size:20px; margin-bottom: 30px">
+            <div style="display:inline-block; width: 35%">AreaName</div>
+            <div style="display:inline-block; width: 50%">Defending Troops</div>
         </div>
+        
+
+        <div *ngFor="let data of teamAreas" style="font-size:15px; margin-bottom: 20px">
+            <div style="display:inline-block; width: 35%">{{data.areaName}}</div>
+            <div style="display:inline-block; width: 50%">{{data.defendingTroops}}</div>
+        </div>
+
     </div>
 </ion-content>

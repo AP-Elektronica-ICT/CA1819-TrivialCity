@@ -7,6 +7,7 @@ import { ThrowStmt } from '@angular/compiler';
 import { delay } from 'rxjs/operators';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { SignalrService } from '../../services/signalR.service';
+import { VirtualTimeScheduler } from 'rxjs';
 
 /**
  * Generated class for the BattlePhasePage page.
@@ -25,6 +26,8 @@ export class BattlePhasePage {
   player: Player;
   area: Area;
 
+  isenabled: Boolean;
+
   playerDiceAmount: number;
   botDiceAmount: number;
 
@@ -33,6 +36,7 @@ export class BattlePhasePage {
   }
 
   ionViewDidLoad() {
+    this.isenabled = true;
     this.playerDiceAmount, this.botDiceAmount = 0;
     console.log('ionViewDidLoad BattlePhasePage');
     this.splashScreen.show();
@@ -67,7 +71,7 @@ export class BattlePhasePage {
     else {
       this.playerDiceAmount = amount;
     }
-
+   this.isenabled = false;
   }
 
   goToBattlePhaseCont() {
@@ -84,9 +88,9 @@ export class BattlePhasePage {
         }
       })
     }
-    else {
+  /*  else {
       this.ErrorHandler('Choose an amount of soldiers to attack');
-    }
+    }*/
   }
 
   ErrorHandler(errormsg: string) {
