@@ -62,14 +62,14 @@
         <br>
         <h6>{{player.playerTroops}} friendly troops remaining</h6>
         <br>
-        <button ion-button [ngStyle]="{'background-color': service.SetTheme('hex') }" *ngIf="playerDiceAmount != 0" (click)="goToBattlePhaseCont()">Fight!</button>
+        <button ion-button [ngStyle]="{'background-color': service.SetTheme('hex') }" *ngIf="playerDiceAmount != 0" (click)="goToBattlePhaseCont()" [disabled]="isenabled">Fight!</button>
       </ion-column>
     </ion-row>
   </ion-grid>
 
   <ion-grid text-center style="margin-top: 50px">
     <ion-row style="margin: 0 auto; text-align: center">
-      <ion-column  *ngIf="player.areaId == 0" style="margin: auto">
+      <ion-column  *ngIf="player.areaId == 5" style="margin: auto">
           <h3>You are not in a (capturable) area!</h3>
           <br>
           <p>please return to a capturable area to in order to battle.</p>
