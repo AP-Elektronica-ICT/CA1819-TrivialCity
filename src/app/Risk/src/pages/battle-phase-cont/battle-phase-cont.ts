@@ -86,7 +86,7 @@ export class BattlePhaseContPage {
         if (this.playerResults[i] > this.botResults[i]) {
 
           this.area.defendingTroops -= 1;
-          this.battleResults[1] -= -1;
+          this.battleResults[1] -= 1;
 
           if (this.area.defendingTroops < 0) {
             this.area.defendingTroops = 0;
