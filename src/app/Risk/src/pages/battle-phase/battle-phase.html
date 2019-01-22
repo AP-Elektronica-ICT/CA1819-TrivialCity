@@ -62,7 +62,7 @@
         <br>
         <h6>{{player.playerTroops}} friendly troops remaining</h6>
         <br>
-        <button ion-button [ngStyle]="{'background-color': service.SetTheme('hex') }" *ngIf="playerDiceAmount != 0" (click)="goToBattlePhaseCont()">Fight!</button>
+        <button ion-button [ngStyle]="{'background-color': service.SetTheme('hex') }" *ngIf="playerDiceAmount != 0" (click)="goToBattlePhaseCont()" [disabled]="isenabled">Fight!</button>
       </ion-column>
     </ion-row>
   </ion-grid>
