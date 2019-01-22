@@ -164,6 +164,7 @@ export class BattlePhaseContPage {
                   playerSilverCoins : this.player.playerSilverCoins += Math.floor((Math.random() * 10) + 50),
                   playerExp: this.player.playerExp += 250
                 })
+                this.GoToMap();
                 this.captureConfirmed = true;
               }
             }

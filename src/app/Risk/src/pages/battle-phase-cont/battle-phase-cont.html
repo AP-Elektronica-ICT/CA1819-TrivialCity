@@ -63,7 +63,7 @@
         <button ion-button [ngStyle]="{'background-color': service.SetTheme('hex') }" (click)="CaptureArea()">Capture</button>
       </ion-column>
     </ion-row>
-    <ion-row style="margin: auto; text-align: center">
+    <ion-row style="margin: auto; text-align: center" *ngIf="area.defendingTroops > 0">
       <ion-column>
         <button ion-button [ngStyle]="{'background-color': service.SetTheme('hex') }" (click)="GoToBattlePhase()">Fight Again</button>
         <br>
