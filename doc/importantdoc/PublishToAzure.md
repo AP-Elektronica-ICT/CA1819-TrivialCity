@@ -9,7 +9,7 @@
 7. Your API is hosted and ready to be used
 8. Make sure you put the right call after the URL, the standard URL returns a 404
 
-
+![Foto](/doc/importantdoc/Img/azure_web.PNG)
 
 If others need to publish aswell, download the publish profile in the app service to get all the information (URL, Login, ...)
 
