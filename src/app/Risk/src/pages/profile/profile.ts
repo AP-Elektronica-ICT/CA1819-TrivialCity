@@ -64,14 +64,14 @@ export class ProfilePage {
 
   ChangeUsername() {
     //this.ChangeAlert();
-    this.ChangeAlert("Change Username", "Username", "playerUsername")
+    this.ChangeAlert("Change Username", "Username","Change","playerUsername")
   }
   ChangeEmail() {
     //this.ChangeAlert();
-    this.ChangeAlert("Change Email", "Email", "playerEmail")
+    this.ChangeAlert("Change Email", "Email","Change","playerEmail")
   }
 
-  ChangeAlert(title: string, value: string, dataPlayer: string) {
+  ChangeAlert(title: string, value: string, buttonText:string , dataPlayer: string) {
     let alert = this.alertCtrl.create({
       title: title,
       inputs: [
@@ -89,7 +89,7 @@ export class ProfilePage {
           }
         },
         {
-          text: 'Change',
+          text: buttonText,
           handler: (data) => {
             let userName;
             userName = data.username;
@@ -109,6 +109,30 @@ export class ProfilePage {
                 })
                 .subscribe(data => this.player = data);
             }
+            if (dataPlayer == "playerTroops") {
+              data.username = Math.floor(data.username);
+              data.amount = data.username;
+              if (data.amount <= 0 || data.amount > this.player.playerReserveTroops || data.amount > (25 - this.player.playerTroops)) {
+                this.errorAlert();
+              }
+              else {
+                this.ngProgress.start();
+                this.isenabled = true;
+                this.Alert("Your troops are now walking!");
+                setTimeout(() => {
+                  this.service.PutPlayer(this.service.GetYourId(),
+                    {
+                      playerId: this.service.GetYourId(),
+                      playerTroops: `${this.player.playerTroops + data.amount}`,
+                      playerReserveTroops: `${this.player.playerReserveTroops - data.amount}`
+                    })
+                    .subscribe(data => this.player = data);
+                  this.ngProgress.done();
+                  this.isenabled = false;
+                  this.Alert("Your troops has arrived!");
+                }, 10000);
+              }
+            }
           }
         }
       ]
@@ -117,6 +141,8 @@ export class ProfilePage {
   }
 
   MoveTroops() {
+    this.ChangeAlert(`You have ${25 - this.player.playerTroops} free slots. You currently have ${this.player.playerReserveTroops} troops ready for deployment.`, "Amount","Send","playerTroops");
+    /*
     let alert = this.alertCtrl.create({
       title: 'Send Troops',
       subTitle: `You have ${25 - this.player.playerTroops} free slots in your army. You currently have ${this.player.playerReserveTroops} troops ready for deployment.`,
@@ -163,7 +189,7 @@ export class ProfilePage {
         }
       ]
     });
-    alert.present();
+    alert.present();*/
   }
 
   errorAlert() {

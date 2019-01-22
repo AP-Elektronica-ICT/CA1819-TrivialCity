@@ -7,6 +7,7 @@ import { ThrowStmt } from '@angular/compiler';
 import { delay } from 'rxjs/operators';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { SignalrService } from '../../services/signalR.service';
+import { VirtualTimeScheduler } from 'rxjs';
 
 /**
  * Generated class for the BattlePhasePage page.
@@ -25,16 +26,17 @@ export class BattlePhasePage {
   player: Player;
   area: Area;
 
+  isenabled: Boolean;
+
   playerDiceAmount: number;
   botDiceAmount: number;
-
-  errormsg: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public service: ApiService, private splashScreen: SplashScreen, private SingalRservice: SignalrService, private alertCtrl: AlertController) {
 
   }
 
   ionViewDidLoad() {
+    this.isenabled = true;
     this.playerDiceAmount, this.botDiceAmount = 0;
     console.log('ionViewDidLoad BattlePhasePage');
     this.splashScreen.show();
@@ -61,37 +63,41 @@ export class BattlePhasePage {
 
   getPlayerDiceAmount(amount: any) {
     if (this.playerDiceAmount == 0 && amount == 0) {
-      this.errormsg = 'please select an amount of dice';
-      this.ErrorHandler();
+      this.ErrorHandler('please select an amount of dice');
     }
     else if (this.player.playerTroops < amount) {
-      this.errormsg = 'You do not have that amount of troops left!'
-      this.ErrorHandler();
+      this.ErrorHandler('You do not have that amount of troops left!');
     }
     else {
       this.playerDiceAmount = amount;
     }
-
+   this.isenabled = false;
   }
 
   goToBattlePhaseCont() {
     if (this.area != undefined && this.area != null) {
-      this.SingalRservice.SendAttackMessage("Your team is under Attack", this.area.teamId);
+      this.SingalRservice.SendAttackMessage("Your team is under Attack!!", this.area.teamId);
     }
-    this.navCtrl.push(BattlePhaseContPage, {
-      data: {
-        player: this.player,
-        area: this.area,
-        botDiceAmount: this.botDiceAmount,
-        playerDiceAmount: this.playerDiceAmount
-      }
-    })
+    if(this.playerDiceAmount != 0){
+      this.navCtrl.push(BattlePhaseContPage, {
+        data: {
+          player: this.player,
+          area: this.area,
+          botDiceAmount: this.botDiceAmount,
+          playerDiceAmount: this.playerDiceAmount
+        }
+      })
+    }
+  /*  else {
+      this.ErrorHandler('Choose an amount of soldiers to attack');
+    }*/
   }
 
-  ErrorHandler() {
+  ErrorHandler(errormsg: string) {
     let alert = this.alertCtrl.create({
       title: 'Error',
-      subTitle: this.errormsg
+      subTitle: errormsg
+      
     });
     alert.present();
   }

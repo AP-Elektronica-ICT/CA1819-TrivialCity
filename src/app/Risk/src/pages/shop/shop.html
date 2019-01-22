@@ -15,6 +15,69 @@
 
 
 <ion-content padding class="bg">
-  <img src="../../assets/imgs/ShoppingCart.png">
+
+  <div *ngIf="player" style="text-align:center">
+
+    <div style="display:inline-block; font-size: 40px; margin-top: 5px; margin-left: 10px">{{player.playerReserveTroops}}</div>
+    <div style="display:inline-block"><img src="../../assets/imgs/Teams/Red/Soldiers/rsz_mguard_s_1.png"></div>
+
+    <div style="display:inline-block; font-size: 40px; margin-left: 20px">{{player.playerSilverCoins}}</div>
+    <div style="display:inline-block; margin-bottom: 10px"><img src="../../assets/imgs/rsz_silver-coin.png"></div>
+
+  </div>
+
+  <div style="text-align: center">
+    <button ion-button [color]="service.SetTheme('string')" style="width: 45%; display: inline-block;" (click)="SetMode(1)">
+      Buy Troops</button>
+    <button ion-button [color]="service.SetTheme('string')" style="width: 45%; display: inline-block;" (click)="SetMode(2)">Buy
+      Silvercoins</button>
+  </div>
+
+  <div *ngIf="mode == true" style="text-align: center; margin-top: 10%">
+
+    <div style="display:inline-block; width: 45%">1 troop</div>
+    <button ion-button [color]="service.SetTheme('string')" style="display:inline-block; width: 45%" outline (click)="SelectTroops(1,1)">1
+      Silvercoin</button>
+    <div></div>
+
+    <div style="display:inline-block; width: 45%">5 troops</div>
+    <button ion-button [color]="service.SetTheme('string')" style="display:inline-block; width: 45%" outline (click)="SelectTroops(5,4)">4
+      Silvercoin</button>
+    <div></div>
+
+    <div style="display:inline-block; width: 45%">10 troops</div>
+    <button ion-button [color]="service.SetTheme('string')" style="display:inline-block; width: 45%" outline (click)="SelectTroops(10,7)">7
+      Silvercoin</button>
+    <div></div>
+
+    <div style="display:inline-block; width: 45%">50 troops</div>
+    <button ion-button [color]="service.SetTheme('string')" style="display:inline-block; width: 45%" outline (click)="SelectTroops(50,32)">32
+      Silvercoin</button>
+
+  </div>
+
+  <div *ngIf="mode == false" style="text-align: center; margin-top: 10%">
+
+    <div style="display:inline-block; width: 45%">1 silvercoin</div>
+    <button ion-button [color]="service.SetTheme('string')" style="display:inline-block; width: 45%" outline (click)="AddCoins(1)">€
+      0.99</button>
+    <div></div>
+
+    <div style="display:inline-block; width: 45%">5 Silvercoins</div>
+    <button ion-button [color]="service.SetTheme('string')" style="display:inline-block; width: 45%" outline (click)="AddCoins(5)">€
+      4.89</button>
+    <div></div>
+
+    <div style="display:inline-block; width: 45%">10 Silvercoins</div>
+    <button ion-button [color]="service.SetTheme('string')" style="display:inline-block; width: 45%" outline (click)="AddCoins(10)">€
+      9.49</button>
+    <div></div>
+
+    <div style="display:inline-block; width: 45%">50 Silvercoins</div>
+    <button ion-button [color]="service.SetTheme('string')" style="display:inline-block; width: 45%" outline (click)="AddCoins(50)">€
+      42.99</button>
+    <div></div>
+
+  </div>
 
 </ion-content>

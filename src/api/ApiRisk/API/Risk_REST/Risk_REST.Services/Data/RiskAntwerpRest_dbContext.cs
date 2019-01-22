@@ -5,13 +5,13 @@ using Risk_REST.Models;
 
 namespace Risk_REST.Services.Data
 {
-    public partial class Risk_Antwerp_dbContext : DbContext
+    public partial class RiskAntwerpRest_dbContext : DbContext
     {
-        public Risk_Antwerp_dbContext()
+        public RiskAntwerpRest_dbContext()
         {
         }
 
-        public Risk_Antwerp_dbContext(DbContextOptions<Risk_Antwerp_dbContext> options)
+        public RiskAntwerpRest_dbContext(DbContextOptions<RiskAntwerpRest_dbContext> options)
             : base(options)
         {
         }
@@ -26,7 +26,7 @@ namespace Risk_REST.Services.Data
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=risk-antwerp.database.windows.net,1433;Initial Catalog=Risk_Antwerp_db;Persist Security Info=False;User ID=Risk_Antwerp;Password=R1sk_4ntw3rp;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+                optionsBuilder.UseSqlServer("Server=riskantwerprestdbserver.database.windows.net,1433;Initial Catalog=RiskAntwerpRest_db;Persist Security Info=False;User ID=RiskAntwerpAdmin;Password=RiskAntwerp_147;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
             }
         }
 
@@ -34,46 +34,40 @@ namespace Risk_REST.Services.Data
         {
             modelBuilder.Entity<Area>(entity =>
             {
-                entity.Property(e => e.AreaId).ValueGeneratedNever();
-
-                entity.Property(e => e.AreaName).HasMaxLength(40);
+                entity.Property(e => e.AreaName).HasMaxLength(100);
 
                 entity.HasOne(d => d.Team)
                     .WithMany(p => p.Area)
                     .HasForeignKey(d => d.TeamId)
-                    .HasConstraintName("FK__Area__TeamId__4F7CD00D");
+                    .HasConstraintName("FK__Area__TeamId__571DF1D5");
             });
 
             modelBuilder.Entity<Players>(entity =>
             {
                 entity.HasKey(e => e.PlayerId);
 
-                entity.Property(e => e.AuthId)
-                    .HasColumnName("Auth_Id")
-                    .HasMaxLength(100);
+                entity.Property(e => e.AuthId).HasMaxLength(100);
 
                 entity.Property(e => e.PlayerEmail).HasMaxLength(100);
 
-                entity.Property(e => e.PlayerTitle).HasMaxLength(70);
+                entity.Property(e => e.PlayerTitle).HasMaxLength(100);
 
                 entity.Property(e => e.PlayerUsername).HasMaxLength(100);
 
                 entity.HasOne(d => d.Area)
                     .WithMany(p => p.Players)
                     .HasForeignKey(d => d.AreaId)
-                    .HasConstraintName("FK__Players__AreaId__534D60F1");
+                    .HasConstraintName("FK__Players__AreaId__5CD6CB2B");
 
                 entity.HasOne(d => d.Team)
                     .WithMany(p => p.Players)
                     .HasForeignKey(d => d.TeamId)
-                    .HasConstraintName("FK__Players__TeamId__52593CB8");
+                    .HasConstraintName("FK__Players__TeamId__5DCAEF64");
             });
 
             modelBuilder.Entity<Positions>(entity =>
             {
                 entity.HasKey(e => e.PositionId);
-
-                entity.Property(e => e.PositionId).ValueGeneratedNever();
 
                 entity.Property(e => e.Latitude).HasColumnType("decimal(9, 6)");
 
@@ -82,16 +76,14 @@ namespace Risk_REST.Services.Data
                 entity.HasOne(d => d.Area)
                     .WithMany(p => p.Positions)
                     .HasForeignKey(d => d.AreaId)
-                    .HasConstraintName("FK__Postition__AreaI__4D94879B");
+                    .HasConstraintName("FK__Positions__AreaI__59FA5E80");
             });
 
             modelBuilder.Entity<Teams>(entity =>
             {
                 entity.HasKey(e => e.TeamId);
 
-                entity.Property(e => e.TeamId).ValueGeneratedNever();
-
-                entity.Property(e => e.TeamColor).HasMaxLength(20);
+                entity.Property(e => e.TeamColor).HasMaxLength(50);
             });
         }
     }

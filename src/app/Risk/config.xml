@@ -100,6 +100,7 @@
     <content src="index.html" />
     <access origin="*" />
     <plugin name="cordova-plugin-advanced-http" spec="2.0.1" />
+    <allow-navigation href="http://192.168.0.216:8100" />
     <engine name="android" spec="7.1.1" />
     <engine name="browser" spec="5.0.4" />
 </widget>

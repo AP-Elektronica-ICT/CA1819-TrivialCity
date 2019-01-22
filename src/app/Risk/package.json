@@ -30,6 +30,7 @@
     "@ionic-native/status-bar": "~4.15.0",
     "@ionic/pro": "2.0.3",
     "@ionic/storage": "2.0.0",
+    "@mapbox/leaflet-pip": "^1.1.0",
     "auth0-js": "^9.8.1",
     "body-parser": "^1.18.3",
     "build": "0.1.4",
@@ -54,6 +55,7 @@
     "leaflet-control-custom": "^1.0.0",
     "leaflet-rotatedmarker": "^0.2.0",
     "ngx-progressbar": "^2.1.1",
+    "point-in-polygon": "^1.0.1",
     "rxjs": "5.5.11",
     "sw-toolbox": "3.6.0",
     "zone.js": "0.8.26"

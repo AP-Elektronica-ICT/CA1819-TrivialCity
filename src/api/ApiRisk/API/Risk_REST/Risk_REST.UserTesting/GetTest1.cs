@@ -16,14 +16,14 @@ namespace Risk_REST.UserTesting
 {
     public class GetTests
     {
-        private Risk_Antwerp_dbContext context;
+        private RiskAntwerpRest_dbContext context;
 
        
 
         [Fact]
         public  void  TestCorrectPlayer()
         {
-            var c = new PlayerController(new Risk_Antwerp_dbContext());
+            var c = new PlayerController(new RiskAntwerpRest_dbContext());
 
             var result =  c.GetPlayerById(2);
             
@@ -37,7 +37,7 @@ namespace Risk_REST.UserTesting
         [Fact]
         public void TestCorrectTeam()
         {
-            var c = new TeamController(new Risk_Antwerp_dbContext());
+            var c = new TeamController(new RiskAntwerpRest_dbContext());
 
             var result = c.GetTeamById(1);
 
@@ -51,7 +51,7 @@ namespace Risk_REST.UserTesting
         [Fact]
         public void TestCorrectArea()
         {
-            var c = new AreaController(new Risk_Antwerp_dbContext());
+            var c = new AreaController(new RiskAntwerpRest_dbContext());
 
             var result = c.GetAreaById(3);
 
@@ -66,7 +66,7 @@ namespace Risk_REST.UserTesting
         public void  TestAllPlayers()
         {
            
-            var controller = new PlayerController(new Risk_Antwerp_dbContext());
+            var controller = new PlayerController(new RiskAntwerpRest_dbContext());
            
             var actionResult =  controller.GetAllPlayers();
  
@@ -77,7 +77,7 @@ namespace Risk_REST.UserTesting
         public void TestAllTeams()
         {
 
-            var controller = new TeamController(new Risk_Antwerp_dbContext());
+            var controller = new TeamController(new RiskAntwerpRest_dbContext());
 
             var actionResult = controller.GetAllTeams();
 
@@ -88,7 +88,7 @@ namespace Risk_REST.UserTesting
         public void TestAllAreas()
         {
 
-            var controller = new AreaController(new Risk_Antwerp_dbContext());
+            var controller = new AreaController(new RiskAntwerpRest_dbContext());
 
             var actionResult = controller.GetAllAreas();
 

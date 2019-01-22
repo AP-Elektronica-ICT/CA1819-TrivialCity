@@ -30,12 +30,12 @@ export class TeamPage {
   btnColor: String = "#f4f4f4"
 
   constructor(public navCtrl: NavController,
-    public navParams: NavParams, 
-    private service: ApiService, 
-    private alertCtrl: AlertController, 
-    private menu: MenuController, 
-    public auth: AuthService, 
-    private splashScreen: SplashScreen, 
+    public navParams: NavParams,
+    private service: ApiService,
+    private alertCtrl: AlertController,
+    private menu: MenuController,
+    public auth: AuthService,
+    private splashScreen: SplashScreen,
     private SignalRservice: SignalrService, ) {
   }
 
@@ -94,7 +94,8 @@ export class TeamPage {
             }).subscribe(data => {
               this.player = data
               this.service.ChangeId(this.player.playerId);
-              this.service.GetTeam(this.player.teamId).subscribe(data => this.service.team = data)
+              this.service.GetPlayer(this.player.playerId).subscribe(data => this.service.player = data);
+              this.service.GetTeam(this.player.teamId).subscribe(data => this.service.team = data);
               if (this.player.teamId == 1)
                 this.SignalRservice.JoinTeam("TeamBlue");
               if (this.player.teamId == 2)
@@ -104,7 +105,6 @@ export class TeamPage {
               if (this.player.teamId == 4)
                 this.SignalRservice.JoinTeam("TeamYellow");
             });
-
             this.menu.swipeEnable(true);
           }
         }
@@ -115,5 +115,12 @@ export class TeamPage {
 
   GoPlayerInfo() {
     this.navCtrl.setRoot(ProfilePage);
+  }
+
+  getMyStyles() {
+    let myStyles = {
+      'visibility': this.teams.length > 1 ? 'visible' : 'hidden',
+    };
+    return myStyles;
   }
 }

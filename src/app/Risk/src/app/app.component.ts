@@ -7,7 +7,6 @@ import { ListPage } from '../pages/list/list';
 import { RegisterPage } from '../pages/register/register';
 import { MapPage } from '../pages/map/map';
 import { BattlePhasePage } from '../pages/battle-phase/battle-phase';
-import { ArmyPage } from '../pages/army/army';
 import { TeamPage } from '../pages/team/team';
 import { ProfilePage } from '../pages/profile/profile';
 import { BattlePhaseContPage } from '../pages/battle-phase-cont/battle-phase-cont';
@@ -17,6 +16,7 @@ import Auth0Cordova from '@auth0/cordova';
 import { TeamViewPage } from '../pages/teamView/teamView';
 import { SignalrService } from '../services/signalR.service';
 import { ShopPage } from '../pages/shop/shop';
+import { DebugPage } from '../pages/debug/debug';
 
 
 @Component({
@@ -57,14 +57,13 @@ export class MyApp implements OnInit{
    
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'List', component: ListPage },
       { title: 'Map', component: MapPage },
-      { title: 'Army', component: ArmyPage },
-      { title: 'Team', component: TeamViewPage },
-      { title: 'Register', component: RegisterPage },
-      { title: 'Battle Phase', component: BattlePhasePage },
       { title: 'Profile', component: ProfilePage },
+      { title: 'Team', component: TeamViewPage },
+      { title: 'Leaderboards', component: ListPage },
       { title: 'Shop', component: ShopPage },
+      { title: 'Register', component: RegisterPage },
+      { title: 'Debug', component: DebugPage },
     ];
 
   }

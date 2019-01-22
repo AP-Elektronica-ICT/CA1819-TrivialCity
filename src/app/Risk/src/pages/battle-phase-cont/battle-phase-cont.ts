@@ -85,10 +85,8 @@ export class BattlePhaseContPage {
       if (this.playerResults[i] && this.botResults[i]) {
         if (this.playerResults[i] > this.botResults[i]) {
 
-          this.player.playerSilverCoins += Math.floor((Math.random() * 10) + 1)
-          this.player.playerExp += Math.floor((Math.random() * 50) + 50)
           this.area.defendingTroops -= 1;
-          this.battleResults[1] -= -1;
+          this.battleResults[1] -= 1;
 
           if (this.area.defendingTroops < 0) {
             this.area.defendingTroops = 0;
@@ -103,13 +101,15 @@ export class BattlePhaseContPage {
 
           this.service.PutPlayer(this.player.playerId, {
             playerId: this.player.playerId,
-            playerSilverCoins: this.player.playerSilverCoins,
+            playerSilverCoins: this.player.playerSilverCoins + Math.floor((Math.random() * 10) + 1),
+            playerExp: this.player.playerExp + Math.floor((Math.random() * 50) + 1)
+          }).subscribe(data => {
+            this.player = data;
+            console.log(data);
           })
 
         }
         else {
-
-          this.player.playerExp += Math.floor((Math.random() * 1) + 50)
           this.player.playerTroops -= 1;
           this.battleResults[0] -= 1;
 
@@ -120,6 +120,7 @@ export class BattlePhaseContPage {
           this.service.PutPlayer(this.service.GetYourId(), {
             playerId: this.service.GetYourId(),
             playerTroops: this.player.playerTroops,
+            playerExp: this.player.playerExp += Math.floor((Math.random() * 10) + 10)
           }).subscribe(data => {
             this.player = data;
           })
@@ -145,13 +146,11 @@ export class BattlePhaseContPage {
           {
             text: 'Capture',
             handler: data => {
-              data.amount = Math.floor(data.amount);
               if (data.amount <= 0 || data.amount > this.player.playerTroops) {
                 this.captureConfirmed = false;
                 this.errorAlert();
               }
               else {
-                this.player.playerTroops -= data.amount;
                 this.service.PutArea(this.area.areaId, {
                   areaId: this.area.areaId,
                   teamId: `${this.player.teamId}`,
@@ -161,8 +160,11 @@ export class BattlePhaseContPage {
                 })
                 this.service.PutPlayer(this.player.playerId, {
                   playerId: this.player.playerId,
-                  playerTroops: `${this.player.playerTroops}`
+                  playerTroops: this.player.playerTroops - data.amount,
+                  playerSilverCoins : this.player.playerSilverCoins += Math.floor((Math.random() * 10) + 50),
+                  playerExp: this.player.playerExp += 250
                 })
+                this.GoToMap();
                 this.captureConfirmed = true;
               }
             }

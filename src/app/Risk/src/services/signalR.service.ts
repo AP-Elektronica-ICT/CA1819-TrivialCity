@@ -13,6 +13,7 @@ import { HubConnection } from '@aspnet/signalr';
 import { AlertController } from 'ionic-angular';
 import { ApiService } from './api.service';
 import { delay } from 'rxjs/operator/delay';
+import { ToastController } from 'ionic-angular';
 
 
 @Injectable()
@@ -23,23 +24,25 @@ export class SignalrService  {
     yourTeam : number;
 
 
-    constructor(private alertC: AlertController , private service: ApiService) {
+    constructor(private toastCtrl: ToastController /*private alertC: AlertController,*/) {
     
   }
 
   RunSignalR(){
-    this.hubConnection = new HubConnection("https://riskantwerp.azurewebsites.net/notification")//.withUrl("http://localhost:53169/api/notification/").build();//("http://localhost:53169/api/notification/");
+    this.hubConnection = new HubConnection("https://riskantwerprest.azurewebsites.net/notification")//.withUrl("http://localhost:53169/api/notification/").build();//("http://localhost:53169/api/notification/");
 
  
 
     this.hubConnection.start()
-    .then(() => {console.log("Connected");}).catch(err => {console.error(err);});
+    .then(() => {console.log("Connected"); this.Toast("Connected!");}).catch(err => {console.error(err);});
    
 
     this.hubConnection.on("Send",data => {  
       //console.log(data);
-      this.Alert(data);
+      //this.Alert(data);
+      this.Toast(data);
     });
+    
 
   }
 
@@ -52,11 +55,25 @@ export class SignalrService  {
     this.hubConnection.invoke("JoinTeam", `${team}`);
   }
 
-  Alert(message: string) {
+  /*Alert(message: string) {
     let Alertm = this.alertC.create({
       message: `${message}`,
     });
     Alertm.present();
+  }*/
+
+  Toast(message: string) {
+    let toast = this.toastCtrl.create({
+      message:  `${message}`,
+      duration: 3000,
+      position: 'top'
+    });
+
+    toast.onDidDismiss(() => {
+      //console.log('Dismissed toast');
+    });
+
+    toast.present();
   }
 
 }

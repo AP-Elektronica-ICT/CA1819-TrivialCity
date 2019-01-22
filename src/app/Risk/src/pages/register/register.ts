@@ -4,10 +4,11 @@ import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angul
 import { AuthService } from '../../services/auth.service';
 import { TeamPage } from '../team/team';
 import { ApiService, Player } from '../../services/api.service';
-import { ProfilePage } from '../profile/profile';
+import { MapPage } from '../map/map';
 import { SignalrService } from '../../services/signalR.service';
 import { delay } from 'rxjs/operator/delay';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { ProfilePage } from '../profile/profile';
 
 /**
  * Generated class for the RegisterPage page.
@@ -47,7 +48,7 @@ export class RegisterPage {
       .subscribe(data => {
         this.player = data;
         this.service.ChangeId(this.player[0].playerId);
-        this.service.GetTeam(this.player[0].teamId).subscribe(data => this.service.team = data)
+        this.service.GetPlayer(this.player[0].playerId).subscribe(data => this.service.player = data)
         if (this.player[0].teamId == 1)
           this.SignalRservice.JoinTeam("TeamBlue");
         if (this.player[0].teamId == 2)
@@ -63,56 +64,7 @@ export class RegisterPage {
           this.splashScreen.hide();
         }
       });
- 
     this.navCtrl.setRoot(TeamPage);
-    /*
-      this.service.GetYourAuthId(this.auth.user.sub)
-        .subscribe(data => {
-          //this.splashScreen.show();
-  
-          this.player = data;
-  
-  
-          if (this.player != [] && this.player != undefined) {
-            console.log("test");
-            console.log(this.player);
-            this.service.ChangeId(this.player[0].playerId)
-            this.service.GetTeam(this.player[0].teamId).subscribe(data => this.service.team = data)
-            if (this.player[0].teamId == 1)
-              this.SignalRservice.JoinTeam("TeamBlue");
-            if (this.player[0].teamId == 2)
-              this.SignalRservice.JoinTeam("TeamRed");
-            if (this.player[0].teamId == 3)
-              this.SignalRservice.JoinTeam("TeamGreen");
-            if (this.player[0].teamId == 4)
-              this.SignalRservice.JoinTeam("TeamYellow");
-            this.menu.swipeEnable(true);
-           // this.splashScreen.hide();
-            this.navCtrl.setRoot(ProfilePage);
-          }
-           // this.splashScreen.hide();
-            this.navCtrl.setRoot(TeamPage);
-          
-  
-  
-  
-             this.service.GetYourAuthId(this.auth.user.sub)
-        .subscribe(data => {
-          this.PlayerInfo = data;
-          this.service.ChangeId(this.PlayerInfo[0].playerId)
-          if (this.PlayerInfo[0].teamId == 1)
-            this.SignalRservice.JoinTeam("TeamBlue");
-          if (this.PlayerInfo[0].teamId == 2)
-            this.SignalRservice.JoinTeam("TeamRed");
-          if (this.PlayerInfo[0].teamId == 3)
-            this.SignalRservice.JoinTeam("TeamGreen");
-          if (this.PlayerInfo[0].teamId == 4)
-            this.SignalRservice.JoinTeam("TeamYellow");
-          if (this.PlayerInfo != [] || this.PlayerInfo != undefined)
-            this.navCtrl.setRoot(HomePage);
-        });
-  
-      this.navCtrl.setRoot(TeamPage);
-        });*/
+    this.splashScreen.hide();
   }
 }
