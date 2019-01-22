@@ -9,3 +9,5 @@
 7. Your API is hosted and ready to be used
 
 If others need to publish aswell, download the publish profile in the app service to get all the information (URL, Login, ...)
+
+![Foto](/doc/importantdoc/Img/publish_profile.PNG)
