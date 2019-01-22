@@ -99,22 +99,7 @@ export class MapPage {
       this.player = data
       this.service.GetAreas().subscribe(data => {
         this.areas = data;
-        for (let i = 0; i < this.areaTotal; i++) {
-          setTimeout(() => {
-            this.service.getAreaPlayers(i + 1).subscribe(data => {
-              this.areas[i].players = data;
-              if (this.areas[this.areaTotal - 1].players != undefined && this.areas[this.areaTotal - 1].players != []) {
-                this.areaPlayersLoaded = true;
-              }
-            });
-            this.service.getAreaPositions(i + 1).subscribe(data => {
-              this.areas[i].positions = data;
-              if (this.areas[this.areaTotal - 1].positions != undefined && this.areas[this.areaTotal - 1].players != []) {
-                this.areaPositionsloaded = true;
-              }
-            });
-          }, 2000 / this.areaTotal);
-        }
+        this.Initialize();
       })
     });
 
@@ -143,7 +128,7 @@ export class MapPage {
         if (this.areaPlayersLoaded == true && this.areaPositionsloaded == true && typeof this.areas != "undefined") {
           console.log("2: " + this.areaPlayersLoaded + "  " + this.areaPositionsloaded);
 
-          if (this.areas != null && this.areas != undefined && this.areas != []) {
+          if (this.areas != null && this.areas != undefined && this.areas != [] && this.areas.length != 0) {
             if (this.areaPlayersLoaded == true && this.areaPositionsloaded == true && this.isLoaded == false) {
               this.LoadAreaPositions();
               this.polygonsLayer = leaflet.featureGroup(this.polygons);
@@ -154,18 +139,8 @@ export class MapPage {
 
           if (this.playerLocation && this.player && this.polygons && this.areas && this.service.areas) {
 
-            //Updates the polygon colors
-            this.service.GetAreas().subscribe(data => {
-              if (this.service.areas != data) {
-                this.service.areas = data;
-                for (let i = 0; i < this.areaTotal; i++) {
-                  this.polygons[i].setStyle({ color: this.colorSelector(this.service.areas[i].teamId), title: i })
-                }
-              }
-            })
-            //
-            //Checks whether multiple people are in an area
-            //this.AreaActivityChecker();
+            //Updates Area colors, centermarkers
+            this.UpdateAreas();
 
             //Checks in which area the player is
             this.territoryChecker();
@@ -297,7 +272,8 @@ export class MapPage {
 
   AreaActivityChecker() {
     for (let i = 0; i < this.areaTotal; i++) {
-      if (this.areas[i].players.length > 1 /*this number decides how many players are needed to display 'multi player battle marker'*/) {
+      if (this.areas[i + 1].players.length > 1 /*this number decides how many players are needed to display 'multi player battle marker'*/) {
+        console.log()
         this.centerMarkers[i].addTo(this.centerMarkersLayer);
       }
     }
@@ -381,13 +357,56 @@ export class MapPage {
       }
       this.polygons[i] = leaflet.polygon(this.polygonsPositions[i], { color: this.colorSelector(this.areas[i].teamId), title: i })
       this.undefiendCheck = false;
-      while ((this.areas[i].positions[this.areas[i].positions.length - 1] == undefined && this.areas[i].positions[this.areas[i].positions.length - 1] == null && this.areas[i].positions == []) && this.undefiendCheck == false) { // && (this.areas[1].positions[this.areas[1].positions.length - 1] == undefined && null && []) && (this.areas[2].positions[this.areas[2].positions.length - 1] == undefined && null && [])) && this.test == false ){
+      while ((this.areas[i].positions[this.areas[i].positions.length - 1] == undefined && this.areas[i].positions[this.areas[i].positions.length - 1] == null && this.areas[i].positions == []) && this.undefiendCheck == false) {
         this.centerMarkers[i] = leaflet.marker([this.areas[i].positions[this.areas[i].positions.length - 1].latitude, this.areas[i].positions[this.areas[i].positions.length - 1].longitude], { icon: this.centerMarkerOptions });
         if (this.areas[i].positions[this.areas[i].positions.length - 1] != undefined && this.areas[i].positions[this.areas[i].positions.length - 1] != null && this.areas[i].positions != []) {
           this.undefiendCheck == true;
         }
       }
       this.undefiendCheck = false;
+    }
+  }
+
+  Initialize() {
+    for (let i = 0; i < this.areaTotal; i++) {
+      setTimeout(() => {
+        this.service.getAreaPlayers(i + 1).subscribe(data => {
+          this.areas[i].players = data;
+          if (this.areas[this.areaTotal - 1].players != undefined && this.areas[this.areaTotal - 1].players != []) {
+            this.areaPlayersLoaded = true;
+          }
+        });
+        this.service.getAreaPositions(i + 1).subscribe(data => {
+          this.areas[i].positions = data;
+          if (this.areas[this.areaTotal - 1].positions != undefined && this.areas[this.areaTotal - 1].players != []) {
+            this.areaPositionsloaded = true;
+          }
+        });
+      }, 2000 / this.areaTotal);
+    }
+  }
+
+  UpdateAreas() {
+    //Updates the polygon colors && popup defending troops
+    this.service.GetAreas().subscribe(data => {
+      if (this.areas != data) {
+        this.areas = data;
+        for (let i = 0; i < this.areaTotal; i++) {
+          this.polygons[i].setStyle({ color: this.colorSelector(this.areas[i].teamId), title: i })
+        }
+        this.SetPopupDefendTroops();
+      }
+    })
+    //
+    //Checks whether multiple people are in an area
+    if (this.centerMarkers != undefined && this.centerMarkers.length != 0) {
+      this.AreaActivityChecker();
+    }
+    else if (this.areas.length != 0 && this.centerMarkers.length == 0) {
+      for (let i = 0; i < this.areaTotal; i++) {
+        this.centerMarkers[i] = leaflet.marker([this.areas[i].positions[this.areas[i].positions.length - 1].latitude, this.areas[i].positions[this.areas[i].positions.length - 1].longitude], { icon: this.centerMarkerOptions });
+        this.centerMarkers[i].addTo(this.centerMarkersLayer);
+      }
     }
   }
 }
