@@ -28,7 +28,7 @@ export class SignalrService  {
     
   }
 
-  RunSignalR(){
+  RunSignalR(){ 
     this.hubConnection = new HubConnection("https://riskantwerprest.azurewebsites.net/notification")//.withUrl("http://localhost:53169/api/notification/").build();//("http://localhost:53169/api/notification/");
 
  

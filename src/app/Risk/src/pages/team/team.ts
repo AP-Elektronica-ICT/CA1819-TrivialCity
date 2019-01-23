@@ -80,32 +80,7 @@ export class TeamPage {
               this.btnColor = '#ffeb3b';
             }
 
-            this.service.PostPlayer({
-              "teamId": `${this.teamId}`,
-              "playerUsername": `${this.pUsername}`,
-              "playerEmail": `${this.pEmail}`,
-              "playerTitle": "Private",
-              "playerLevel": 0,
-              "playerExp": 0,
-              "playerSilverCoins": 0,
-              "playerTroops": 20,
-              "playerReserveTroops": 100,
-              "authId": `${this.auth.user.sub}`,
-            }).subscribe(data => {
-              this.player = data
-              this.service.ChangeId(this.player.playerId);
-              this.service.GetPlayer(this.player.playerId).subscribe(data => this.service.player = data);
-              this.service.GetTeam(this.player.teamId).subscribe(data => this.service.team = data);
-              if (this.player.teamId == 1)
-                this.SignalRservice.JoinTeam("TeamBlue");
-              if (this.player.teamId == 2)
-                this.SignalRservice.JoinTeam("TeamRed");
-              if (this.player.teamId == 3)
-                this.SignalRservice.JoinTeam("TeamGreen");
-              if (this.player.teamId == 4)
-                this.SignalRservice.JoinTeam("TeamYellow");
-            });
-            this.menu.swipeEnable(true);
+
           }
         }
       ]
@@ -114,10 +89,36 @@ export class TeamPage {
   }
 
   GoPlayerInfo() {
-    this.navCtrl.setRoot(ProfilePage);
+    this.service.PostPlayer({
+      "teamId": `${this.teamId}`,
+      "playerUsername": `${this.pUsername}`,
+      "playerEmail": `${this.pEmail}`,
+      "playerTitle": "Private",
+      "playerLevel": 0,
+      "playerExp": 0,
+      "playerSilverCoins": 0,
+      "playerTroops": 20,
+      "playerReserveTroops": 100,
+      "authId": `${this.auth.user.sub}`,
+    }).subscribe(data => {
+      this.player = data
+      this.service.ChangeId(this.player.playerId);
+      this.service.GetPlayer(this.player.playerId).subscribe(data => this.service.player = data); // set theme
+      this.service.GetTeam(this.player.teamId).subscribe(data => this.service.team = data);
+      if (this.player.teamId == 1)
+        this.SignalRservice.JoinTeam("TeamBlue");
+      if (this.player.teamId == 2)
+        this.SignalRservice.JoinTeam("TeamRed");
+      if (this.player.teamId == 3)
+        this.SignalRservice.JoinTeam("TeamGreen");
+      if (this.player.teamId == 4)
+        this.SignalRservice.JoinTeam("TeamYellow");
+      this.menu.swipeEnable(true);
+      this.navCtrl.setRoot(ProfilePage);
+    });
   }
 
-  getMyStyles() {
+  getMyStyles() { // zorgt voor dat pagina niets toont wanneer er niets geladen is
     let myStyles = {
       'visibility': this.teams.length > 1 ? 'visible' : 'hidden',
     };

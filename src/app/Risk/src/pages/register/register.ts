@@ -48,7 +48,7 @@ export class RegisterPage {
       .subscribe(data => {
         this.player = data;
         this.service.ChangeId(this.player[0].playerId);
-        this.service.GetPlayer(this.player[0].playerId).subscribe(data => this.service.player = data)
+        this.service.GetPlayer(this.player[0].playerId).subscribe(data => this.service.player = data) // set theme
         if (this.player[0].teamId == 1)
           this.SignalRservice.JoinTeam("TeamBlue");
         if (this.player[0].teamId == 2)
@@ -60,11 +60,11 @@ export class RegisterPage {
         if (this.player != []) {
           this.splashScreen.show();
           this.menu.swipeEnable(true);
-          this.navCtrl.setRoot(ProfilePage);
+          this.navCtrl.setRoot(ProfilePage);// als player al wel bestaat in database navigeer je naar hier
           this.splashScreen.hide();
         }
       });
-    this.navCtrl.setRoot(TeamPage);
+    this.navCtrl.setRoot(TeamPage); // als player nog niet bestaat in database navigeer je naar hier
     this.splashScreen.hide();
   }
 }
