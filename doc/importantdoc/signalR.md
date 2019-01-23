@@ -10,8 +10,8 @@ De send function zal wanneer aangeroepen wordt , naar dat bepaald team de messag
 
 ## APP
 
-Een service gemaakt zodat ik deze code beter zou kunnen toepassen.\
-StartHubconnection zal soortvan de setup zijn.\ (hubconnection aanmaken en de connection starten)\
+Een service gemaakt zodat deze code beter zou worden toegepast.\
+StartHubconnection zal soort van de setup zijn.\ (hubconnection aanmaken en de connection starten)\
 Jointeam kan je dus een groep joinen.\
 SendAttackMessage zal de Send function aanspreken in de Api en zo dan doormiddel van een toast,\
 zal de message die de hub zal sturen naar de gebruikers getoond worden.
