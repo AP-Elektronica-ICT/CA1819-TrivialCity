@@ -306,11 +306,11 @@ export class MapPage {
                   playerTroops: this.player.playerTroops - data.amount,
                 })
                 .subscribe(data => this.player = data);
-              this.service.PutArea(this.areas[this.player.areaId].areaId, {
-                areaId: this.areas[this.player.areaId].areaId,
-                defendingTroops: this.areas[this.player.areaId].defendingTroops + data.amount,
+              this.service.PutArea(this.areas[this.player.areaId-1].areaId, {
+                areaId: this.areas[this.player.areaId].areaId-1,
+                defendingTroops: this.areas[this.player.areaId-1].defendingTroops + data.amount,
               }).subscribe(data => {
-                this.areas[this.player.areaId] = data;
+                this.areas[this.player.areaId-1] = data;
               })
             }
           }
