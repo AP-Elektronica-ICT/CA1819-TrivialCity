@@ -52,18 +52,7 @@ export class DebugPage {
 
   GoTeam(){
    this.navCtrl.setRoot(TeamPage);
-  /* this.service.PostPlayer({
-    "areaId": 0,
-    "playerTitle": "Private",
-    "playerLevel": 0,
-    "playerExp": 0,
-    "playerSilverCoins": 0,
-    "playerTroops": 20,
-    "playerReserveTroops": 100,
-  }).subscribe(data => {
-    this.player = data;
-    console.log(data);
-  });*/
+
   }
 
   Attack(){
