@@ -48,7 +48,7 @@ export class ProfilePage {
     });
   }
 
-  RankChecker() {
+  RankChecker() { // zet rank image
     if (this.player.playerLevel < 5) { this.src = '../../assets/imgs/ranks/private.png'; }
     else if (this.player.playerLevel >= 50) { this.src = '../../assets/imgs/ranks/sergeant_major_of_the_army.png'; }
     else if (this.player.playerLevel >= 45) { this.src = '../../assets/imgs/ranks/command_sergeant_major.png'; }
@@ -71,7 +71,7 @@ export class ProfilePage {
     this.ChangeAlert("Change Email", "Email","Change","playerEmail")
   }
 
-  ChangeAlert(title: string, value: string, buttonText:string , dataPlayer: string) {
+  ChangeAlert(title: string, value: string, buttonText:string , dataPlayer: string) { // dataPlayer parameter zorg voor welke Put er zal uitgevoerd worden
     let alert = this.alertCtrl.create({
       title: title,
       inputs: [

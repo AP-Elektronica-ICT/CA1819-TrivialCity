@@ -106,7 +106,7 @@ export class ApiService extends BaseService {
     return this.http.get<Team>(`${this.baseApi}/team/${_number}`, this.httpHeader);
   }
 
-  ChangeId(_id: number) {
+  ChangeId(_id: number) { // veranderd id naar id van de gebruiker
     this.PlayerID = _id;
   }
 
@@ -126,7 +126,7 @@ export class ApiService extends BaseService {
     return this.http.get(`${this.baseApi}/player/${this.GetYourId}/team`, this.httpHeader);
   }
 
-  SetTheme(mode: String){
+  SetTheme(mode: String){ // zet thema in kleur van team van de gebruiker
     if(mode == "hex"){
       if(this.player.teamId == 1){ return '#4285F4' }
       else if(this.player.teamId == 2){ return '#ff4444' }
